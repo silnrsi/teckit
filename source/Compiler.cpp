@@ -319,6 +319,19 @@ Compiler::xmlOut(char c)
 }
 
 string
+Compiler::getContextID(const vector<Item>& ctx, bool isUnicode)
+{
+	string	contextString = xmlString(ctx.begin(), ctx.end(), isUnicode);
+	string	contextID = currentPass.xmlContexts[contextString];
+	if (contextID.length() == 0) {
+		contextID = isUnicode ? "uctx_" : "bctx_";
+		contextID += asDec(currentPass.xmlContexts.size());
+		currentPass.xmlContexts[contextString] = contextID;
+	}
+	return contextID;
+}
+
+string
 Compiler::xmlString(vector<Item>::const_iterator b, vector<Item>::const_iterator e, bool isUnicode)
 {
 	string	rval;
@@ -414,7 +427,7 @@ Compiler::xmlString(vector<Item>::const_iterator b, vector<Item>::const_iterator
 				}
 				break;
 			case kMatchElem_Type_Copy:
-				rval += "<copy-ref name=\"";
+				rval += "<copy-ref id=\"";
 				rval += i->tag;
 				rval += "\"";
 				break;
@@ -615,7 +628,7 @@ Compiler::Compiler(const char* txt, UInt32 len, char inForm, bool cmp, bool genX
 								currentRule.lhsString, currentRule.startingLine));
 						}
 						if (generateXML) {
-							// create an XML representation of the rule and append to currentPass.xmlRules
+							// create an XML representation of the rule and append to currentPass.xmlRules/xmlContexts
 							bool	sourceUni = (currentPass.passType == 'U->B') || (currentPass.passType == 'Unic');
 							bool	targetUni = (currentPass.passType == 'B->U') || (currentPass.passType == 'Unic');
 
@@ -630,44 +643,41 @@ Compiler::Compiler(const char* txt, UInt32 len, char inForm, bool cmp, bool genX
 								xmlRule += " dir=\"rev\"";
 							xmlRule += ">\n";
 							
-							xmlRule += "<l>";
+							string	contextID;
+							xmlRule += "<l";
+							if (currentRule.lhsPreContext.size() != 0) {
+								contextID = getContextID(currentRule.lhsPreContext, sourceUni);
+								xmlRule += " preCtx=\"";
+								xmlRule + contextID;
+								xmlRule += "\"";
+							}
+							if (currentRule.lhsPostContext.size() != 0) {
+								contextID = getContextID(currentRule.lhsPostContext, sourceUni);
+								xmlRule += " postCtx=\"";
+								xmlRule += contextID;
+								xmlRule += "\"";
+							}
+							xmlRule += ">";
 							xmlRule += xmlString(currentRule.lhsString.begin(), currentRule.lhsString.end(), sourceUni);
 							xmlRule += "</l>\n";
-							
-							if ((currentRule.lhsPreContext.size() != 0) || (currentRule.lhsPostContext.size() != 0)) {
-								xmlRule += "<lctxt>";
-								if (currentRule.lhsPreContext.size() != 0) {
-									xmlRule += "<pre>";
-									xmlRule += xmlString(currentRule.lhsPreContext.begin(), currentRule.lhsPreContext.end(), sourceUni);
-									xmlRule += "</pre>";
-								}
-								if (currentRule.lhsPostContext.size() != 0) {
-									xmlRule += "<post>";
-									xmlRule += xmlString(currentRule.lhsPostContext.begin(), currentRule.lhsPostContext.end(), sourceUni);
-									xmlRule += "</post>";
-								}
-								xmlRule += "</lctxt>\n";
+
+							xmlRule += "<r";
+							if (currentRule.rhsPreContext.size() != 0) {
+								contextID = getContextID(currentRule.rhsPreContext, targetUni);
+								xmlRule += " preCtx=\"";
+								xmlRule += contextID;
+								xmlRule += "\"";
 							}
-							
-							xmlRule += "<r>";
+							if (currentRule.rhsPostContext.size() != 0) {
+								contextID = getContextID(currentRule.rhsPostContext, targetUni);
+								xmlRule += " postCtx=\"";
+								xmlRule += contextID;
+								xmlRule += "\"";
+							}
+							xmlRule += ">";
 							xmlRule += xmlString(currentRule.rhsString.begin(), currentRule.rhsString.end(), targetUni);
 							xmlRule += "</r>\n";
-							
-							if ((currentRule.rhsPreContext.size() != 0) || (currentRule.rhsPostContext.size() != 0)) {
-								xmlRule += "<rctxt>";
-								if (currentRule.rhsPreContext.size() != 0) {
-									xmlRule += "<pre>";
-									xmlRule += xmlString(currentRule.rhsPreContext.begin(), currentRule.rhsPreContext.end(), targetUni);
-									xmlRule += "</pre>";
-								}
-								if (currentRule.rhsPostContext.size() != 0) {
-									xmlRule += "<post>";
-									xmlRule += xmlString(currentRule.rhsPostContext.begin(), currentRule.rhsPostContext.end(), targetUni);
-									xmlRule += "</post>";
-								}
-								xmlRule += "</rctxt>\n";
-							}
-							
+
 							xmlRule += "</a>\n";
 							currentPass.xmlRules.push_back(xmlRule);
 						}
@@ -1234,7 +1244,7 @@ Compiler::Compiler(const char* txt, UInt32 len, char inForm, bool cmp, bool genX
 		if (generateXML) {
 			string	header;
 			header += "<?xml version=\"1.0\"?>\n";
-			header += "<characterMapping\n";
+			header += "<teckitMapping\n";
 	
 #define doName(att,name_id)								\
 			if (names.find(name_id) != names.end()) {	\
@@ -1245,17 +1255,28 @@ Compiler::Compiler(const char* txt, UInt32 len, char inForm, bool cmp, bool genX
 				header += "\"\n";						\
 			}
 	
-			doName("id", kNameID_LHS_Name);
+			doName("lhsName", kNameID_LHS_Name);
+			doName("rhsName", kNameID_RHS_Name);
+			doName("lhsDescription", kNameID_LHS_Description);
+			doName("rhsDescription", kNameID_RHS_Description);
 			doName("version", kNameID_Version);
-			doName("description", kNameID_LHS_Description);
 			doName("contact", kNameID_Contact);
 			doName("registrationAuthority", kNameID_RegAuthority);
 			doName("registrationName", kNameID_RegName);
-	
-	//		cout << " normalization\"" << !!FIXME!! << "\"\n";
+			doName("copyright", kNameID_Copyright);
+
+			if (lhsFlags & kFlags_ExpectsNFC)
+				header += " lhsExpects=\"NFC\"\n";
+			else if (lhsFlags & kFlags_ExpectsNFD)
+				header += " lhsExpects=\"NFD\"\n";
+			if (rhsFlags & kFlags_ExpectsNFC)
+				header += " rhsExpects=\"NFC\"\n";
+			else if (rhsFlags & kFlags_ExpectsNFD)
+				header += " rhsExpects=\"NFD\"\n";
+
 			header += ">\n";
 
-			string	trailer("</characterMapping>\n");
+			string	trailer("</teckitMapping>\n");
 			
 			compiledSize = header.length() + xmlRepresentation.length() + trailer.length();
 			compiledTable = (Byte*)std::malloc(compiledSize + 1);
@@ -1499,36 +1520,52 @@ Compiler::FinishPass()
 				xmlOut("\">\n");
 				
 				// class definitions
-				for (int i = 0; i < currentPass.byteClassMembers.size(); ++i) {
-					xmlOut("<class size=\"bytes\" id=\"b_");
-					xmlOut(getClassName(currentPass.byteClassNames, i));
-					xmlOut("\" line=\"");
-					xmlOut(asDec(currentPass.byteClassLines[i]));
-					xmlOut("\">");
-					for (Class::const_iterator ci = currentPass.byteClassMembers[i].begin(); ci != currentPass.byteClassMembers[i].end(); ++ci) {
-						xmlOut(ci == currentPass.byteClassMembers[i].begin() ? "\n" : " ");
-						xmlOut(asHex(*ci, 2));
+				if (currentPass.byteClassMembers.size() > 0 || currentPass.uniClassMembers.size() > 0) {
+					xmlOut("<classes>\n");
+					for (int i = 0; i < currentPass.byteClassMembers.size(); ++i) {
+						xmlOut("<class size=\"bytes\" name=\"b_");
+						xmlOut(getClassName(currentPass.byteClassNames, i));
+						xmlOut("\" line=\"");
+						xmlOut(asDec(currentPass.byteClassLines[i]));
+						xmlOut("\">");
+						for (Class::const_iterator ci = currentPass.byteClassMembers[i].begin(); ci != currentPass.byteClassMembers[i].end(); ++ci) {
+							xmlOut(ci == currentPass.byteClassMembers[i].begin() ? "\n" : " ");
+							xmlOut(asHex(*ci, 2));
+						}
+						xmlOut("\n</class>\n");
 					}
-					xmlOut("\n</class>\n");
-				}
-				for (int i = 0; i < currentPass.uniClassMembers.size(); ++i) {
-					xmlOut("<class size=\"unicode\" id=\"u_");
-					xmlOut(getClassName(currentPass.uniClassNames, i));
-					xmlOut("\" line=\"");
-					xmlOut(asDec(currentPass.uniClassLines[i]));
-					xmlOut("\">");
-					for (Class::const_iterator ci = currentPass.uniClassMembers[i].begin(); ci != currentPass.uniClassMembers[i].end(); ++ci) {
-						xmlOut(ci == currentPass.uniClassMembers[i].begin() ? "\n" : " ");
-						xmlOut(asHex(*ci, 4));
+					for (int i = 0; i < currentPass.uniClassMembers.size(); ++i) {
+						xmlOut("<class size=\"unicode\" name=\"u_");
+						xmlOut(getClassName(currentPass.uniClassNames, i));
+						xmlOut("\" line=\"");
+						xmlOut(asDec(currentPass.uniClassLines[i]));
+						xmlOut("\">");
+						for (Class::const_iterator ci = currentPass.uniClassMembers[i].begin(); ci != currentPass.uniClassMembers[i].end(); ++ci) {
+							xmlOut(ci == currentPass.uniClassMembers[i].begin() ? "\n" : " ");
+							xmlOut(asHex(*ci, 4));
+						}
+						xmlOut("\n</class>\n");
 					}
-					xmlOut("\n</class>\n");
+					xmlOut("</classes>\n");
 				}
 				
-				// rules
+				if (currentPass.xmlContexts.size() > 0) {
+					xmlOut("<contexts>\n");
+					for (map<string,string>::const_iterator i = currentPass.xmlContexts.begin();
+							i != currentPass.xmlContexts.end(); ++i) {
+						xmlOut("<context id=\"");
+						xmlOut(i->second);
+						xmlOut("\">");
+						xmlOut(i->first);
+						xmlOut("</context>\n");
+					}
+					xmlOut("</contexts>\n");
+				}
+				
 				xmlOut("<assignments>\n");
 				for (vector<string>::const_iterator i = currentPass.xmlRules.begin();
 						i != currentPass.xmlRules.end(); ++i) {
-					xmlOut(i->c_str());
+					xmlOut(*i);
 				}
 				xmlOut("</assignments>\n");
 				
@@ -3398,6 +3435,7 @@ Compiler::Pass::clear()
 	fwdRules.clear();
 	revRules.clear();
 	xmlRules.clear();
+	xmlContexts.clear();
 	
 	byteClassNames.clear();
 	uniClassNames.clear();

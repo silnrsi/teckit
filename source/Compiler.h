@@ -194,6 +194,7 @@ protected:
 		vector<Rule>		fwdRules;
 		vector<Rule>		revRules;
 		vector<string>		xmlRules;
+		map<string,string>	xmlContexts;
 
 		map<string,UInt32>	byteClassNames;		// map name to byteClassMembers index
 		map<string,UInt32>	uniClassNames;
@@ -294,6 +295,7 @@ protected:
 	void			xmlOut(const string& s);
 	void			xmlOut(char c);
 	string			xmlString(vector<Item>::const_iterator b, vector<Item>::const_iterator e, bool isUnicode);
+	string			getContextID(const vector<Item>& ctx, bool isUnicode);
 };
 
 struct CharName {
