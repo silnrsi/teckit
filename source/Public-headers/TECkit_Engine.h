@@ -1,5 +1,5 @@
 /*------------------------------------------------------------------------
-Copyright (C) 2002-2003 SIL International. All rights reserved.
+Copyright (C) 2002-2005 SIL International. All rights reserved.
 
 Distributable under the terms of either the Common Public License or the
 GNU Lesser General Public License, as specified in the LICENSING.txt file.
@@ -17,6 +17,7 @@ Description:
 	
 	Public API to the TECkit encoding conversion library.
 	
+	18-Mar-2005		jk	moved version number to TECkit_Common.h as it is shared with the compiler
 	19-Mar-2004		jk	updated minor version for 2.2 engine (improved matching functionality)
 	23-Sep-2003		jk	updated for version 2.1 - new "...Opt" APIs
 	 5-Jul-2002		jk	corrected placement of WINAPI to keep MS compiler happy
@@ -28,8 +29,6 @@ Description:
 #define __TECkit_Engine_H__
 
 #include "TECkit_Common.h"
-
-#define	kCurrentTECkitVersion	0x00020002	/* 16.16 version number */
 
 /* formFlags bits for normalization; if none are set, then this side of the mapping is normalization-form-agnostic on input, and may generate an unspecified mixture */
 #define kFlags_ExpectsNFC		0x00000001	/* expects fully composed text (NC) */

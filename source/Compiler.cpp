@@ -121,7 +121,7 @@ TECkit_Compile(char* txt, UInt32 len, Byte doCompression, TECkit_ErrorFn errFunc
 {
 	TECkit_Status	result = kStatus_CompilationFailed;
 	try {
-		Compiler*	cmp = new Compiler(txt, len, kForm_Unspecified, (bool)doCompression, errFunc, userData);
+		Compiler*	cmp = new Compiler(txt, len, kForm_Unspecified, (bool)doCompression, false, errFunc, userData);
 		cmp->GetCompiledTable(*outTable, *outLen);
 		if (*outTable == 0)
 			result = kStatus_CompilationFailed;
@@ -143,7 +143,8 @@ TECkit_CompileOpt(char* txt, UInt32 len, TECkit_ErrorFn errFunc, void* userData,
 {
 	TECkit_Status	result = kStatus_CompilationFailed;
 	try {
-		Compiler*	cmp = new Compiler(txt, len, (opts & kCompilerOpts_FormMask), (opts & kCompilerOpts_Compress) != 0, errFunc, userData);
+		Compiler*	cmp = new Compiler(txt, len, (opts & kCompilerOpts_FormMask),
+			(opts & kCompilerOpts_Compress) != 0, (opts & kCompilerOpts_XML) != 0, errFunc, userData);
 		cmp->GetCompiledTable(*outTable, *outLen);
 		if (*outTable == 0)
 			result = kStatus_CompilationFailed;
@@ -291,15 +292,152 @@ asHex(UInt32 val, short digits)
 	return str;
 }
 
-static void
-xmlOut(const char* s)
+
+void
+Compiler::xmlOut(const char* s)
 {
-	cerr << s;
+	xmlRepresentation += s;
 }
 
-bool generateXML = true;
+void
+Compiler::xmlOut(const string& s)
+{
+	xmlRepresentation += s;
+}
 
-Compiler::Compiler(const char* txt, UInt32 len, char inForm, bool cmp, TECkit_ErrorFn errFunc, void* userData)
+void
+Compiler::xmlOut(char c)
+{
+	xmlRepresentation += c;
+}
+
+string
+Compiler::xmlString(vector<Item>::const_iterator b, vector<Item>::const_iterator e, bool isUnicode)
+{
+	string	rval;
+	char	buf[100];
+	if (b == e)
+		return rval;
+	for (vector<Item>::const_iterator i = b; i != e; ++i) {
+		switch (i->type) {
+			case 0:
+				rval += "<ch n=\"";
+				rval += asHex(i->val, isUnicode ? 4 : 2);
+				rval += "\"";
+				break;
+			case kMatchElem_Type_EOS:
+				rval += "<eot";
+				break;
+			case kMatchElem_Type_ANY:
+				rval += "<any";
+				break;
+			case kMatchElem_Type_BGroup:
+				{
+					vector<Item>::const_iterator j = i;
+					int nesting = 0;
+					bool	alt = false;
+					string	groupStr;
+					++i;
+					while (++j != e) {
+						if (j->type == kMatchElem_Type_BGroup)
+							++nesting;
+						else if (j->type == kMatchElem_Type_EGroup) {
+							if (nesting == 0) {
+								if (alt && i < j - 1)
+									groupStr += "<group>\n";
+								groupStr += xmlString(i, j, isUnicode);
+								if (alt && i < j - 1)
+									groupStr += "</group>\n";
+								break;
+							}
+							else
+								--nesting;
+						}
+						else if (j->type == kMatchElem_Type_OR && nesting == 0) {
+							if (i < j - 1)
+								groupStr += "<group>\n";
+							groupStr += xmlString(i, j, isUnicode);
+							if (i < j - 1)
+								groupStr += "</group>\n";
+							i = j + 1;
+							alt = true;
+						}
+					}
+					i = j;
+					rval += "<group";
+					if (alt)
+						rval += " alt=\"1\"";
+					if (i->repeatMin != 1 && i->repeatMin != 255) {
+						sprintf(buf, " min=\"%d\"", i->repeatMin);
+						rval += buf;
+					}
+					if (i->repeatMax != 1 && i->repeatMax != 255) {
+						sprintf(buf, " max=\"%d\"", i->repeatMax);
+						rval += buf;
+					}
+					if (i->tag.length() > 0) {
+						if (i->type != kMatchElem_Type_Copy) {
+							rval += " id=\"";
+							rval += i->tag;
+							rval += "\"";
+						}
+					}
+					rval += ">\n";
+					rval += groupStr;
+					rval += "</group>\n";
+					continue;
+				}
+				break;
+			case kMatchElem_Type_OR:
+				rval += "<OR/>\n";
+				continue;
+				break;
+			case kMatchElem_Type_EGroup:
+				rval += "<END-GROUP/>\n";
+				continue;
+				break;
+			case kMatchElem_Type_Class:
+				{
+					rval += "<class-ref name=\"";
+					const map<string,UInt32>&	classes = isUnicode ? currentPass.uniClassNames : currentPass.byteClassNames;
+					rval += isUnicode ? "u_" : "b_";
+					rval += getClassName(classes, i->val);
+					rval += "\"";
+				}
+				break;
+			case kMatchElem_Type_Copy:
+				rval += "<copy-ref name=\"";
+				rval += i->tag;
+				rval += "\"";
+				break;
+			default:
+				rval += "<UNKNOWN type=\"";
+				rval += asHex(i->type, 1);
+				break;
+		}
+		if (i->negate)
+			rval += " neg=\"1\"";
+		if (i->repeatMin != 1 && i->repeatMin != 255) {
+			sprintf(buf, " min=\"%d\"", i->repeatMin);
+			rval += buf;
+		}
+		if (i->repeatMax != 1 && i->repeatMax != 255) {
+			sprintf(buf, " max=\"%d\"", i->repeatMax);
+			rval += buf;
+		}
+		if (i->tag.length() > 0) {
+			if (i->type != kMatchElem_Type_Copy) {
+				rval += " id=\"";
+				rval += i->tag;
+				rval += "\"";
+			}
+		}
+		rval += "/>";
+	}
+	return rval;
+}
+
+Compiler::Compiler(const char* txt, UInt32 len, char inForm, bool cmp, bool genXML, TECkit_ErrorFn errFunc, void* userData)
 {
 	compiledTable = 0;
 	compiledSize = 0;
@@ -309,6 +447,8 @@ Compiler::Compiler(const char* txt, UInt32 len, char inForm, bool cmp, TECkit_Er
 	
 	ungotten = kInvalidChar;
 	inputForm = inForm;
+	
+	generateXML = genXML;
 	
 	errorFunction = errFunc;
 	errFuncUserData = userData;
@@ -462,6 +602,60 @@ Compiler::Compiler(const char* txt, UInt32 len, char inForm, bool cmp, TECkit_Er
 							currentPass.revRules.push_back(Rule(currentRule.rhsString,
 								reverseContext(currentRule.rhsPreContext), currentRule.rhsPostContext,
 								currentRule.lhsString, lineNumber - 1));
+						}
+						if (generateXML) {
+							// create an XML representation of the rule and append to currentPass.xmlRules
+							bool	sourceUni = (currentPass.passType == 'U->B') || (currentPass.passType == 'Unic');
+							bool	targetUni = (currentPass.passType == 'B->U') || (currentPass.passType == 'Unic');
+
+							string	xmlRule;
+							xmlRule += "<a";
+							if (ruleType == '>')
+								xmlRule += " dir=\"fwd\"";
+							else if (ruleType == '<')
+								xmlRule += " dir=\"rev\"";
+							xmlRule += ">\n";
+							
+							xmlRule += "<l>";
+							xmlRule += xmlString(currentRule.lhsString.begin(), currentRule.lhsString.end(), sourceUni);
+							xmlRule += "</l>\n";
+							
+							if ((currentRule.lhsPreContext.size() != 0) || (currentRule.lhsPostContext.size() != 0)) {
+								xmlRule += "<lctxt>";
+								if (currentRule.lhsPreContext.size() != 0) {
+									xmlRule += "<pre>";
+									xmlRule += xmlString(currentRule.lhsPreContext.begin(), currentRule.lhsPreContext.end(), sourceUni);
+									xmlRule += "</pre>";
+								}
+								if (currentRule.lhsPostContext.size() != 0) {
+									xmlRule += "<post>";
+									xmlRule += xmlString(currentRule.lhsPostContext.begin(), currentRule.lhsPostContext.end(), sourceUni);
+									xmlRule += "</post>";
+								}
+								xmlRule += "</lctxt>\n";
+							}
+							
+							xmlRule += "<r>";
+							xmlRule += xmlString(currentRule.rhsString.begin(), currentRule.rhsString.end(), targetUni);
+							xmlRule += "</r>\n";
+							
+							if ((currentRule.rhsPreContext.size() != 0) || (currentRule.rhsPostContext.size() != 0)) {
+								xmlRule += "<rctxt>";
+								if (currentRule.rhsPreContext.size() != 0) {
+									xmlRule += "<pre>";
+									xmlRule += xmlString(currentRule.rhsPreContext.begin(), currentRule.rhsPreContext.end(), targetUni);
+									xmlRule += "</pre>";
+								}
+								if (currentRule.rhsPostContext.size() != 0) {
+									xmlRule += "<post>";
+									xmlRule += xmlString(currentRule.rhsPostContext.begin(), currentRule.rhsPostContext.end(), targetUni);
+									xmlRule += "</post>";
+								}
+								xmlRule += "</rctxt>\n";
+							}
+							
+							xmlRule += "</a>\n";
+							currentPass.xmlRules.push_back(xmlRule);
 						}
 						currentRule.clear();
 						ruleState = notInRule;
@@ -1019,113 +1213,153 @@ Compiler::Compiler(const char* txt, UInt32 len, char inForm, bool cmp, TECkit_Er
 	}
 
 	if (errorCount == 0) {
-		// now we need to assemble the complete compiled file
-		FileHeader	fh;
-		WRITE(fh.type, kMagicNumber);
-		WRITE(fh.version, kCurrentFileVersion);
-		WRITE(fh.headerLength, 0);	// to be filled in later, once names and table counts are known
-		WRITE(fh.formFlagsLHS, lhsFlags);
-		WRITE(fh.formFlagsRHS, rhsFlags);
-
-		WRITE(fh.numFwdTables, fwdTables.size());
-		WRITE(fh.numRevTables, revTables.size());
-		WRITE(fh.numNames, names.size());
-		
-		string	offsets;
-		UInt32	offset = sizeof(FileHeader) + (names.size() + fwdTables.size() + revTables.size()) * sizeof(UInt32);
-		UInt32	prevLength = 0;
-		
-		// sort the name IDs into ascending order
-		vector<UInt16>	nameIDs;
-		nameIDs.reserve(names.size());
-		for (map<UInt16,string>::const_iterator n = names.begin(); n != names.end(); ++n) {
-			nameIDs.push_back(n->first);
-		}
-		sort(nameIDs.begin(), nameIDs.end());
-		
-		// pack all the name records
-		string	namesData;
-		for (vector<UInt16>::const_iterator i = nameIDs.begin(); i != nameIDs.end(); ++i) {
-			appendToTable(offsets, (const char*)&offset, sizeof(offset));
-			NameRec	r;
-			WRITE(r.nameID, *i);
-			WRITE(r.nameLength, names[*i].length());
-			namesData.append((const char*)&r, sizeof(r));
-			namesData.append(names[*i]);
-			if ((namesData.length() & 1) != 0)
-				namesData.append(1, (char)0);
-			offset += namesData.length() - prevLength;
-			prevLength = namesData.length();
-		}
-		if ((namesData.length() & 2) != 0)
-			namesData.append(2, (char)0);
-		offset += namesData.length() - prevLength;
-		
-		// pack the offsets to the actual mapping tables
-		for (vector<string>::const_iterator t = fwdTables.begin(); t != fwdTables.end(); ++t) {
-			appendToTable(offsets, (const char*)&offset, sizeof(offset));
-			offset += t->size();
-		}
-		for (vector<string>::const_iterator t = revTables.end(); t != revTables.begin(); ) {
-			--t;
-			appendToTable(offsets, (const char*)&offset, sizeof(offset));
-			offset += t->size();
-		}
-		
-		WRITE(fh.headerLength, sizeof(fh) + offsets.length() + namesData.length());
-
-		if (errorCount == 0) {
-			// calculate total size of compiled table, malloc() it, and copy everything into it
-			compiledSize = sizeof(fh)
-						+ offsets.length()
-						+ namesData.length();
-			for (vector<string>::const_iterator t = fwdTables.begin(); t != fwdTables.end(); ++t)
-				compiledSize += t->length();
-			for (vector<string>::const_iterator t = revTables.begin(); t != revTables.end(); ++t)
-				compiledSize += t->length();
-
-			compiledTable = (Byte*)std::malloc(compiledSize);
-			if (compiledTable != 0) {
-				char*	cp = (char*)compiledTable;
-				std::memcpy(cp, &fh, sizeof(fh));
-				cp += sizeof(fh);
-				std::memcpy(cp, offsets.data(), offsets.length());
-				cp += offsets.length();
-				std::memcpy(cp, namesData.data(), namesData.length());
-				cp += namesData.length();
-				for (vector<string>::const_iterator t = fwdTables.begin(); t != fwdTables.end(); ++t) {
-					std::memcpy(cp, t->data(), t->length());
-					cp += t->length();
-				}
-				for (vector<string>::const_iterator t = revTables.end(); t != revTables.begin(); ) {
-					--t;
-					std::memcpy(cp, t->data(), t->length());
-					cp += t->length();
-				}
-				if ((char*)compiledTable + compiledSize != cp)
-					cerr << "error!" << endl;
+		if (generateXML) {
+			string	header;
+			header += "<?xml version=\"1.0\"?>\n";
+			header += "<characterMapping\n";
+	
+#define doName(att,name_id)								\
+			if (names.find(name_id) != names.end()) {	\
+				header += " ";							\
+				header += att;							\
+				header += "=\"";						\
+				header += names[name_id];				\
+				header += "\"\n";						\
 			}
-			else
+	
+			doName("id", kNameID_LHS_Name);
+			doName("version", kNameID_Version);
+			doName("description", kNameID_LHS_Description);
+			doName("contact", kNameID_Contact);
+			doName("registrationAuthority", kNameID_RegAuthority);
+			doName("registrationName", kNameID_RegName);
+	
+	//		cout << " normalization\"" << !!FIXME!! << "\"\n";
+			header += ">\n";
+
+			string	trailer("</characterMapping>\n");
+			
+			compiledSize = header.length() + xmlRepresentation.length() + trailer.length();
+			compiledTable = (Byte*)std::malloc(compiledSize + 1);
+			if (compiledTable == NULL)
 				throw std::bad_alloc();
+			
+			std::memcpy(compiledTable, header.data(), header.length());
+			std::memcpy(compiledTable + header.length(), xmlRepresentation.data(), xmlRepresentation.length());
+			std::memcpy(compiledTable + header.length() + xmlRepresentation.length(), trailer.data(), trailer.length());
+			compiledTable[compiledSize] = 0;
+
+			xmlRepresentation.clear();
 		}
-		
-		if (errorCount == 0 && cmp) {
-			// do the compression...
-			unsigned long	destLen = compiledSize * 11 / 10 + 20;
-			Byte*	dest = (Byte*)std::malloc(destLen + 8);
-			if (dest != 0) {
-				int	result = compress2(dest + 8, &destLen, compiledTable, compiledSize, Z_BEST_COMPRESSION);
-				if (result == Z_OK) {
-					destLen += 8;
-					std::realloc(dest, destLen);
-					WRITE(((FileHeader*)dest)->type, kMagicNumberCmp);
-					WRITE(((FileHeader*)dest)->version, compiledSize);
-					std::free(compiledTable);
-					compiledTable = dest;
-					compiledSize = destLen;
+		else {
+			// assemble the complete compiled file
+			FileHeader	fh;
+			WRITE(fh.type, kMagicNumber);
+			WRITE(fh.version, kCurrentFileVersion);
+			WRITE(fh.headerLength, 0);	// to be filled in later, once names and table counts are known
+			WRITE(fh.formFlagsLHS, lhsFlags);
+			WRITE(fh.formFlagsRHS, rhsFlags);
+	
+			WRITE(fh.numFwdTables, fwdTables.size());
+			WRITE(fh.numRevTables, revTables.size());
+			WRITE(fh.numNames, names.size());
+			
+			string	offsets;
+			UInt32	offset = sizeof(FileHeader) + (names.size() + fwdTables.size() + revTables.size()) * sizeof(UInt32);
+			UInt32	prevLength = 0;
+			
+			// sort the name IDs into ascending order
+			vector<UInt16>	nameIDs;
+			nameIDs.reserve(names.size());
+			for (map<UInt16,string>::const_iterator n = names.begin(); n != names.end(); ++n) {
+				nameIDs.push_back(n->first);
+			}
+			sort(nameIDs.begin(), nameIDs.end());
+			
+			// pack all the name records
+			string	namesData;
+			for (vector<UInt16>::const_iterator i = nameIDs.begin(); i != nameIDs.end(); ++i) {
+				appendToTable(offsets, (const char*)&offset, sizeof(offset));
+				NameRec	r;
+				WRITE(r.nameID, *i);
+				WRITE(r.nameLength, names[*i].length());
+				namesData.append((const char*)&r, sizeof(r));
+				namesData.append(names[*i]);
+				if ((namesData.length() & 1) != 0)
+					namesData.append(1, (char)0);
+				offset += namesData.length() - prevLength;
+				prevLength = namesData.length();
+			}
+			if ((namesData.length() & 2) != 0)
+				namesData.append(2, (char)0);
+			offset += namesData.length() - prevLength;
+			
+			// pack the offsets to the actual mapping tables
+			for (vector<string>::const_iterator t = fwdTables.begin(); t != fwdTables.end(); ++t) {
+				appendToTable(offsets, (const char*)&offset, sizeof(offset));
+				offset += t->size();
+			}
+			for (vector<string>::const_iterator t = revTables.end(); t != revTables.begin(); ) {
+				--t;
+				appendToTable(offsets, (const char*)&offset, sizeof(offset));
+				offset += t->size();
+			}
+			
+			WRITE(fh.headerLength, sizeof(fh) + offsets.length() + namesData.length());
+	
+			if (errorCount == 0) {
+				// calculate total size of compiled table, malloc() it, and copy everything into it
+				compiledSize = sizeof(fh)
+							+ offsets.length()
+							+ namesData.length();
+				for (vector<string>::const_iterator t = fwdTables.begin(); t != fwdTables.end(); ++t)
+					compiledSize += t->length();
+				for (vector<string>::const_iterator t = revTables.begin(); t != revTables.end(); ++t)
+					compiledSize += t->length();
+	
+				compiledTable = (Byte*)std::malloc(compiledSize);
+				if (compiledTable != 0) {
+					char*	cp = (char*)compiledTable;
+					std::memcpy(cp, &fh, sizeof(fh));
+					cp += sizeof(fh);
+					std::memcpy(cp, offsets.data(), offsets.length());
+					cp += offsets.length();
+					std::memcpy(cp, namesData.data(), namesData.length());
+					cp += namesData.length();
+					for (vector<string>::const_iterator t = fwdTables.begin(); t != fwdTables.end(); ++t) {
+						std::memcpy(cp, t->data(), t->length());
+						cp += t->length();
+					}
+					for (vector<string>::const_iterator t = revTables.end(); t != revTables.begin(); ) {
+						--t;
+						std::memcpy(cp, t->data(), t->length());
+						cp += t->length();
+					}
+					if ((char*)compiledTable + compiledSize != cp)
+						cerr << "error!" << endl;
 				}
 				else
-					std::free(dest);
+					throw std::bad_alloc();
+			}
+			
+			if (errorCount == 0 && cmp) {
+				// do the compression...
+				unsigned long	destLen = compiledSize * 11 / 10 + 20;
+				Byte*	dest = (Byte*)std::malloc(destLen + 8);
+				if (dest != 0) {
+					int	result = compress2(dest + 8, &destLen, compiledTable, compiledSize, Z_BEST_COMPRESSION);
+					if (result == Z_OK) {
+						destLen += 8;
+						std::realloc(dest, destLen);
+						WRITE(((FileHeader*)dest)->type, kMagicNumberCmp);
+						WRITE(((FileHeader*)dest)->version, compiledSize);
+						std::free(compiledTable);
+						compiledTable = dest;
+						compiledSize = destLen;
+					}
+					else
+						std::free(dest);
+				}
 			}
 		}
 	}
@@ -1214,6 +1448,17 @@ Compiler::FinishPass()
 				fwdTables.push_back(normTable);
 			if ((currentPass.passType & 0x000000FF) != 'f')
 				revTables.push_back(normTable);
+			if (generateXML) {
+				xmlOut("<pass lhs=\"unicode\" rhs=\"unicode\">\n");
+				xmlOut("<normalize form=\"");
+				xmlOut(normTable[2]);
+				if ((currentPass.passType & 0x000000FF) == 'f')
+					xmlOut(" dir=\"fwd\"");
+				else if ((currentPass.passType & 0x000000FF) == 'r')
+					xmlOut(" dir=\"rev\"");
+				xmlOut("\">\n");
+				xmlOut("</pass>\n");
+			}
 			break;
 		}
 	}
@@ -1234,7 +1479,7 @@ Compiler::FinishPass()
 				
 				// class definitions
 				for (int i = 0; i < currentPass.byteClassMembers.size(); ++i) {
-					xmlOut("<class size=\"bytes\" id=\"");
+					xmlOut("<class size=\"bytes\" id=\"b_");
 					xmlOut(getClassName(currentPass.byteClassNames, i));
 					xmlOut("\">");
 					for (Class::const_iterator ci = currentPass.byteClassMembers[i].begin(); ci != currentPass.byteClassMembers[i].end(); ++ci) {
@@ -1244,7 +1489,7 @@ Compiler::FinishPass()
 					xmlOut("\n</class>\n");
 				}
 				for (int i = 0; i < currentPass.uniClassMembers.size(); ++i) {
-					xmlOut("<class size=\"unicode\" id=\"");
+					xmlOut("<class size=\"unicode\" id=\"u_");
 					xmlOut(getClassName(currentPass.uniClassNames, i));
 					xmlOut("\">");
 					for (Class::const_iterator ci = currentPass.uniClassMembers[i].begin(); ci != currentPass.uniClassMembers[i].end(); ++ci) {
@@ -1255,12 +1500,12 @@ Compiler::FinishPass()
 				}
 				
 				// rules
-				xmlOut("<mapping>\n");
+				xmlOut("<assignments>\n");
 				for (vector<string>::const_iterator i = currentPass.xmlRules.begin();
 						i != currentPass.xmlRules.end(); ++i) {
 					xmlOut(i->c_str());
 				}
-				xmlOut("</mapping>\n");
+				xmlOut("</assignments>\n");
 				
 				// end pass
 				xmlOut("</pass>\n");
@@ -3124,7 +3369,8 @@ Compiler::Pass::clear()
 {
 	fwdRules.clear();
 	revRules.clear();
-
+	xmlRules.clear();
+	
 	byteClassNames.clear();
 	uniClassNames.clear();
 

@@ -6,11 +6,12 @@
 	Jonathan Kew	22-Dec-2001
 					14-May-2002		added WINAPI to function declarations
 					 5-Jul-2002		corrected placement of WINAPI/CALLBACK to keep MS compiler happy
+					18-Mar-2005		added option to generate 
 */
 
 /*
 	TECkit_Compiler.h
-	Copyright (c) 2002 SIL International.
+	Copyright (c) 2002-2005 SIL International.
 */
 
 #ifndef __TECkit_Compiler_H__
@@ -40,7 +41,8 @@ extern "C" {
 #endif
 
 #define kCompilerOpts_FormMask	0x0000000F	/* see TECkit_Common.h for encoding form constants */
-#define kCompilerOpts_Compress	0x00000010
+#define kCompilerOpts_Compress	0x00000010	/* generate compressed mapping table */
+#define kCompilerOpts_XML		0x00000020	/* instead of a compiled binary table, generate an XML representation of the mapping */
 
 typedef void (CALLBACK *TECkit_ErrorFn)(void* userData, char* msg, char* param, UInt32 line);
 

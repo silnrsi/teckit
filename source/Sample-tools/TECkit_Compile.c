@@ -4,6 +4,7 @@
 	
 	2004-03-12	updated to use v2.1 compiler
 				added -u option to force UTF8 mode
+	2005-03-18	added -x option to generate XML representation
 */
 
 #include "TECkit_Compiler.h"
@@ -44,6 +45,7 @@ main(int argc, char** argv)
 	int		errorCount = 0;
 	char	compress = 1;
 	char	form = kForm_Unspecified;
+	char	genXML = 0;
 	
 	if (*progName == 0)
 		progName = "TECkit_Compile";
@@ -66,6 +68,9 @@ main(int argc, char** argv)
 					break;
 				case 'u':
 					form = kForm_UTF8;
+					break;
+				case 'x':
+					genXML = 1;
 					break;
 				default:
 					fprintf(stderr, "unknown option: -%c\n", arg[1]);
@@ -90,8 +95,9 @@ Usage: %s mapping_description [-o compiled_table] [-z]\n\
 \n\
     Optional arguments:\n\
         -o file     output compiled table (.tec) file\n\
-        -z          generate uncompressed table format\n\
         -u          read source text as UTF8 even if no BOM found\n\
+        -x          generate XML representation rather than compiled table\n\
+        -z          generate uncompressed table format\n\
 ", progName);
 		return 1;
 	}
@@ -113,7 +119,7 @@ Usage: %s mapping_description [-o compiled_table] [-z]\n\
 					strcpy(tecFileName, mapFileName);
 			}
 		}
-		strcat(tecFileName, ".tec");
+		strcat(tecFileName, genXML ? ".xml" : ".tec");
 	}
 
 	if (mapFileName != 0) {
@@ -153,17 +159,17 @@ Usage: %s mapping_description [-o compiled_table] [-z]\n\
 		fclose(inFile);
 		
 		status = TECkit_CompileOpt(txt, len, &errFunc, 0, &compiledTable, &compiledSize,
-									form | (compress ? kCompilerOpts_Compress : 0));
+						form | (compress ? kCompilerOpts_Compress : 0) | (genXML ? kCompilerOpts_XML : 0));
 
 		free(txt);
 		
 		if (status == kStatus_NoError) {
-			// save the compiled mapping
+			// save the compiled mapping (or XML representation)
 			FILE*	outFile;
 			remove(tecFileName);
 			outFile = fopen(tecFileName, "wb");
 			if (outFile == 0) {
-				fprintf(stderr, "unable to open output table file %s\n", tecFileName);
+				fprintf(stderr, "unable to open output file %s\n", tecFileName);
 				return 1;
 			}
 			fwrite(compiledTable, compiledSize, 1, outFile);

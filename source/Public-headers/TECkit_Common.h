@@ -16,12 +16,15 @@ Description:
 	Common types and defines for the engine and compiler
 
 History:
+	18-Mar-2005		jk	updated minor version for 2.3 (engine unchanged, XML option in compiler)
 	23-Sep-2003		jk	updated for version 2.1 - extended status values
 	xx-xxx-2002		jk	version 2.0 initial release
 */
 
 #ifndef __TECkit_Common_H__
 #define __TECkit_Common_H__
+
+#define	kCurrentTECkitVersion	0x00020003	/* 16.16 version number */
 
 #ifndef MAC_TYPES	/* these are all predefined if using a Mac prefix */
 typedef unsigned char			UInt8;

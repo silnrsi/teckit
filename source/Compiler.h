@@ -37,7 +37,7 @@ using namespace std;
 class Compiler
 {
 public:
-					Compiler(const char* txt, UInt32 len, char inForm, bool cmp, TECkit_ErrorFn errFunc, void* userData);
+					Compiler(const char* txt, UInt32 len, char inForm, bool cmp, bool genXML, TECkit_ErrorFn errFunc, void* userData);
 					~Compiler();
 	
 	void			GetCompiledTable(Byte*& table, UInt32& len) const;
@@ -101,8 +101,9 @@ protected:
 	const unsigned char*	tokStart;
 	UInt32		errorCount;
 	UInt32		lineNumber;
-	bool		errorState;
 	char		inputForm;
+	bool		errorState;
+	bool		generateXML;
 
 	// used in compiling passes
 	enum {
@@ -185,6 +186,7 @@ protected:
 		void				clear();
 		vector<Rule>		fwdRules;
 		vector<Rule>		revRules;
+		vector<string>		xmlRules;
 
 		map<string,UInt32>	byteClassNames;		// map name to byteClassMembers index
 		map<string,UInt32>	uniClassNames;
@@ -225,6 +227,8 @@ protected:
 	tokListT::const_iterator	defIter;
 	tokListT::const_iterator	defEnd;
 	map<string,tokListT>		defines;
+
+	string			xmlRepresentation;
 
 	UInt32			getChar(void);
 	void			ungetChar(UInt32 c);
@@ -276,6 +280,11 @@ protected:
 
 	vector<Item>	reverseContext(const vector<Item>& ctx);
 	void			align(string& table, int alignment);
+	
+	void			xmlOut(const char* s);
+	void			xmlOut(const string& s);
+	void			xmlOut(char c);
+	string			xmlString(vector<Item>::const_iterator b, vector<Item>::const_iterator e, bool isUnicode);
 };
 
 struct CharName {
