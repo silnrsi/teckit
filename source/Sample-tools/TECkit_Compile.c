@@ -60,8 +60,14 @@ main(int argc, char** argv)
 		if (arg[0] == '-' && strlen(arg + 1) == 1 && argc > 0) {
 			switch (arg[1]) {
 				case 'o':
-					tecFileName = *++argv;
-					--argc;
+					if (argc > 1) {
+						tecFileName = *++argv;
+						--argc;
+					}
+					else {
+						fprintf(stderr, "missing filename after -o\n");
+						++errorCount;
+					}
 					break;
 				case 'z':
 					compress = 0;
@@ -88,13 +94,13 @@ main(int argc, char** argv)
 
 	if (errorCount > 0 || mapFileName == 0) {
 		fprintf(stderr, "\
-Usage: %s mapping_description [-o compiled_table] [-z]\n\
+Usage: %s [-u] [-x] [-z] mapping_description [-o compiled_table]\n\
 \n\
     Required argument:\n\
         source mapping description (.map) file\n\
 \n\
     Optional arguments:\n\
-        -o file     output compiled table (.tec) file\n\
+        -o file     output compiled table (.tec) file (\"-\" for stdout)\n\
         -u          read source text as UTF8 even if no BOM found\n\
         -x          generate XML representation rather than compiled table\n\
         -z          generate uncompressed table format\n\
@@ -166,11 +172,15 @@ Usage: %s mapping_description [-o compiled_table] [-z]\n\
 		if (status == kStatus_NoError) {
 			// save the compiled mapping (or XML representation)
 			FILE*	outFile;
-			remove(tecFileName);
-			outFile = fopen(tecFileName, "wb");
-			if (outFile == 0) {
-				fprintf(stderr, "unable to open output file %s\n", tecFileName);
-				return 1;
+			if (strcmp(tecFileName, "-") == 0)
+				outFile = stdout;
+			else {
+				remove(tecFileName);
+				outFile = fopen(tecFileName, "wb");
+				if (outFile == 0) {
+					fprintf(stderr, "unable to open output file %s\n", tecFileName);
+					return 1;
+				}
 			}
 			fwrite(compiledTable, compiledSize, 1, outFile);
 			fclose(outFile);

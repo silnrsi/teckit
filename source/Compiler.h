@@ -156,6 +156,8 @@ protected:
 	
 	struct CurrRule {
 		void			clear();
+		void			setLineNo(UInt32 lineNo);
+		UInt32			startingLine;
 		vector<Item>	lhsString;
 		vector<Item>	lhsPreContext;
 		vector<Item>	lhsPostContext;
@@ -166,7 +168,10 @@ protected:
 	
 	CurrRule			currentRule;	// the current rule being parsed
 	
-	typedef vector<UInt32>	Class;
+	UInt32				classLine;
+
+	typedef	vector<UInt32>	Class;
+
 	struct MatClass {
 						MatClass(UInt32 m)
 							: membersClass(m)
@@ -184,6 +189,8 @@ protected:
 	
 	struct Pass {
 		void				clear();
+		void				setLineNo(UInt32 lineNo);
+		UInt32				startingLine;
 		vector<Rule>		fwdRules;
 		vector<Rule>		revRules;
 		vector<string>		xmlRules;
@@ -193,6 +200,8 @@ protected:
 
 		vector<Class>		byteClassMembers;	// the actual members of each byte class
 		vector<Class>		uniClassMembers;
+		vector<UInt32>		byteClassLines;
+		vector<UInt32>		uniClassLines;
 
 		long				passType;
 		UInt32				uniDefault;

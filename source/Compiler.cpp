@@ -287,11 +287,18 @@ getClassName(const map<string,UInt32>& nameMap, UInt32 index)
 static const char*
 asHex(UInt32 val, short digits)
 {
-	static char	str[10];
+	static char	str[16];
 	sprintf(str, "%0*X", digits, val);
 	return str;
 }
 
+static const char*
+asDec(UInt32 val)
+{
+	static char	str[16];
+	sprintf(str, "%d", val);
+	return str;
+}
 
 void
 Compiler::xmlOut(const char* s)
@@ -315,7 +322,6 @@ string
 Compiler::xmlString(vector<Item>::const_iterator b, vector<Item>::const_iterator e, bool isUnicode)
 {
 	string	rval;
-	char	buf[100];
 	if (b == e)
 		return rval;
 	for (vector<Item>::const_iterator i = b; i != e; ++i) {
@@ -367,13 +373,15 @@ Compiler::xmlString(vector<Item>::const_iterator b, vector<Item>::const_iterator
 					rval += "<group";
 					if (alt)
 						rval += " alt=\"1\"";
-					if (i->repeatMin != 1 && i->repeatMin != 255) {
-						sprintf(buf, " min=\"%d\"", i->repeatMin);
-						rval += buf;
+					if ((i->repeatMin != 1) && (i->repeatMin != 255)) {
+						rval += " min=\"";
+						rval += asDec(i->repeatMin);
+						rval += "\"";
 					}
-					if (i->repeatMax != 1 && i->repeatMax != 255) {
-						sprintf(buf, " max=\"%d\"", i->repeatMax);
-						rval += buf;
+					if ((i->repeatMax != 1) && (i->repeatMax != 255)) {
+						rval += " max=\"";
+						rval += asDec(i->repeatMax);
+						rval += "\"";
 					}
 					if (i->tag.length() > 0) {
 						if (i->type != kMatchElem_Type_Copy) {
@@ -417,13 +425,15 @@ Compiler::xmlString(vector<Item>::const_iterator b, vector<Item>::const_iterator
 		}
 		if (i->negate)
 			rval += " neg=\"1\"";
-		if (i->repeatMin != 1 && i->repeatMin != 255) {
-			sprintf(buf, " min=\"%d\"", i->repeatMin);
-			rval += buf;
+		if ((i->repeatMin != 1) && (i->repeatMin != 255)) {
+			rval += " min=\"";
+			rval += asDec(i->repeatMin);
+			rval += "\"";
 		}
-		if (i->repeatMax != 1 && i->repeatMax != 255) {
-			sprintf(buf, " max=\"%d\"", i->repeatMax);
-			rval += buf;
+		if ((i->repeatMax != 1) && (i->repeatMax != 255)) {
+			rval += " max=\"";
+			rval += asDec(i->repeatMax);
+			rval += "\"";
 		}
 		if (i->tag.length() > 0) {
 			if (i->type != kMatchElem_Type_Copy) {
@@ -450,6 +460,10 @@ Compiler::Compiler(const char* txt, UInt32 len, char inForm, bool cmp, bool genX
 	
 	generateXML = genXML;
 	
+	lineNumber = 1;
+	errorState = false;
+	errorCount = 0;
+
 	errorFunction = errFunc;
 	errFuncUserData = userData;
 	
@@ -464,10 +478,6 @@ Compiler::Compiler(const char* txt, UInt32 len, char inForm, bool cmp, bool genX
 	
 	char	classType;
 	
-	lineNumber = 1;
-	errorState = false;
-	errorCount = 0;
-
 	ruleState = notInRule;
 	int	nestingLevel = 0;
 
@@ -596,12 +606,12 @@ Compiler::Compiler(const char* txt, UInt32 len, char inForm, bool cmp, bool genX
 						if (ruleType == 0 || ruleType == '>') {
 							currentPass.fwdRules.push_back(Rule(currentRule.lhsString,
 								reverseContext(currentRule.lhsPreContext), currentRule.lhsPostContext,
-								currentRule.rhsString, lineNumber - 1));
+								currentRule.rhsString, currentRule.startingLine));
 						}
 						if (ruleType == 0 || ruleType == '<') {
 							currentPass.revRules.push_back(Rule(currentRule.rhsString,
 								reverseContext(currentRule.rhsPreContext), currentRule.rhsPostContext,
-								currentRule.lhsString, lineNumber - 1));
+								currentRule.lhsString, currentRule.startingLine));
 						}
 						if (generateXML) {
 							// create an XML representation of the rule and append to currentPass.xmlRules
@@ -610,6 +620,9 @@ Compiler::Compiler(const char* txt, UInt32 len, char inForm, bool cmp, bool genX
 
 							string	xmlRule;
 							xmlRule += "<a";
+							xmlRule += " line=\"";
+							xmlRule += asDec(currentRule.startingLine);
+							xmlRule += "\"";
 							if (ruleType == '>')
 								xmlRule += " dir=\"fwd\"";
 							else if (ruleType == '<')
@@ -949,6 +962,7 @@ Compiler::Compiler(const char* txt, UInt32 len, char inForm, bool cmp, bool genX
 
 			case tok_Pass:
 				FinishPass();
+				currentPass.setLineNo(lineNumber);
 				if (!ExpectToken('(', "expected (PASS-TYPE) after Pass"))
 					break;
 				GetNextToken();
@@ -1008,6 +1022,7 @@ Compiler::Compiler(const char* txt, UInt32 len, char inForm, bool cmp, bool genX
 			
 			case tok_Class:
 				StartDefaultPass();
+				classLine = lineNumber;
 				if (tok.val == 0) {
 					if (currentPass.passType == 'Byte')
 						classType = 'B';
@@ -1179,6 +1194,7 @@ Compiler::Compiler(const char* txt, UInt32 len, char inForm, bool cmp, bool genX
 						}
 						currentPass.uniClassNames[className] = currentPass.uniClassMembers.size();
 						currentPass.uniClassMembers.push_back(classMembers);
+						currentPass.uniClassLines.push_back(classLine);
 					}
 					else {
 						if (currentPass.byteClassNames.find(className) != currentPass.byteClassNames.end()) {
@@ -1187,6 +1203,7 @@ Compiler::Compiler(const char* txt, UInt32 len, char inForm, bool cmp, bool genX
 						}
 						currentPass.byteClassNames[className] = currentPass.byteClassMembers.size();
 						currentPass.byteClassMembers.push_back(classMembers);
+						currentPass.byteClassLines.push_back(classLine);
 					}
 					goto GOT_TOKEN;
 				}
@@ -1449,7 +1466,9 @@ Compiler::FinishPass()
 			if ((currentPass.passType & 0x000000FF) != 'f')
 				revTables.push_back(normTable);
 			if (generateXML) {
-				xmlOut("<pass lhs=\"unicode\" rhs=\"unicode\">\n");
+				xmlOut("<pass lhs=\"unicode\" rhs=\"unicode\" line=\"");
+				xmlOut(asDec(currentPass.startingLine));
+				xmlOut("\">\n");
 				xmlOut("<normalize form=\"");
 				xmlOut(normTable[2]);
 				if ((currentPass.passType & 0x000000FF) == 'f')
@@ -1470,17 +1489,20 @@ Compiler::FinishPass()
 
 			if (generateXML) {
 				// pass header
-				xmlOut("<pass ");
-				xmlOut("lhs=\"");
+				xmlOut("<pass lhs=\"");
 				xmlOut(sourceUni ? "unicode" : "bytes");
 				xmlOut("\" rhs=\"");
 				xmlOut(targetUni ? "unicode" : "bytes");
+				xmlOut("\" line=\"");
+				xmlOut(asDec(currentPass.startingLine));
 				xmlOut("\">\n");
 				
 				// class definitions
 				for (int i = 0; i < currentPass.byteClassMembers.size(); ++i) {
 					xmlOut("<class size=\"bytes\" id=\"b_");
 					xmlOut(getClassName(currentPass.byteClassNames, i));
+					xmlOut("\" line=\"");
+					xmlOut(asDec(currentPass.byteClassLines[i]));
 					xmlOut("\">");
 					for (Class::const_iterator ci = currentPass.byteClassMembers[i].begin(); ci != currentPass.byteClassMembers[i].end(); ++ci) {
 						xmlOut(ci == currentPass.byteClassMembers[i].begin() ? "\n" : " ");
@@ -1491,6 +1513,8 @@ Compiler::FinishPass()
 				for (int i = 0; i < currentPass.uniClassMembers.size(); ++i) {
 					xmlOut("<class size=\"unicode\" id=\"u_");
 					xmlOut(getClassName(currentPass.uniClassNames, i));
+					xmlOut("\" line=\"");
+					xmlOut(asDec(currentPass.uniClassLines[i]));
 					xmlOut("\">");
 					for (Class::const_iterator ci = currentPass.uniClassMembers[i].begin(); ci != currentPass.uniClassMembers[i].end(); ++ci) {
 						xmlOut(ci == currentPass.uniClassMembers[i].begin() ? "\n" : " ");
@@ -1559,6 +1583,7 @@ Compiler::FinishPass()
 		}
 	}
 	currentPass.clear();
+	currentPass.setLineNo(lineNumber);
 }
 
 void
@@ -2003,6 +2028,7 @@ Compiler::StartDefaultPass()
 	if (currentPass.passType == 0) {
 		currentPass.clear();	// should already be clear!
 		currentPass.passType = 'B->U';
+		currentPass.setLineNo(lineNumber);
 	}
 }
 
@@ -2013,6 +2039,7 @@ Compiler::AppendToRule(const Item& item)
 	switch (ruleState) {
 		case notInRule:
 			ruleState = inLHSString;
+			currentRule.setLineNo(lineNumber);
 		case inLHSString:
 			currentRule.lhsString.push_back(item);
 			break;
@@ -3381,6 +3408,14 @@ Compiler::Pass::clear()
 	byteDefault = '?';
 	passType = 0;
 	supplementaryChars = false;
+	startingLine = 0;
+}
+
+void
+Compiler::Pass::setLineNo(UInt32 lineNo)
+{
+	if (startingLine == 0)
+		startingLine = lineNo;
 }
 
 void
@@ -3404,4 +3439,12 @@ Compiler::CurrRule::clear()
 	rhsString.clear();
 	rhsPreContext.clear();
 	rhsPostContext.clear();
+	startingLine = 0;
+}
+
+void
+Compiler::CurrRule::setLineNo(UInt32 lineNo)
+{
+	if (startingLine == 0)
+		startingLine = lineNo;
 }
