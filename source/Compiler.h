@@ -1,0 +1,287 @@
+/*------------------------------------------------------------------------
+Copyright (C) 2002-2004 SIL International. All rights reserved.
+
+Distributable under the terms of either the Common Public License or the
+GNU Lesser General Public License, as specified in the LICENSING.txt file.
+
+File: Engine.h
+Responsibility: Jonathan Kew
+Last reviewed: Not yet.
+
+Description:
+
+-------------------------------------------------------------------------*/
+
+#ifndef __Compiler_H__
+#define __Compiler_H__
+
+#include "TECkit_Format.h"
+#include "TECkit_Compiler.h"
+
+#include "TECkit_Engine.h"
+
+#ifndef __MWERKS__
+#include "ulong_chartraits.h"
+#endif
+
+#include <string>
+#include <vector>
+#include <map>
+
+#ifndef TARGET_RT_BIG_ENDIAN
+#define TARGET_RT_BIG_ENDIAN	1
+#endif
+
+using namespace std;
+
+class Compiler
+{
+public:
+					Compiler(const char* txt, UInt32 len, char inForm, bool cmp, TECkit_ErrorFn errFunc, void* userData);
+					~Compiler();
+	
+	void			GetCompiledTable(Byte*& table, UInt32& len) const;
+	void			DetachCompiledTable();
+
+	enum { kInvalidRuleOffset = 0xffffffffUL };
+
+protected:
+	typedef enum {
+		// general token types recognized by the compiler
+		tok_Newline = 256,
+		tok_Map,
+		tok_Ellipsis,
+		tok_Number,
+		tok_USV,
+		tok_Identifier,
+		tok_String,
+		tok_Unknown,
+		// then we have the TECkit language keywords:
+		tok_Name,
+		tok_Flags,
+		tok_FlagValue,
+		tok_Pass,
+		tok_PassType,
+		tok_Class,
+		tok_Default,
+		tok_Define
+	} tokenType;
+
+	Byte*		compiledTable;
+	UInt32		compiledSize;
+
+	TECkit_ErrorFn	errorFunction;
+	void*			errFuncUserData;
+
+	typedef basic_string<UInt32>	string32;
+
+	struct Token {
+		tokenType	type;
+		UInt32		val;
+		const char*	str;
+		string32	strval;
+	};
+	
+	struct Keyword {
+		const char	*keyword;
+		tokenType	token;
+		UInt32		refCon;
+	};
+	static Keyword	keywords[];
+
+	const unsigned char*	textEnd;
+	const unsigned char*	textPtr;
+	
+	char		idBuffer[256];
+	
+	// used by the front end parser
+	UInt32		currCh;
+	UInt32		ungotten;
+	Token		tok;
+	const unsigned char*	tokStart;
+	UInt32		errorCount;
+	UInt32		lineNumber;
+	bool		errorState;
+	char		inputForm;
+
+	// used in compiling passes
+	enum {
+		notInRule,
+		inLHSString,
+		inLHSPreContext,
+		inLHSPostContext,
+		inRHSString,
+		inRHSPreContext,
+		inRHSPostContext
+	}			ruleState;
+	char		ruleType;
+
+	struct Item {
+		UInt8	type;	// 0: literal; kMatchElem_Type_XXXX; 0xff: copy
+		UInt8	negate;
+		UInt8	repeatMin;
+		UInt8	repeatMax;
+		UInt32	val;	// class index or literal value
+		UInt8	start;	// OR/EGroup: index of BGroup
+		UInt8	next;	// BGroup/OR: index of next OR/EGroup
+		UInt8	after;	// BGroup: index of EGroup + 1
+		UInt8	index;	// Class/Copy: index of corresponding item in match
+		string	tag;
+	};
+	
+	struct Rule {
+						Rule(
+							const vector<Item>&	mat,
+							const vector<Item>&	pre,
+							const vector<Item>&	post,
+							const vector<Item>&	rep,
+							UInt32				line
+							)	: matchStr(mat)
+								, preContext(pre)
+								, postContext(post)
+								, replaceStr(rep)
+								, sortKey(0)
+								, lineNumber(line)
+								, offset(kInvalidRuleOffset)
+							{ }
+		vector<Item>	matchStr;
+		vector<Item>	preContext;
+		vector<Item>	postContext;
+		vector<Item>	replaceStr;
+		UInt32			sortKey;
+		UInt32			lineNumber;
+		UInt32			offset;	// offset of the packed form in the StringRuleData block
+	};
+	
+	struct CurrRule {
+		void			clear();
+		vector<Item>	lhsString;
+		vector<Item>	lhsPreContext;
+		vector<Item>	lhsPostContext;
+		vector<Item>	rhsString;
+		vector<Item>	rhsPreContext;
+		vector<Item>	rhsPostContext;
+	};
+	
+	CurrRule			currentRule;	// the current rule being parsed
+	
+	typedef vector<UInt32>	Class;
+	struct MatClass {
+						MatClass(UInt32 m)
+							: membersClass(m)
+								{ }
+		UInt32			membersClass;
+	};
+	struct RepClass {
+						RepClass(UInt32 m, UInt32 s)
+							: membersClass(m)
+							, sortLikeClass(s)
+								{ }
+		UInt32			membersClass;
+		UInt32			sortLikeClass;
+	};
+	
+	struct Pass {
+		void				clear();
+		vector<Rule>		fwdRules;
+		vector<Rule>		revRules;
+
+		map<string,UInt32>	byteClassNames;		// map name to byteClassMembers index
+		map<string,UInt32>	uniClassNames;
+
+		vector<Class>		byteClassMembers;	// the actual members of each byte class
+		vector<Class>		uniClassMembers;
+
+		long				passType;
+		UInt32				uniDefault;
+		UInt8				byteDefault;
+		bool				supplementaryChars;
+	};
+	
+	Pass				currentPass;	// the current pass being built
+
+	struct BuildVars {
+		void				clear();
+		string				planeMap;
+		vector<string>		pageMaps;
+		vector< vector<UInt16> >	charMaps;
+		UInt8				maxMatch;
+		UInt8				maxPre;
+		UInt8				maxPost;
+		UInt8				maxOutput;
+	};
+	
+	BuildVars			buildVars;		// variables used during pass compilation
+	
+	vector<string>		fwdTables;		// binary forms of compiled tables
+	vector<string>		revTables;
+	
+	UInt32				lhsFlags;
+	UInt32				rhsFlags;
+	
+	map<UInt16,string>	names;			// map name IDs to name texts (NB: utf8)
+
+	typedef vector<Token>		tokListT;
+	tokListT::const_iterator	defIter;
+	tokListT::const_iterator	defEnd;
+	map<string,tokListT>		defines;
+
+	UInt32			getChar(void);
+	void			ungetChar(UInt32 c);
+	
+	void			SkipSpaces(void);
+	tokenType		IDlookup(const char* str, UInt32 len);
+	bool			GetNextToken();
+	bool			ExpectToken(tokenType type, const char* errMsg);
+	bool			ExpectToken(char c, const char* errMsg)
+						{ return ExpectToken((tokenType)c, errMsg); }
+	void			Error(const char* errMsg, const char* s = 0, UInt32 line = 0xffffffff);
+	void			StartDefaultPass();
+	void			AppendLiteral(UInt32 val, bool negate = false);
+	void			AppendUSV(UInt32 val, bool negate = false);
+	void			AppendSpecial(UInt8 type, bool negate = false);
+	void			AppendClass(const string& className, bool negate = false);
+	void			AppendToRule(const Item& item);
+	void			AssignTag(const string& tag);
+	void			SetMinMax(int repeatMin, int repeatMax);
+	void			FinishPass();
+	string			asUTF8(const string32 s);
+	void			ReadNameString(UInt16 nameID);
+	
+	UInt32			charLimit();
+	static int		ruleKeyComp(const Rule& a, const Rule& b);
+	int				findTag(const string& tag, const vector<Item>& str);
+	void			associateItems(vector<Rule>& rules, bool fromUni, bool toUni);
+	void			setGroupPointers(vector<Item>::iterator b, vector<Item>::iterator e, int startIndex, bool isReversed = false);
+	void			setGroupPointers(vector<Rule>& rules);
+	void			sortRules(vector<Rule>& rules);
+	int				calcMaxLen(vector<Item>::iterator b, vector<Item>::iterator e);
+	int				calcMaxOutLen(Rule& rule);
+	bool			findInitialItems(const Rule& rule, vector<Item>::const_iterator b, vector<Item>::const_iterator e,
+										vector<Item>& initialItems);
+	void			findInitialItems(const Rule& rule, vector<Item>& initialItems);
+	void			addToCharMap(UInt32 ch, UInt16 index);
+	void			buildTable(vector<Rule>& rules, bool fromUni, bool toUni, string& table);
+	long			classIndex(UInt32 charCode, const Class& classMembers);
+	long			uniClassIndex(UInt32 charCode, UInt32 classIndex);
+	long			byteClassIndex(UInt8 charCode, UInt32 classIndex);
+	bool			isSingleCharRule(const Rule& rule);
+	void			appendMatchElem(string& packedRule, Item& item, int index,
+									vector<MatClass>& matchClasses);
+	void			appendReplaceElem(string& packedRule, Item& item,
+									vector<Item>& matchStr, vector<RepClass>& repClasses);
+	void			appendToTable(string& s, const char* ptr, UInt32 len);
+	template <class T>
+		void		appendToTable(string& table, T x);
+
+	vector<Item>	reverseContext(const vector<Item>& ctx);
+	void			align(string& table, int alignment);
+};
+
+struct CharName {
+	unsigned long	usv;
+	const char*		name;
+};
+extern CharName	gUnicodeNames[];
+
+#endif	/* __Compiler_H__ */
