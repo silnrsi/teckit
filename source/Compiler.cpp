@@ -13,6 +13,7 @@ Description:
 -------------------------------------------------------------------------*/
 
 /*
+    2004-11-11  jk  2.1.3   added support for XML export
 	2004-07-21	jk	2.1.2	removed trailing spaces from 2 names in UnicodeNames.cpp
 	2004-06-16	jk	2.1.1	fixed bug of ignoring char after '_'
 	2004-03-12	jk	2.1		updated for version 2.1 with ...Opt APIs
@@ -270,6 +271,33 @@ unicodeNameCompare(const char* uniName, const char* idStr, UInt32 len)
 	}
 	return 0;
 }
+
+static const char*
+getClassName(const map<string,UInt32>& nameMap, UInt32 index)
+{
+	for (map<string,UInt32>::const_iterator i = nameMap.begin(); i != nameMap.end(); ++i) {
+		if (i->second == index) {
+			return i->first.c_str();
+		}
+	}
+	return "[UNKNOWN]";
+}
+
+static const char*
+asHex(UInt32 val, short digits)
+{
+	static char	str[10];
+	sprintf(str, "%0*X", digits, val);
+	return str;
+}
+
+static void
+xmlOut(const char* s)
+{
+	cerr << s;
+}
+
+bool generateXML = true;
 
 Compiler::Compiler(const char* txt, UInt32 len, char inForm, bool cmp, TECkit_ErrorFn errFunc, void* userData)
 {
@@ -1194,6 +1222,49 @@ Compiler::FinishPass()
 			// not really a loop; just so we can use 'break' to exit early
 			bool	sourceUni = (currentPass.passType == 'U->B') || (currentPass.passType == 'Unic');
 			bool	targetUni = (currentPass.passType == 'B->U') || (currentPass.passType == 'Unic');
+
+			if (generateXML) {
+				// pass header
+				xmlOut("<pass ");
+				xmlOut("lhs=\"");
+				xmlOut(sourceUni ? "unicode" : "bytes");
+				xmlOut("\" rhs=\"");
+				xmlOut(targetUni ? "unicode" : "bytes");
+				xmlOut("\">\n");
+				
+				// class definitions
+				for (int i = 0; i < currentPass.byteClassMembers.size(); ++i) {
+					xmlOut("<class size=\"bytes\" id=\"");
+					xmlOut(getClassName(currentPass.byteClassNames, i));
+					xmlOut("\">");
+					for (Class::const_iterator ci = currentPass.byteClassMembers[i].begin(); ci != currentPass.byteClassMembers[i].end(); ++ci) {
+						xmlOut(ci == currentPass.byteClassMembers[i].begin() ? "\n" : " ");
+						xmlOut(asHex(*ci, 2));
+					}
+					xmlOut("\n</class>\n");
+				}
+				for (int i = 0; i < currentPass.uniClassMembers.size(); ++i) {
+					xmlOut("<class size=\"unicode\" id=\"");
+					xmlOut(getClassName(currentPass.uniClassNames, i));
+					xmlOut("\">");
+					for (Class::const_iterator ci = currentPass.uniClassMembers[i].begin(); ci != currentPass.uniClassMembers[i].end(); ++ci) {
+						xmlOut(ci == currentPass.uniClassMembers[i].begin() ? "\n" : " ");
+						xmlOut(asHex(*ci, 4));
+					}
+					xmlOut("\n</class>\n");
+				}
+				
+				// rules
+				xmlOut("<mapping>\n");
+				for (vector<string>::const_iterator i = currentPass.xmlRules.begin();
+						i != currentPass.xmlRules.end(); ++i) {
+					xmlOut(i->c_str());
+				}
+				xmlOut("</mapping>\n");
+				
+				// end pass
+				xmlOut("</pass>\n");
+			}
 
 			if (fwdTables.size() == 0) {
 				if (sourceUni)
