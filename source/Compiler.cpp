@@ -472,6 +472,7 @@ Compiler::Compiler(const char* txt, UInt32 len, char inForm, bool cmp, bool genX
 	revTables.clear();
 	currentPass.clear();
 	buildVars.clear();
+	currentRule.clear();
 	
 	lhsFlags = 0;
 	rhsFlags = 0;
