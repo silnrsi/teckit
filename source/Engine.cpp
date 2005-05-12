@@ -13,6 +13,7 @@ Description:
 -------------------------------------------------------------------------*/
 
 /*
+	2005-05-06	jk	patched match() to forget matches within groups if we backtrack out
 	2004-03-19	jk	rewrote match() to fix group/repeat bugs and be more efficient
 	2004-03-12	jk	finished updating for version 2.1 with ...Opt APIs
 */
@@ -640,6 +641,10 @@ Pass::match(int index, int repeats, int textLoc)
 					- aborted without a definite decision
 */
 
+#ifdef TRACING
+cerr << "match(" << index << ", " << repeats << ", " << textLoc << ")\n";
+#endif
+
 	UInt32	_rval = matchNo;
 
 	// we come back here to loop rather than recurse, with new values for the arguments
@@ -649,8 +654,12 @@ RESTART:
 	if (repeats == 0) {
 		if (index == matchElems)
 			matchedLength = textLoc;
-		if (index < infoLimit)
+		if (index < infoLimit) {
 			info[index].matchedSpan.start = textLoc;
+#ifdef TRACING
+cerr << "info[" << index << "].matchedSpan.start = " << textLoc << "\n";
+#endif
+		}
 	}
 
 	// if we're at the end of the pattern, we have a match
@@ -695,10 +704,25 @@ RESTART:
 			// if the group has matched enough times...
 			if (repeats >= repeatMin) {
 				// try to match following stuff
+#ifdef TRACING
+cerr << "repeats >= repeatMin\n";
+#endif
 				mr = match(index + READ(m.value.bgroup.dAfter), 0, textLoc);
 				if (mr == matchYes) {
-					if (index < infoLimit)
+					if (index < infoLimit) {
 						info[index].matchedSpan.limit = textLoc;
+#ifdef TRACING
+cerr << "group returning matchYes; info[" << index << "].matchedSpan.limit = " << textLoc << "\n";
+#endif
+						// don't allow elements within the group to indicate matches beyond the span of the group itself
+						for (int i = index + READ(m.value.bgroup.dAfter) - 1; i > index; --i)
+							if (i < infoLimit) {
+								if (info[i].matchedSpan.start > textLoc)
+									info[i].matchedSpan.start = textLoc;
+								if (info[i].matchedSpan.limit > textLoc)
+									info[i].matchedSpan.limit = textLoc;
+							}
+					}
 				}
 				RETURN(mr);
 			}
@@ -748,8 +772,12 @@ RESTART:
 				textLoc += direction;
 			}
 			
-			if (index < infoLimit)
+			if (index < infoLimit) {
 				info[index].matchedSpan.limit = textLoc;
+#ifdef TRACING
+cerr << "info[" << index << "].matchedSpan.limit = " << textLoc << "\n";
+#endif
+			}
 
 			if (repeatMin == repeatMax) {
 				// no need to recurse, as no optionality
@@ -801,9 +829,16 @@ RESTART:
 _return_label:
 
 	if (_rval == matchNo)
-		if (index < infoLimit)
+		if (index < infoLimit) {
 			info[index].matchedSpan.limit = textLoc;
+#ifdef TRACING
+cerr << "rval == matchNo; setting info[" << index << "].matchedSpan.limit = " << textLoc << "\n";
+#endif
+		}
 
+#ifdef TRACING
+cerr << "RETURN(" << (_rval == matchYes ? "matchYes" : "matchNo") << ")\n";
+#endif
     return _rval;
 }
 
@@ -881,7 +916,7 @@ printMatch(const StringRule* rule)
 	for (int i = 0; i < READ(rule->matchLength); ++i) {
 		cerr << " ";
 		printMatchElem(((MatchElem*)(rule + 1))[i]);
-		cerr << "<" << i << ">";
+//		cerr << "<" << i << ">";
 	}
 	if (READ(rule->preLength) > 0 || READ(rule->postLength) > 0) {
 		cerr << " /";

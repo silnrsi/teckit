@@ -5,10 +5,13 @@
 	2004-03-12	updated to use v2.1 compiler
 				added -u option to force UTF8 mode
 	2005-03-18	added -x option to generate XML representation
+
+	 5-May-2005		jk	added include <stdlib.h> to keep gcc happy
 */
 
 #include "TECkit_Compiler.h"
 
+#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>

@@ -2,11 +2,14 @@
 	TxtConv.c
 	Copyright (c) 2002-2004 SIL International.
 
+	 5-May-2005		jk	added include <stdlib.h> and <string.h> to keep gcc happy
 	10-Mar-2004		jk	added -u option to control handling of unmappable input
 */
 
 #include "TECkit_Engine.h"
 
+#include <stdlib.h>
+#include <string.h>
 #include <stdio.h>
 
 #if __MWERKS__

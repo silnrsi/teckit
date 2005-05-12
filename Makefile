@@ -4,11 +4,19 @@ compiler_hdr = source/Compiler.h
 compiler_src = source/Compiler.cpp source/UnicodeNames.cpp
 compiler_obj = obj/Compiler.o obj/UnicodeNames.o
 
+compiler = lib/TECkit_Compiler.dylib
+
 engine_hdr = source/Engine.h
 engine_src = source/Engine.cpp source/NormalizationData.c
 engine_obj = obj/Engine.o
 
-libs = -lz -lstdc++ -lgcc -lc
+engine = lib/TECkit.dylib
+
+# Tiger: some Mac OS X-specific stuff here for now... yuck... *FIXME*
+libs = -lz -lstdc++ -lc -lgcc_s -lSystemStubs
+libdir = -L/usr/lib/gcc/powerpc-apple-darwin8/4.0.0/ # won't exist on other systems
+
+libs = -lz -lstdc++ -lc -lgcc
 
 CFLAGS = -I./source/Public-headers
 
@@ -23,19 +31,19 @@ clean:
 
 tools: teckit_compile txtconv
 
-libs: compiler engine
+libs: $(compiler) $(engine)
 
-compiler: $(compiler_obj)
-	libtool -dynamic -o lib/TECkit_Compiler.dylib $(compiler_obj) $(libs)
+$(compiler): $(compiler_obj)
+	libtool -dynamic -o lib/TECkit_Compiler.dylib $(compiler_obj) $(libs) $(libdir)
 
-engine: $(engine_obj)
-	libtool -dynamic -o lib/TECkit.dylib $(engine_obj) $(libs)
+$(engine): $(engine_obj)
+	libtool -dynamic -o lib/TECkit.dylib $(engine_obj) $(libs) $(libdir)
 
 teckit_compile: source/Sample-tools/TECkit_Compile.c lib/TECkit_Compiler.dylib
-	$(CC) $(CFLAGS) -o $@ $< lib/TECkit_Compiler.dylib $(libs)
+	$(CC) $(CFLAGS) -o $@ $< $(compiler) $(libs)
 
 txtconv: source/Sample-tools/TxtConv.c lib/TECkit.dylib
-	$(CC) $(CFLAGS) -o $@ $< lib/TECkit.dylib $(libs)
+	$(CC) $(CFLAGS) -o $@ $< $(engine) $(libs)
 
 obj/%.o: source/%.cpp
 	$(CC) -c $(CFLAGS) $(CPPFLAGS) -o $@ $<
