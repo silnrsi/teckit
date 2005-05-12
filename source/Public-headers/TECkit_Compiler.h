@@ -29,7 +29,7 @@ extern "C" {
 #else
 /* not the MS compiler, so try Metrowerks' platform macros */
 #ifndef __APPLE__
-#if __dest_os == __win32_os
+#if defined __dest_os && (__dest_os == __win32_os)
 #include <windef.h>
 #endif
 #endif

@@ -20,7 +20,7 @@ Description:
 //#define TRACING	1
 
 #ifndef __APPLE__
-#if	(__dest_os	== __win32_os) || defined WIN32
+#if	(defined __dest_os && (__dest_os == __win32_os)) || defined WIN32
 #include <Windows.h>
 
 BOOL WINAPI
@@ -656,9 +656,12 @@ RESTART:
 	// if we're at the end of the pattern, we have a match
 	if (index >= patternLength)
 		RETURN(matchYes);
-	
-	{
-		// get the current match item
+
+	if (index == 0 && repeats == 0)
+		sgrStack = 0;	// ensure this is cleared at start of pattern (shouldn't be necessary?)
+
+	{	// gcc complains about jumping past initializers (from RETURN above) without this
+		UInt32				mr;
 		const MatchElem&	m = pattern[index];
 		int					repeatMin = READ(m.flags.repeat) >> 4;
 		int					repeatMax = READ(m.flags.repeat) & 0x0f;
@@ -669,7 +672,7 @@ RESTART:
 			? type & kMatchElem_TypeMask
 			: 0;
 
-		int		mr, classIndex;
+		int		classIndex;
 		bool	matches;
 		UInt32	inChar;
 		
