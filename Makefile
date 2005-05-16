@@ -47,3 +47,6 @@ txtconv: source/Sample-tools/TxtConv.c lib/TECkit.dylib
 
 obj/%.o: source/%.cpp
 	$(CC) -c $(CFLAGS) $(CPPFLAGS) -o $@ $<
+
+obj/Engine.o: source/NormalizationData.c
+	$(CC) -c $(CFLAGS) $(CPPFLAGS) -o $@ source/Engine.cpp

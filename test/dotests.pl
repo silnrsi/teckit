@@ -56,6 +56,38 @@ print "comparing...";
 $errs = `diff mrk.sf.legacy.txt mrk.sf.legacy.txt.orig`;
 print (($errs eq "" ? "ok" : "failed: $errs") . "\n");
 
+
+print "preparing normalization tests...";
+open(FH, "< NormalizationTest.txt") or die "can't open NormalizationTest.txt";
+while (<FH>) {
+	s/\#.*//;
+	@cols = split(/;/);
+	if (defined $cols[4]) {
+		foreach (1..5) {
+			$col[$_] .= pack('U*', map { hex "0x$_" } split(/ /,$cols[$_ - 1])) . "\n";
+		}
+	}
+}
+close(FH);
+foreach (1..5) {
+	open(FH, ">:utf8", "NormCol$_.txt") or die "can't write to NormCol$_.txt";
+	print FH $col[$_];
+	system("txtconv -i NormCol$_.txt -o NormCol$_.NFC.txt -of utf8 -nfc -nobom");
+	system("txtconv -i NormCol$_.txt -o NormCol$_.NFD.txt -of utf8 -nfd -nobom");
+	close FH;
+}
+foreach $diff ("2,1.NFC", "2,2.NFC", "2,3.NFC", "4,4.NFC", "4,5.NFC",
+				"3,1.NFD", "3,2.NFD", "3,3.NFD", "5,4.NFD", "5,5.NFD") {
+	split(/,/, $diff);
+	$cmd = "diff NormCol$_[0].txt NormCol$_[1].txt";
+	print "\n$cmd ...";
+	$errs .= `$cmd`;
+	if ($errs ne "") {
+		print "\n", $errs;
+	}
+}
+print "\ndone\n";
+
 if (1) {
 	print "removing working files...";
 	unlink("SILGreek.uncompressed.tec");
@@ -67,5 +99,6 @@ if (1) {
 	unlink("mrk.bytes.txt");
 	unlink("mrk.sf.utf8.txt");
 	unlink("mrk.sf.legacy.txt");
+	system("rm NormCol*.txt");
 	print "done\n";
 }
