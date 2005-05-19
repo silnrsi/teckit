@@ -1,4 +1,19 @@
-#include "DocCharConvert_Converter_TecKitJni.h"
+/*
+ ------------------------------------------------------------------------
+Copyright (C) 2002-2004 Keith Stribley
+
+Distributable under the terms of either the Common Public License or the
+GNU Lesser General Public License, as specified in the LICENSING.txt file.
+
+File: TecKitJni.cpp
+Responsibility: Keith Stribley
+Last reviewed: Not yet.
+
+Description:
+    Implements a JNI interface to the TECkit conversion engine.
+-------------------------------------------------------------------------*/
+
+#include "org_sil_scripts_teckit_TecKitJni.h"
 
 #include <jni.h>
 
@@ -20,7 +35,7 @@ class TecKitJni;
 
 
 
-static TecKitJni * instance = NULL;
+//static TecKitJni * instance = NULL;
 
 TecKitJni::TecKitJni()
 : converter(NULL), mapBuffer(NULL), outputLength(0), maxOutputLength(8192), 
@@ -171,18 +186,18 @@ void TecKitJni::flush()
 
 
 
-JNIEXPORT jboolean JNICALL Java_DocCharConvert_Converter_TecKitJni_createConverter
-  (JNIEnv * env, jobject obj, jstring path, jboolean toUnicode)
+JNIEXPORT jlong JNICALL Java_org_sil_scripts_teckit_TecKitJni_createConverter
+  (JNIEnv * env, jobject, jstring path, jboolean toUnicode)
   {
       //fprintf(stderr,"in createConverter\n");
 	
-      jboolean success = false;
+      jlong success = 0;
       
-      if (instance != NULL) return success;
-      instance = new TecKitJni();
+      TecKitJni * instance = new TecKitJni();
       const char *str = env->GetStringUTFChars(path, 0);
       success = instance->openMapping(str, toUnicode);
       env->ReleaseStringUTFChars(path, str);
+      success = reinterpret_cast<jlong>(instance);
       return success;
   }
   
@@ -193,11 +208,12 @@ JNIEXPORT jboolean JNICALL Java_DocCharConvert_Converter_TecKitJni_createConvert
  * Method:    convert
  * Signature: ([B)[B
  */
-JNIEXPORT jbyteArray JNICALL Java_DocCharConvert_Converter_TecKitJni_convert
-  (JNIEnv *env, jobject, jbyteArray iArray)
+JNIEXPORT jbyteArray JNICALL Java_org_sil_scripts_teckit_TecKitJni_convert
+  (JNIEnv *env, jobject, jlong instanceId, jbyteArray iArray)
 {
   jsize inLength = env->GetArrayLength(iArray);
   jbyte * inData = env->GetByteArrayElements(iArray, 0);
+  TecKitJni * instance = reinterpret_cast<TecKitJni*>(instanceId);
   char * converted = instance->convert(reinterpret_cast<const char *>(inData), inLength);
   //fprintf(stderr, "Input length %d\n",inLength);
   env->ReleaseByteArrayElements(iArray, inData, 0);
@@ -220,9 +236,10 @@ JNIEXPORT jbyteArray JNICALL Java_DocCharConvert_Converter_TecKitJni_convert
  * Method:    flush
  * Signature: ()V
  */
-JNIEXPORT void JNICALL Java_DocCharConvert_Converter_TecKitJni_flush
-  (JNIEnv *env, jobject)
+JNIEXPORT void JNICALL Java_org_sil_scripts_teckit_TecKitJni_flush
+  (JNIEnv *env, jobject, jlong instanceId)
   {
+      TecKitJni * instance = reinterpret_cast<TecKitJni*>(instanceId);
       if (instance) instance->flush();
   }
 
@@ -231,9 +248,10 @@ JNIEXPORT void JNICALL Java_DocCharConvert_Converter_TecKitJni_flush
  * Method:    destroyConverter
  * Signature: ()V
  */
-JNIEXPORT void JNICALL Java_DocCharConvert_Converter_TecKitJni_destroyConverter
-  (JNIEnv *env, jobject)
+JNIEXPORT void JNICALL Java_org_sil_scripts_teckit_TecKitJni_destroyConverter
+  (JNIEnv *env, jobject, jlong instanceId)
   {
+      TecKitJni * instance = reinterpret_cast<TecKitJni*>(instanceId);
       if (instance != NULL) 
       {
           delete instance;

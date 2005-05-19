@@ -1,3 +1,17 @@
+/*
+ ------------------------------------------------------------------------
+Copyright (C) 2002-2004 Keith Stribley
+
+Distributable under the terms of either the Common Public License or the
+GNU Lesser General Public License, as specified in the LICENSING.txt file.
+
+File: TecKitJni.h
+Responsibility: Keith Stribley
+Last reviewed: Not yet.
+
+Description:
+    Implements a JNI interface to the TECkit conversion engine.
+-------------------------------------------------------------------------*/
 
 #ifndef TecKitJni_h
 #define TecKitJni_h
