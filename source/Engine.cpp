@@ -22,6 +22,9 @@ Description:
 
 #ifndef __APPLE__
 #if	(defined __dest_os && (__dest_os == __win32_os)) || defined WIN32
+#define WIN32_LEAN_AND_MEAN
+#define NOSERVICE
+#define NOMCX
 #include <Windows.h>
 
 BOOL WINAPI

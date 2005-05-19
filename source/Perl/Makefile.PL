@@ -32,6 +32,8 @@ if ($^O =~ m/win32/oi)
     $ccflags = $Config{'ccflags'};
     $objects = join(' ', map {$_ . $o_ext} (@cpps, 'TECkit'));
 #    $ccflags =~ s/-O1//o;
+#    foreach $i (split(/;/, $ENV{'INCLUDE'}))
+#    { $define .= " -I\"$i\""; }
 }
 elsif ($^O eq 'linux')
 {
@@ -124,6 +126,8 @@ $fname.zip : $fname.par
 \techo perl $fname.parl --par-options -i $fname.par > setup.bat
 \t7z a -tzip $fname.zip $fname.parl setup.bat
 \tdel setup.bat
+
+par : $fname.par
 
 $fname.par : pure_all
 \tpar -p
