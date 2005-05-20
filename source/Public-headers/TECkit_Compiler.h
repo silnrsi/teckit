@@ -6,7 +6,7 @@
 	Jonathan Kew	22-Dec-2001
 					14-May-2002		added WINAPI to function declarations
 					 5-Jul-2002		corrected placement of WINAPI/CALLBACK to keep MS compiler happy
-					18-Mar-2005		added option to generate 
+					18-Mar-2005		added option to generate XML representation
 */
 
 /*
