@@ -13,8 +13,8 @@ engine_obj = obj/Engine.o
 engine = lib/TECkit.dylib
 
 # Tiger: some Mac OS X-specific stuff here for now... yuck... *FIXME*
-libs = -lz -lstdc++ -lc -lgcc_s -lSystemStubs
-libdir = -L/usr/lib/gcc/powerpc-apple-darwin8/4.0.0/ # won't exist on other systems
+# libs = -lz -lstdc++ -lc -lgcc_s -lSystemStubs
+# libdir = -L/usr/lib/gcc/powerpc-apple-darwin8/4.0.0/ # won't exist on other systems
 
 libs = -lz -lstdc++ -lc -lgcc
 
@@ -45,8 +45,8 @@ teckit_compile: source/Sample-tools/TECkit_Compile.c lib/TECkit_Compiler.dylib
 txtconv: source/Sample-tools/TxtConv.c lib/TECkit.dylib
 	$(CC) $(CFLAGS) -o $@ $< $(engine) $(libs)
 
-obj/%.o: source/%.cpp
+obj/%.o: source/%.cpp Makefile
 	$(CC) -c $(CFLAGS) $(CPPFLAGS) -o $@ $<
 
-obj/Engine.o: source/NormalizationData.c
+obj/Engine.o: source/NormalizationData.c Makefile
 	$(CC) -c $(CFLAGS) $(CPPFLAGS) -o $@ source/Engine.cpp

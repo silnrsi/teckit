@@ -7,6 +7,7 @@
 					14-May-2002		added WINAPI to function declarations
 					 5-Jul-2002		corrected placement of WINAPI/CALLBACK to keep MS compiler happy
 					18-Mar-2005		added option to generate XML representation
+					21-May-2005		changes based on Ulrik Petersen's patch for MS VC++ 6
 */
 
 /*
@@ -25,7 +26,7 @@ extern "C" {
 
 #ifdef _WIN32
 /* MS compiler has predefined _WIN32, so assume Windows target  */
-#include <windef.h>
+#include <windows.h>	// apparently just using windef.h fails on VC++6
 #else
 /* not the MS compiler, so try Metrowerks' platform macros */
 #ifndef __APPLE__

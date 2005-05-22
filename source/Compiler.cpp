@@ -13,6 +13,8 @@ Description:
 -------------------------------------------------------------------------*/
 
 /*
+	21-May-2005		changes based on Ulrik Petersen's patch for MS VC++ 6
+
     2004-11-11  jk  2.1.3   added support for XML export
 	2004-07-21	jk	2.1.2	removed trailing spaces from 2 names in UnicodeNames.cpp
 	2004-06-16	jk	2.1.1	fixed bug of ignoring char after '_'
@@ -108,15 +110,15 @@ Compiler::keywords[] = {
 	{ 0,					tok_Identifier,	0						}
 };
 
-WINAPI
 UInt32
+WINAPI
 TECkit_GetCompilerVersion()
 {
 	return kCurrentTECkitVersion;
 }
 
-WINAPI
 TECkit_Status
+WINAPI
 TECkit_Compile(char* txt, UInt32 len, Byte doCompression, TECkit_ErrorFn errFunc, void* userData, Byte** outTable, UInt32* outLen)
 {
 	TECkit_Status	result = kStatus_CompilationFailed;
@@ -137,8 +139,8 @@ TECkit_Compile(char* txt, UInt32 len, Byte doCompression, TECkit_ErrorFn errFunc
 	return result;
 }
 
-WINAPI
 TECkit_Status
+WINAPI
 TECkit_CompileOpt(char* txt, UInt32 len, TECkit_ErrorFn errFunc, void* userData, Byte** outTable, UInt32* outLen, UInt32 opts)
 {
 	TECkit_Status	result = kStatus_CompilationFailed;
@@ -160,12 +162,12 @@ TECkit_CompileOpt(char* txt, UInt32 len, TECkit_ErrorFn errFunc, void* userData,
 	return result;
 }
 
-WINAPI
 void
+WINAPI
 TECkit_DisposeCompiled(Byte* table)
 {
 	if (table != 0)
-		std::free(table);
+		free(table);
 }
 
 
@@ -200,20 +202,6 @@ inline static void
 WRITE(T& t, UInt32 v)
 {
 	t = READ(T(v));
-}
-
-template<class T>
-void
-Compiler::appendToTable(string& table, T x)
-{
-#if TARGET_RT_BIG_ENDIAN
-	const char*	xp = (const char*)&x;
-	table.append(xp, sizeof(x));
-#else
-	const char*	xp = (const char*)&x + sizeof(x);
-	for (unsigned int i = 0; i < sizeof(x); ++i)
-		table.append(1, *--xp);
-#endif
 }
 
 void
@@ -568,6 +556,7 @@ Compiler::Compiler(const char* txt, UInt32 len, char inForm, bool cmp, bool genX
 		}
 		errorState = false;
 
+		string32::const_iterator i;
 		switch (tok.type) {
 			default:
 				Error("this can't happen!");
@@ -704,7 +693,7 @@ Compiler::Compiler(const char* txt, UInt32 len, char inForm, bool cmp, bool genX
 					Error("can't use quoted string for Bytes in Unicode source text");
 					break;
 				}
-				for (string32::const_iterator i = tok.strval.begin(); i != tok.strval.end(); ++i)
+				for (i = tok.strval.begin(); i != tok.strval.end(); ++i)
 					AppendLiteral(*i);
 				break;
 
@@ -1126,7 +1115,7 @@ Compiler::Compiler(const char* txt, UInt32 len, char inForm, bool cmp, bool genX
 									break;
 								}
 								ellipsisOK = (tok.strval.length() == 1);
-								for (string32::const_iterator i = tok.strval.begin(); i < tok.strval.end(); ++i)
+								for (i = tok.strval.begin(); i < tok.strval.end(); ++i)
 									classMembers.push_back(*i);
 								break;
 								
@@ -1279,16 +1268,16 @@ Compiler::Compiler(const char* txt, UInt32 len, char inForm, bool cmp, bool genX
 			string	trailer("</teckitMapping>\n");
 			
 			compiledSize = header.length() + xmlRepresentation.length() + trailer.length();
-			compiledTable = (Byte*)std::malloc(compiledSize + 1);
+			compiledTable = (Byte*)malloc(compiledSize + 1);
 			if (compiledTable == NULL)
-				throw std::bad_alloc();
+				throw bad_alloc();
 			
-			std::memcpy(compiledTable, header.data(), header.length());
-			std::memcpy(compiledTable + header.length(), xmlRepresentation.data(), xmlRepresentation.length());
-			std::memcpy(compiledTable + header.length() + xmlRepresentation.length(), trailer.data(), trailer.length());
+			memcpy(compiledTable, header.data(), header.length());
+			memcpy(compiledTable + header.length(), xmlRepresentation.data(), xmlRepresentation.length());
+			memcpy(compiledTable + header.length() + xmlRepresentation.length(), trailer.data(), trailer.length());
 			compiledTable[compiledSize] = 0;
 
-			xmlRepresentation.clear();
+			xmlRepresentation.erase(xmlRepresentation.begin(), xmlRepresentation.end());
 		}
 		else {
 			// assemble the complete compiled file
@@ -1334,11 +1323,12 @@ Compiler::Compiler(const char* txt, UInt32 len, char inForm, bool cmp, bool genX
 			offset += namesData.length() - prevLength;
 			
 			// pack the offsets to the actual mapping tables
-			for (vector<string>::const_iterator t = fwdTables.begin(); t != fwdTables.end(); ++t) {
+			vector<string>::const_iterator t;
+			for (t = fwdTables.begin(); t != fwdTables.end(); ++t) {
 				appendToTable(offsets, (const char*)&offset, sizeof(offset));
 				offset += t->size();
 			}
-			for (vector<string>::const_iterator t = revTables.end(); t != revTables.begin(); ) {
+			for (t = revTables.end(); t != revTables.begin(); ) {
 				--t;
 				appendToTable(offsets, (const char*)&offset, sizeof(offset));
 				offset += t->size();
@@ -1351,53 +1341,53 @@ Compiler::Compiler(const char* txt, UInt32 len, char inForm, bool cmp, bool genX
 				compiledSize = sizeof(fh)
 							+ offsets.length()
 							+ namesData.length();
-				for (vector<string>::const_iterator t = fwdTables.begin(); t != fwdTables.end(); ++t)
+				for (t = fwdTables.begin(); t != fwdTables.end(); ++t)
 					compiledSize += t->length();
-				for (vector<string>::const_iterator t = revTables.begin(); t != revTables.end(); ++t)
+				for (t = revTables.begin(); t != revTables.end(); ++t)
 					compiledSize += t->length();
 	
-				compiledTable = (Byte*)std::malloc(compiledSize);
+				compiledTable = (Byte*)malloc(compiledSize);
 				if (compiledTable != 0) {
 					char*	cp = (char*)compiledTable;
-					std::memcpy(cp, &fh, sizeof(fh));
+					memcpy(cp, &fh, sizeof(fh));
 					cp += sizeof(fh);
-					std::memcpy(cp, offsets.data(), offsets.length());
+					memcpy(cp, offsets.data(), offsets.length());
 					cp += offsets.length();
-					std::memcpy(cp, namesData.data(), namesData.length());
+					memcpy(cp, namesData.data(), namesData.length());
 					cp += namesData.length();
-					for (vector<string>::const_iterator t = fwdTables.begin(); t != fwdTables.end(); ++t) {
-						std::memcpy(cp, t->data(), t->length());
+					for (t = fwdTables.begin(); t != fwdTables.end(); ++t) {
+						memcpy(cp, t->data(), t->length());
 						cp += t->length();
 					}
-					for (vector<string>::const_iterator t = revTables.end(); t != revTables.begin(); ) {
+					for (t = revTables.end(); t != revTables.begin(); ) {
 						--t;
-						std::memcpy(cp, t->data(), t->length());
+						memcpy(cp, t->data(), t->length());
 						cp += t->length();
 					}
 					if ((char*)compiledTable + compiledSize != cp)
 						cerr << "error!" << endl;
 				}
 				else
-					throw std::bad_alloc();
+					throw bad_alloc();
 			}
 			
 			if (errorCount == 0 && cmp) {
 				// do the compression...
 				unsigned long	destLen = compiledSize * 11 / 10 + 20;
-				Byte*	dest = (Byte*)std::malloc(destLen + 8);
+				Byte*	dest = (Byte*)malloc(destLen + 8);
 				if (dest != 0) {
 					int	result = compress2(dest + 8, &destLen, compiledTable, compiledSize, Z_BEST_COMPRESSION);
 					if (result == Z_OK) {
 						destLen += 8;
-						std::realloc(dest, destLen);
+						realloc(dest, destLen);
 						WRITE(((FileHeader*)dest)->type, kMagicNumberCmp);
 						WRITE(((FileHeader*)dest)->version, compiledSize);
-						std::free(compiledTable);
+						free(compiledTable);
 						compiledTable = dest;
 						compiledSize = destLen;
 					}
 					else
-						std::free(dest);
+						free(dest);
 				}
 			}
 		}
@@ -1407,7 +1397,7 @@ Compiler::Compiler(const char* txt, UInt32 len, char inForm, bool cmp, bool genX
 Compiler::~Compiler()
 {
 	if (compiledTable != 0)
-		std::free(compiledTable);
+		free(compiledTable);
 }
 
 void
@@ -1428,7 +1418,8 @@ string
 Compiler::asUTF8(const string32 s)
 {
 	string	rval;
-	for (string32::const_iterator i = s.begin(); i != s.end(); ++i) {
+	string32::const_iterator i;
+	for (i = s.begin(); i != s.end(); ++i) {
 		UInt32	c = *i;
 		int	bytesToWrite;
 		if (c < 0x80) {				bytesToWrite = 1;
@@ -1455,7 +1446,7 @@ Compiler::ReadNameString(UInt16 nameID)
 {
 	if (ExpectToken(tok_String, "expected STRING after name keyword")) {
 		if (inputForm == kForm_Bytes) {
-			names[nameID].clear();
+			names[nameID].erase(names[nameID].begin(), names[nameID].end());
 			for (string32::const_iterator i = tok.strval.begin(); i != tok.strval.end(); ++i)
 				names[nameID].append(1, *i);
 		}
@@ -1522,7 +1513,8 @@ Compiler::FinishPass()
 				// class definitions
 				if (currentPass.byteClassMembers.size() > 0 || currentPass.uniClassMembers.size() > 0) {
 					xmlOut("<classes>\n");
-					for (int i = 0; i < currentPass.byteClassMembers.size(); ++i) {
+					int i;
+					for (i = 0; i < currentPass.byteClassMembers.size(); ++i) {
 						xmlOut("<class size=\"bytes\" name=\"b_");
 						xmlOut(getClassName(currentPass.byteClassNames, i));
 						xmlOut("\" line=\"");
@@ -1534,7 +1526,7 @@ Compiler::FinishPass()
 						}
 						xmlOut("\n</class>\n");
 					}
-					for (int i = 0; i < currentPass.uniClassMembers.size(); ++i) {
+					for (i = 0; i < currentPass.uniClassMembers.size(); ++i) {
 						xmlOut("<class size=\"unicode\" name=\"u_");
 						xmlOut(getClassName(currentPass.uniClassNames, i));
 						xmlOut("\" line=\"");
@@ -1668,7 +1660,7 @@ Compiler::IDlookup(const char* str, UInt32 len)
 		else
 			++c;
 
-	tok.strval.clear();
+	tok.strval.erase(tok.strval.begin(), tok.strval.end());
 	while (len-- > 0)
 		tok.strval.append(1, *str++);
 	return tok_Identifier;
@@ -1840,7 +1832,7 @@ Compiler::GetNextToken()
 			case '\'':
 				{
 					UInt32	delimiter = currCh;
-					tok.strval.clear();
+					tok.strval.erase(tok.strval.begin(), tok.strval.end());
 					while ((textPtr < textEnd) && ((currCh = getChar()) != delimiter) && (currCh != '\r') && (currCh != '\n'))
 						tok.strval.append(1, currCh);
 					tok.type = tok_String;
@@ -3054,11 +3046,12 @@ Compiler::buildTable(vector<Rule>& rules, bool fromUni, bool toUni, string& tabl
 			vector<Item>	initialItems;
 			findInitialItems(rules[i], initialItems);
 			for (vector<Item>::iterator j = initialItems.begin(); j != initialItems.end(); ++j) {
+				unsigned int c;
 				switch (j->type) {
 					case 0:	// literal
 						if (j->negate) {
 							// add rule to every char except the literal!
-							for (unsigned int c = 0; c < 256; ++c)
+							for (c = 0; c < 256; ++c)
 								if (c != j->val)
 									if (rulesForIndex[c].size() == 0 || rulesForIndex[c].back() != i)
 										rulesForIndex[c].push_back(i);
@@ -3071,7 +3064,7 @@ Compiler::buildTable(vector<Rule>& rules, bool fromUni, bool toUni, string& tabl
 					case kMatchElem_Type_Class:
 						{
 							Class&	bc = currentPass.byteClassMembers[j->val];
-							for (unsigned int c = 0; c < 256; ++c)
+							for (c = 0; c < 256; ++c)
 								if ((classIndex(c, bc) != -1) != j->negate)
 									if (rulesForIndex[c].size() == 0 || rulesForIndex[c].back() != i)
 										rulesForIndex[c].push_back(i);
@@ -3084,7 +3077,7 @@ Compiler::buildTable(vector<Rule>& rules, bool fromUni, bool toUni, string& tabl
 							Error("rule can't start with negated ANY or EOS", 0, rules[i].lineNumber);
 							break;
 						}
-						for (unsigned int c = 0; c < 256; ++c)
+						for (c = 0; c < 256; ++c)
 							if (rulesForIndex[c].size() == 0 || rulesForIndex[c].back() != i)
 								rulesForIndex[c].push_back(i);
 						break;
@@ -3100,7 +3093,8 @@ Compiler::buildTable(vector<Rule>& rules, bool fromUni, bool toUni, string& tabl
 	vector<Lookup>	lookup;
 	lookup.resize(rulesForIndex.size());
 	
-	for (UInt32 i = 0; errorCount == 0 && i < rulesForIndex.size(); ++i) {
+	UInt32 i;
+	for (i = 0; errorCount == 0 && i < rulesForIndex.size(); ++i) {
 		WRITE(lookup[i].usv, 0);	// initialize the lookup to all zero bits
 
 		if (rulesForIndex[i].size() == 0) {
@@ -3171,7 +3165,8 @@ Compiler::buildTable(vector<Rule>& rules, bool fromUni, bool toUni, string& tabl
 					if (rule.replaceStr.size() <= 3) {
 						WRITE(lookup[i].bytes.count, rule.replaceStr.size());
 							// this will get overwritten by lookup[i].rules.type if string rules turn out to be needed
-						for (UInt32 j = 0; j < rule.replaceStr.size(); ++j) {
+						UInt32 j;
+						for (j = 0; j < rule.replaceStr.size(); ++j) {
 							const Item&	rep = rule.replaceStr[j];
 							int	t = rep.tag.length() > 0 ? findTag(rep.tag, rule.matchStr) : j;
 							if (t == -1) {
@@ -3275,14 +3270,15 @@ Compiler::buildTable(vector<Rule>& rules, bool fromUni, bool toUni, string& tabl
 					stringRuleData.append(1, r.postContext.size());
 					stringRuleData.append(1, r.preContext.size());
 					stringRuleData.append(1, r.replaceStr.size());
-					for (unsigned int j = 0; j < r.matchStr.size(); ++j)
-						appendMatchElem(stringRuleData, r.matchStr[j], j, matchClasses);
-					for (unsigned int j = 0; j < r.postContext.size(); ++j)
-						appendMatchElem(stringRuleData, r.postContext[j], j, matchClasses);
-					for (unsigned int j = 0; j < r.preContext.size(); ++j)
-						appendMatchElem(stringRuleData, r.preContext[j], j, matchClasses);
-					for (unsigned int j = 0; j < r.replaceStr.size(); ++j)
-						appendReplaceElem(stringRuleData, r.replaceStr[j], r.matchStr, repClasses);
+					unsigned int k;
+					for (k = 0; k < r.matchStr.size(); ++k)
+						appendMatchElem(stringRuleData, r.matchStr[k], k, matchClasses);
+					for (k = 0; k < r.postContext.size(); ++k)
+						appendMatchElem(stringRuleData, r.postContext[k], k, matchClasses);
+					for (k = 0; k < r.preContext.size(); ++k)
+						appendMatchElem(stringRuleData, r.preContext[k], k, matchClasses);
+					for (k = 0; k < r.replaceStr.size(); ++k)
+						appendReplaceElem(stringRuleData, r.replaceStr[k], r.matchStr, repClasses);
 				}
 				stringRuleLists.push_back(r.offset);
 			}
@@ -3318,17 +3314,17 @@ Compiler::buildTable(vector<Rule>& rules, bool fromUni, bool toUni, string& tabl
 	}
 
 	WRITE(th.lookupBase, table.size());
-	for (UInt32 i = 0; i < lookup.size(); ++i)
+	for (i = 0; i < lookup.size(); ++i)
 		appendToTable(table, READ(lookup[i].usv));
 	align(table, 4);
 	
 	WRITE(th.stringListBase, table.size());
-	for (UInt32 i = 0; i < stringRuleLists.size(); ++i)
+	for (i = 0; i < stringRuleLists.size(); ++i)
 		appendToTable(table, stringRuleLists[i]);
 	align(table, 4);
 	
 	WRITE(th.stringRuleData, table.size());
-	for (UInt32 i = 0; i < stringRuleData.size(); ++i)
+	for (i = 0; i < stringRuleData.size(); ++i)
 		appendToTable(table, stringRuleData[i]);
 	align(table, 4);
 	
@@ -3340,7 +3336,7 @@ Compiler::buildTable(vector<Rule>& rules, bool fromUni, bool toUni, string& tabl
 		UInt32	classOffset = matchClasses.size() * sizeof(UInt32);
 		string	classes;
 		
-		for (UInt32 i = 0; i < matchClasses.size(); ++i) {
+		for (i = 0; i < matchClasses.size(); ++i) {
 			classOffsets[i] = classOffset + classes.size();
 			Class	sortedClass = fromUni
 					? currentPass.uniClassMembers[matchClasses[i].membersClass]
@@ -3367,7 +3363,7 @@ Compiler::buildTable(vector<Rule>& rules, bool fromUni, bool toUni, string& tabl
 			align(classes, 4);
 		}
 		// copy the real classOffsets into the table
-		for (UInt32 i = 0; i < classOffsets.size(); ++i)
+		for (i = 0; i < classOffsets.size(); ++i)
 			appendToTable(table, classOffsets[i]);
 		
 		// now append the actual classes
@@ -3382,7 +3378,7 @@ Compiler::buildTable(vector<Rule>& rules, bool fromUni, bool toUni, string& tabl
 		UInt32	classOffset = repClasses.size() * sizeof(UInt32);
 		string	classes;
 
-		for (UInt32 i = 0; i < repClasses.size(); ++i) {
+		for (i = 0; i < repClasses.size(); ++i) {
 			classOffsets[i] = classOffset + classes.size();
 			vector<Member>	sortedClass;
 			const Class&	values = toUni
@@ -3415,7 +3411,7 @@ Compiler::buildTable(vector<Rule>& rules, bool fromUni, bool toUni, string& tabl
 			align(classes, 4);
 		}
 		// copy the real classOffsets into the table
-		for (UInt32 i = 0; i < classOffsets.size(); ++i)
+		for (i = 0; i < classOffsets.size(); ++i)
 			appendToTable(table, classOffsets[i]);
 		
 		// now append the actual classes

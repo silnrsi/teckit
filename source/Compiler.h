@@ -10,6 +10,11 @@ Last reviewed: Not yet.
 
 Description:
 
+
+Changes:
+
+	21-May-2005		changes based on Ulrik Petersen's patch for MS VC++ 6
+
 -------------------------------------------------------------------------*/
 
 #ifndef __Compiler_H__
@@ -286,7 +291,16 @@ protected:
 									vector<Item>& matchStr, vector<RepClass>& repClasses);
 	void			appendToTable(string& s, const char* ptr, UInt32 len);
 	template <class T>
-		void		appendToTable(string& table, T x);
+		void		appendToTable(string& table, T x) {
+#if TARGET_RT_BIG_ENDIAN
+			const char*	xp = (const char*)&x;
+			table.append(xp, sizeof(x));
+#else
+			const char*	xp = (const char*)&x + sizeof(x);
+			for (unsigned int i = 0; i < sizeof(x); ++i)
+				table.append(1, *--xp);
+#endif
+	};
 
 	vector<Item>	reverseContext(const vector<Item>& ctx);
 	void			align(string& table, int alignment);
