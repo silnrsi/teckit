@@ -13,6 +13,7 @@ Description:
 -------------------------------------------------------------------------*/
 
 /*
+	23-May-2005		changes for 64-bit compilation, from Ulrik P
 	21-May-2005		changes based on Ulrik Petersen's patch for MS VC++ 6
 
     2004-11-11  jk  2.1.3   added support for XML export
@@ -1513,7 +1514,7 @@ Compiler::FinishPass()
 				// class definitions
 				if (currentPass.byteClassMembers.size() > 0 || currentPass.uniClassMembers.size() > 0) {
 					xmlOut("<classes>\n");
-					int i;
+					unsigned int i;
 					for (i = 0; i < currentPass.byteClassMembers.size(); ++i) {
 						xmlOut("<class size=\"bytes\" name=\"b_");
 						xmlOut(getClassName(currentPass.byteClassNames, i));
@@ -2843,7 +2844,7 @@ Compiler::appendMatchElem(string& packedRule, Item& item, int index,
 			break;
 	}
 	const char*	p = (const char*)&m;
-	packedRule.append(p, sizeof(p));
+	packedRule.append(p, sizeof(m));
 }
 
 void
@@ -2885,7 +2886,7 @@ Compiler::appendReplaceElem(string& packedRule, Item& item, vector<Item>& matchS
 			break;
 	}
 	const char*	p = (const char*)&r;
-	packedRule.append(p, sizeof(p));
+	packedRule.append(p, sizeof(r));
 }
 
 vector<Compiler::Item>
@@ -3349,7 +3350,7 @@ Compiler::buildTable(vector<Rule>& rules, bool fromUni, bool toUni, string& tabl
 						sortedClass.erase(sortedClass.begin() + j);
 			}
 
-			appendToTable(classes, sortedClass.size());
+			appendToTable(classes, (UInt32)sortedClass.size());
 			if (fromUni)
 				if (currentPass.supplementaryChars)
 					for (Class::iterator x = sortedClass.begin(); x != sortedClass.end(); ++x)
@@ -3397,7 +3398,7 @@ Compiler::buildTable(vector<Rule>& rules, bool fromUni, bool toUni, string& tabl
 						sortedClass.erase(sortedClass.begin() + j);
 			}
 
-			appendToTable(classes, sortedClass.size());
+			appendToTable(classes, (UInt32)sortedClass.size());
 			if (toUni)
 				if (currentPass.supplementaryChars)
 					for (vector<Member>::iterator x = sortedClass.begin(); x != sortedClass.end(); ++x)

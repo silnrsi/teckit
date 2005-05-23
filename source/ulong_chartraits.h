@@ -5,7 +5,13 @@
 #include <string>
 #include <locale>
 
-// Provide std::char_traits specialization for unsigned long.
+/*
+	This used to be defined for unsigned long; changed to unsigned int for 64-bit architecture.
+	Note that this will now fail if int is not 4 bytes (let's hope nobody is using such old compilers any more).
+	The real solution would be a proper autoconf setup for TECkit, but that's left for another day.
+*/
+
+// Provide std::char_traits specialization for unsigned int.
 
 // BEWARE:
 // This is adequate for the TECkit compiler but would not work for generic stream i/o, for example.
@@ -13,14 +19,14 @@
 namespace std
 {
   template<>
-    struct char_traits<unsigned long>
+    struct char_traits<unsigned int>
     {
-      typedef unsigned long		char_type;
+      typedef unsigned int		char_type;
 
       // NB: this type should be bigger than char_type, so as to
       // properly hold EOF values in addition to the full range of
       // char_type values.
-      typedef unsigned long     int_type;
+      typedef unsigned int     int_type;
 
       typedef streampos         pos_type;
       typedef streamoff         off_type;

@@ -16,6 +16,7 @@ Description:
 	Common types and defines for the engine and compiler
 
 History:
+	23-May-2005		jk	patch for 64-bit architectures (thanks to Ulrik P)
 	18-Mar-2005		jk	updated minor version for 2.3 (engine unchanged, XML option in compiler)
 	23-Sep-2003		jk	updated for version 2.1 - extended status values
 	xx-xxx-2002		jk	version 2.0 initial release
@@ -29,7 +30,7 @@ History:
 #ifndef MAC_TYPES	/* these are all predefined if using a Mac prefix */
 typedef unsigned char			UInt8;
 typedef unsigned short			UInt16;
-typedef unsigned long			UInt32;
+typedef unsigned int			UInt32;	/* NB: assumes int is 4 bytes */
 typedef UInt8					Byte;
 typedef Byte*					BytePtr;
 typedef UInt16					UniChar;
