@@ -48,5 +48,6 @@ txtconv: source/Sample-tools/TxtConv.c lib/TECkit.dylib
 obj/%.o: source/%.cpp Makefile
 	$(CC) -c $(CFLAGS) $(CPPFLAGS) -o $@ $<
 
-obj/Engine.o: source/Engine.cpp source/NormalizationData.c Makefile
-	$(CC) -c $(CFLAGS) $(CPPFLAGS) -o $@ source/Engine.cpp
+$(compiler_obj): $(compiler_src) $(compiler_hdr) Makefile
+
+$(engine_obj): $(engine_src) $(engine_hdr) Makefile

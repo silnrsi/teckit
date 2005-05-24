@@ -7,6 +7,7 @@
 	2005-03-18	added -x option to generate XML representation
 
 	 5-May-2005		jk	added include <stdlib.h> to keep gcc happy
+	24-May-2005		jk	change placement of CALLBACK for VC++6 (Ulrik)
 */
 
 #include "TECkit_Compiler.h"
@@ -25,8 +26,9 @@
 #define TARGET_RT_BIG_ENDIAN	1
 #endif
 
-static CALLBACK
+static
 void
+CALLBACK
 errFunc(void* usedData, char* msg, char* param, UInt32 line)
 {
 #pragma unused(usedData)

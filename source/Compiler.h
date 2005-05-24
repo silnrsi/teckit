@@ -13,6 +13,7 @@ Description:
 
 Changes:
 
+	24-May-2005		change from Ulrik to work around MS VC++ 6 issues
 	21-May-2005		changes based on Ulrik Petersen's patch for MS VC++ 6
 
 -------------------------------------------------------------------------*/
@@ -296,9 +297,13 @@ protected:
 			const char*	xp = (const char*)&x;
 			table.append(xp, sizeof(x));
 #else
-			const char*	xp = (const char*)&x + sizeof(x);
-			for (unsigned int i = 0; i < sizeof(x); ++i)
-				table.append(1, *--xp);
+			/* split into separate statements to work around VC++6 problems */
+ 			const char*	xp = (const char*)&x;
+ 			xp = xp + sizeof(T);
+ 			for (unsigned int i = 0; i < sizeof(T); ++i) {
+				xp = xp - 1;
+				table.append(1, *xp);
+ 			}
 #endif
 	};
 
