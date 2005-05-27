@@ -3,7 +3,7 @@ use Config;
 use Getopt::Std;
 
 $name = 'Encode::TECkit';
-$version = '0.04';
+$version = '0.05';
 
 getopts('d');
 
@@ -35,7 +35,7 @@ if ($^O =~ m/win32/oi)
 #    foreach $i (split(/;/, $ENV{'INCLUDE'}))
 #    { $define .= " -I\"$i\""; }
 }
-elsif ($^O eq 'linux')
+elsif ($^O eq 'linux' || $^O eq 'darwin')
 {
     $ccflags = $Config{'ccflags'};
     $objects = join(' ', map {$_ . $o_ext} (@cpps, 'TECkit'));
