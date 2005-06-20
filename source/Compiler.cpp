@@ -13,9 +13,9 @@ Description:
 -------------------------------------------------------------------------*/
 
 /*
+    2005-06-20  jk  2.1.4   added lhsDefault/rhsDefault attributes to <pass> elem in xml output
 	23-May-2005		changes for 64-bit compilation, from Ulrik P
 	21-May-2005		changes based on Ulrik Petersen's patch for MS VC++ 6
-
     2004-11-11  jk  2.1.3   added support for XML export
 	2004-07-21	jk	2.1.2	removed trailing spaces from 2 names in UnicodeNames.cpp
 	2004-06-16	jk	2.1.1	fixed bug of ignoring char after '_'
@@ -1507,6 +1507,12 @@ Compiler::FinishPass()
 				xmlOut(sourceUni ? "unicode" : "bytes");
 				xmlOut("\" rhs=\"");
 				xmlOut(targetUni ? "unicode" : "bytes");
+				if (sourceUni != targetUni) {
+					xmlOut("\" lhsDefault=\"");
+					xmlOut(sourceUni ? asHex(currentPass.uniDefault, 4) : asHex(currentPass.byteDefault, 2));
+					xmlOut("\" rhsDefault=\"");
+					xmlOut(targetUni ? asHex(currentPass.uniDefault, 4) : asHex(currentPass.byteDefault, 2));
+				}
 				xmlOut("\" line=\"");
 				xmlOut(asDec(currentPass.startingLine));
 				xmlOut("\">\n");
