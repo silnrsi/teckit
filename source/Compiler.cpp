@@ -1667,7 +1667,11 @@ Compiler::IDlookup(const char* str, UInt32 len)
 		else
 			++c;
 
+#ifdef __MWERKS__
+	tok.strval.clear();
+#else
 	tok.strval.erase(tok.strval.begin(), tok.strval.end());
+#endif
 	while (len-- > 0)
 		tok.strval.append(1, *str++);
 	return tok_Identifier;
@@ -1839,7 +1843,11 @@ Compiler::GetNextToken()
 			case '\'':
 				{
 					UInt32	delimiter = currCh;
+#ifdef __MWERKS__
+					tok.strval.clear();
+#else
 					tok.strval.erase(tok.strval.begin(), tok.strval.end());
+#endif
 					while ((textPtr < textEnd) && ((currCh = getChar()) != delimiter) && (currCh != '\r') && (currCh != '\n'))
 						tok.strval.append(1, currCh);
 					tok.type = tok_String;
