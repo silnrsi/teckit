@@ -64,6 +64,17 @@ are: 1 for bytes and 2 for UTF-8.
 
 =back
 
+There are other non-required options to new:
+
+=over 4
+
+=item -form
+
+Takes the value C<nfc> or C<nfd> according to which form the data to be converted
+is in or should be in.
+
+=back
+
 =cut
 
 sub new
@@ -73,7 +84,7 @@ sub new
     my ($ref, $hr, $form);
     
     if ($opts{'-form'})
-    { $form = $forms{lc($opts{'-forms'})}; }
+    { $form = $forms{lc($opts{'-form'})}; }
     if ($opts{'-raw'})
     { 
         ($res, $hr) = new_conv($fname, $opts{'-forward'}, $opts{'-style'} + $form);
@@ -100,7 +111,7 @@ sub new_scalar
     my ($ref, $hr, $form);
     
     if ($opts{'-form'})
-    { $form = $forms{lc($opts{'-forms'})}; }
+    { $form = $forms{lc($opts{'-form'})}; }
     if ($opts{'-raw'})
     { 
         ($res, $hr) = new_conv_scalar($fdat, $opts{'-forward'}, $opts{'-style'} + $form);
