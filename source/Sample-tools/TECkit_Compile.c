@@ -22,10 +22,6 @@
 #include "console.h"
 #endif
 
-#ifndef TARGET_RT_BIG_ENDIAN
-#define TARGET_RT_BIG_ENDIAN	1
-#endif
-
 static
 void
 CALLBACK

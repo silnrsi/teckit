@@ -13,8 +13,22 @@
 //#include "Profiler.h"
 #endif
 
-#ifndef TARGET_RT_BIG_ENDIAN
-#define TARGET_RT_BIG_ENDIAN	1
+#ifdef HAVE_CONFIG_H
+#	include "config.h"	/* a Unix-ish setup where we have config.h available */
+#else
+#	if	(defined __dest_os && (__dest_os == __win32_os)) || defined WIN32	/* Windows target: little-endian */
+#		undef WORDS_BIGENDIAN
+#	else
+#		if (defined TARGET_RT_BIG_ENDIAN)	/* the CodeWarrior prefix files set this */
+#			if TARGET_RT_BIG_ENDIAN
+#				define WORDS_BIGENDIAN 1
+#			else
+#				undef WORDS_BIGENDIAN
+#			endif
+#		else
+#			error Unsure about endianness!
+#		endif
+#	endif
 #endif
 
 using namespace std;

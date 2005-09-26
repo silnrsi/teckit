@@ -13,6 +13,7 @@ Description:
 -------------------------------------------------------------------------*/
 
 /*
+	2005-07-19	jk	revised to use WORDS_BIGENDIAN conditional, config.h
 	2005-05-06	jk	patched match() to forget matches within groups if we backtrack out
 	2004-03-19	jk	rewrote match() to fix group/repeat bugs and be more efficient
 	2004-03-12	jk	finished updating for version 2.1 with ...Opt APIs
@@ -20,19 +21,35 @@ Description:
 
 //#define TRACING	1
 
-#ifndef __APPLE__
-#if	(defined __dest_os && (__dest_os == __win32_os)) || defined WIN32
-#define WIN32_LEAN_AND_MEAN
-#define NOSERVICE
-#define NOMCX
-#include <Windows.h>
-
-BOOL WINAPI
-DllMain(HINSTANCE /*hInst*/, DWORD /*wDataSeg*/, LPVOID /*lpReserved*/)
-{
-   	return true;
-}
+#ifdef HAVE_CONFIG_H
+#	include "config.h"	/* a Unix-ish setup where we have config.h available */
+#else
+#	if	(defined __dest_os && (__dest_os == __win32_os)) || defined WIN32	/* Windows target: little-endian */
+#		undef WORDS_BIGENDIAN
+#	else
+#		if (defined TARGET_RT_BIG_ENDIAN)	/* the CodeWarrior prefix files set this */
+#			if TARGET_RT_BIG_ENDIAN
+#				define WORDS_BIGENDIAN 1
+#			else
+#				undef WORDS_BIGENDIAN
+#			endif
+#		else
+#			error Unsure about endianness!
+#		endif
+#	endif
 #endif
+
+#if	(defined __dest_os && (__dest_os == __win32_os)) || defined WIN32
+#	define WIN32_LEAN_AND_MEAN
+#	define NOSERVICE
+#	define NOMCX
+#	include <Windows.h>
+
+	BOOL WINAPI
+	DllMain(HINSTANCE /*hInst*/, DWORD /*wDataSeg*/, LPVOID /*lpReserved*/)
+	{
+		return true;
+	}
 #endif
 
 #include "Engine.h"
@@ -48,12 +65,6 @@ int	traceLevel = 1;
 
 #include "zlib.h"
 
-#ifdef __APPLE__
-#ifndef TARGET_RT_BIG_ENDIAN		/* CodeWarrior prefix defines this */
-#define TARGET_RT_BIG_ENDIAN	1	/* default for Project Builder */
-#endif
-#endif
-
 using namespace std;
 
 /* we apply READ to values read from the compiled table, to provide byte-swapping where needed */
@@ -66,7 +77,7 @@ READ(const UInt8 p)
 static inline UInt16
 READ(const UInt16 p)
 {
-#if TARGET_RT_BIG_ENDIAN
+#ifdef WORDS_BIGENDIAN
 	return p;
 #else
 	return (p >> 8) + (p << 8);
@@ -76,7 +87,7 @@ READ(const UInt16 p)
 static inline UInt32
 READ(const UInt32 p)
 {
-#if TARGET_RT_BIG_ENDIAN
+#ifdef WORDS_BIGENDIAN
 	return p;
 #else
 	return (p >> 24) + ((p >> 8) & 0x0000ff00) + ((p << 8) & 0x00ff0000) + (p << 24);

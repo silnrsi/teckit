@@ -13,6 +13,7 @@ Description:
 -------------------------------------------------------------------------*/
 
 /*
+    2005-07-07  jk  2.1.5   changed to use WORDS_BIGENDIAN rather than TARGET_RT_BIG_ENDIAN
     2005-06-20  jk  2.1.4   added lhsDefault/rhsDefault attributes to <pass> elem in xml output
 	23-May-2005		changes for 64-bit compilation, from Ulrik P
 	21-May-2005		changes based on Ulrik Petersen's patch for MS VC++ 6
@@ -181,7 +182,7 @@ READ(const UInt8 p)
 static inline UInt16
 READ(const UInt16 p)
 {
-#if TARGET_RT_BIG_ENDIAN
+#ifdef WORDS_BIGENDIAN
 	return p;
 #else
 	return (p >> 8) + (p << 8);
@@ -191,7 +192,7 @@ READ(const UInt16 p)
 static inline UInt32
 READ(const UInt32 p)
 {
-#if TARGET_RT_BIG_ENDIAN
+#ifdef WORDS_BIGENDIAN
 	return p;
 #else
 	return (p >> 24) + ((p >> 8) & 0x0000ff00) + ((p << 8) & 0x00ff0000) + (p << 24);
@@ -208,7 +209,7 @@ WRITE(T& t, UInt32 v)
 void
 Compiler::appendToTable(string& s, const char* ptr, UInt32 len)
 {
-#if TARGET_RT_BIG_ENDIAN
+#ifdef WORDS_BIGENDIAN
 	s.append(ptr, len);
 #else
 	ptr += len;

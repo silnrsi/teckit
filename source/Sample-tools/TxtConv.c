@@ -19,8 +19,22 @@
 #endif
 #endif
 
-#ifndef TARGET_RT_BIG_ENDIAN
-#define TARGET_RT_BIG_ENDIAN	1
+#ifdef HAVE_CONFIG_H
+#	include "config.h"	/* a Unix-ish setup where we have config.h available */
+#else
+#	if	(defined __dest_os && (__dest_os == __win32_os)) || defined WIN32	/* Windows target: little-endian */
+#		undef WORDS_BIGENDIAN
+#	else
+#		if (defined TARGET_RT_BIG_ENDIAN)	/* the CodeWarrior prefix files set this */
+#			if TARGET_RT_BIG_ENDIAN
+#				define WORDS_BIGENDIAN 1
+#			else
+#				undef WORDS_BIGENDIAN
+#			endif
+#		else
+#			error Unsure about endianness!
+#		endif
+#	endif
 #endif
 
 #define	kInBufLen	4096
@@ -198,7 +212,7 @@ main(int argc, char** argv)
 				else if (strcmp(*argv, "utf8") == 0)
 					inForm = kForm_UTF8;
 				else if (strcmp(*argv, "utf16") == 0)
-#if TARGET_RT_BIG_ENDIAN
+#ifdef WORDS_BIGENDIAN
 					inForm = kForm_UTF16BE;
 #else
 					inForm = kForm_UTF16LE;
@@ -208,7 +222,7 @@ main(int argc, char** argv)
 				else if (strcmp(*argv, "utf16le") == 0)
 					inForm = kForm_UTF16LE;
 				else if (strcmp(*argv, "utf32") == 0)
-#if TARGET_RT_BIG_ENDIAN
+#ifdef WORDS_BIGENDIAN
 					inForm = kForm_UTF32BE;
 #else
 					inForm = kForm_UTF32LE;
@@ -226,7 +240,7 @@ main(int argc, char** argv)
 				else if (strcmp(*argv, "utf8") == 0)
 					outForm = kForm_UTF8;
 				else if (strcmp(*argv, "utf16") == 0)
-#if TARGET_RT_BIG_ENDIAN
+#ifdef WORDS_BIGENDIAN
 					outForm = kForm_UTF16BE;
 #else
 					outForm = kForm_UTF16LE;
@@ -236,7 +250,7 @@ main(int argc, char** argv)
 				else if (strcmp(*argv, "utf16le") == 0)
 					outForm = kForm_UTF16LE;
 				else if (strcmp(*argv, "utf32") == 0)
-#if TARGET_RT_BIG_ENDIAN
+#ifdef WORDS_BIGENDIAN
 					outForm = kForm_UTF32BE;
 #else
 					outForm = kForm_UTF32LE;

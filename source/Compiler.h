@@ -21,22 +21,36 @@ Changes:
 #ifndef __Compiler_H__
 #define __Compiler_H__
 
+#ifdef HAVE_CONFIG_H
+#	include "config.h"	/* a Unix-ish setup where we have config.h available */
+#else
+#	if	(defined __dest_os && (__dest_os == __win32_os)) || defined WIN32	/* Windows target: little-endian */
+#		undef WORDS_BIGENDIAN
+#	else
+#		if (defined TARGET_RT_BIG_ENDIAN)	/* the CodeWarrior prefix files set this */
+#			if TARGET_RT_BIG_ENDIAN
+#				define WORDS_BIGENDIAN 1
+#			else
+#				undef WORDS_BIGENDIAN
+#			endif
+#		else
+#			error Unsure about endianness!
+#		endif
+#	endif
+#endif
+
 #include "TECkit_Format.h"
 #include "TECkit_Compiler.h"
 
 #include "TECkit_Engine.h"
 
 #ifndef __MWERKS__
-#include "ulong_chartraits.h"
+#	include "ulong_chartraits.h"
 #endif
 
 #include <string>
 #include <vector>
 #include <map>
-
-#ifndef TARGET_RT_BIG_ENDIAN
-#define TARGET_RT_BIG_ENDIAN	1
-#endif
 
 using namespace std;
 
@@ -293,7 +307,7 @@ protected:
 	void			appendToTable(string& s, const char* ptr, UInt32 len);
 	template <class T>
 		void		appendToTable(string& table, T x) {
-#if TARGET_RT_BIG_ENDIAN
+#ifdef WORDS_BIGENDIAN
 			const char*	xp = (const char*)&x;
 			table.append(xp, sizeof(x));
 #else
