@@ -27,6 +27,7 @@ History:
 
 #define	kCurrentTECkitVersion	0x00020003	/* 16.16 version number */
 
+#ifndef __MACTYPES__
 #ifndef MAC_TYPES	/* these are all predefined if using a Mac prefix */
 typedef unsigned char			UInt8;
 typedef unsigned short			UInt16;
@@ -37,6 +38,7 @@ typedef UInt16					UniChar;
 
 typedef char*					Ptr;
 typedef Byte*					TextPtr;
+#endif
 #endif
 
 /*
