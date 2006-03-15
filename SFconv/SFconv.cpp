@@ -92,10 +92,10 @@ Utf8ToString(const char* s)
 {
 	int	len = strlen(s);
 	UniChar*	buf = new UniChar[len];
-	Byte*		sourceStart = (Byte*)s;
+	const Byte*	sourceStart = (Byte*)s;
 	UniChar*	targetStart = buf;
-	int	status = ConvertUTF8toUTF16(&sourceStart, sourceStart + len, &targetStart, targetStart + len);
-	if (status != ok) {
+	int	status = ConvertUTF8toUTF16(&sourceStart, sourceStart + len, &targetStart, targetStart + len, lenientConversion);
+	if (status != conversionOK) {
 		fprintf(stderr, "error %d converting UTF-8 to UTF-16\n", status);
 		exit(1);
 	}
