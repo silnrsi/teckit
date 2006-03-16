@@ -1675,6 +1675,8 @@ Compiler::IDlookup(const char* str, UInt32 len)
 	}
 
 	// didn't find the identifier as a keyword; try as a Unicode char name
+	// NOTE: the names are now sorted (by Unicode name), so we could use a binary
+	//  search here if anyone complains about compilation time when using names :)
 	const CharName	*c = &gUnicodeNames[0];
 	while (c->name != 0)
 		if (unicodeNameCompare(c->name, str, len) == 0) {
