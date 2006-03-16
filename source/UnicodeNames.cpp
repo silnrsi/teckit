@@ -3,7 +3,7 @@ struct CharName {
 	const char*		name;
 };
 
-const CharName	gUnicodeNames[] = {
+CharName	gUnicodeNames[] = {
 {0x23E6,"AC CURRENT"},
 {0x2100,"ACCOUNT OF"},
 {0x206D,"ACTIVATE ARABIC FORM SHAPING"},

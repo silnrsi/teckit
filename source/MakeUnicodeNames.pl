@@ -21,7 +21,7 @@ struct CharName {
 	const char*		name;
 };
 
-const CharName	gUnicodeNames[] = {
+CharName	gUnicodeNames[] = {
 __END__
 
 # sort the names so that we can use binary search
