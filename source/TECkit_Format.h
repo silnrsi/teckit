@@ -25,7 +25,8 @@ Description:
 #define kFileVersion2_1			0x00020001	/* version before tables with ExtStringRules */
 #define kCurrentFileVersion		0x00030000	/* current version */
 
-#define kCurrentTableVersion	0x00020000
+#define kTableVersion2			0x00020000
+#define kCurrentTableVersion	0x00030000
 
 struct NameRec {
 	UInt16	nameID;
