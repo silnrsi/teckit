@@ -26,7 +26,8 @@ Description:
 #define kCurrentFileVersion		0x00030000	/* current version */
 
 #define kTableVersion2			0x00020000
-#define kCurrentTableVersion	0x00030000
+#define kCurrentTableVersion	0x00030000	/* actually, the engine doesn't check this,
+												it only looks at the file version */
 
 struct NameRec {
 	UInt16	nameID;
