@@ -13,6 +13,8 @@ Description:
 -------------------------------------------------------------------------*/
 
 /*
+	2006-06-02	jk	added support for extended string rules (>255 per initial char)
+	2006-06-02	jk	fixed bug handling passes with no mapping rules
 	2006-01-12	jk	remove multi-char constants, use kTableType_XXX from TECkit_Format.h
 	2005-07-19	jk	revised to use WORDS_BIGENDIAN conditional, config.h
 	2005-05-06	jk	patched match() to forget matches within groups if we backtrack out
@@ -1056,12 +1058,16 @@ Pass::DoMapping()
 			lookup = lookupBase + inChar;
 	}
 
-	if (READ(lookup->rules.type) == kLookupType_StringRules) {
+	UInt8	ruleType = READ(lookup->rules.type);
+	if (ruleType == kLookupType_StringRules || (ruleType & kLookupType_RuleTypeMask) == kLookupType_ExtStringRules) {
 		// process string rule list
 		const UInt32*	ruleList = (const UInt32*)stringListBase + READ(lookup->rules.ruleIndex);
 		bool			matched = false;
 		bool			allowInsertion = true;
-		for (int ruleCount = READ(lookup->rules.ruleCount); ruleCount > 0; --ruleCount) {
+		int ruleCount = READ(lookup->rules.ruleCount);
+		if ((ruleType & kLookupType_RuleTypeMask) == kLookupType_ExtStringRules)
+			ruleCount += 256 * (ruleType & kLookupType_ExtRuleCountMask);
+		for ( ; ruleCount > 0; --ruleCount) {
 			const StringRule*	rule = (const StringRule*)(stringRuleData + READ(*ruleList));
 #ifdef TRACING
 if (traceLevel > 0) {
@@ -1236,7 +1242,7 @@ if (traceLevel > 0)
 			matchedLength = 1;
 		}
 	}
-	else if (READ(lookup->rules.type) == kLookupType_Unmapped) {
+	else if (ruleType == kLookupType_Unmapped) {
 		if (bOutputIsUnicode == bInputIsUnicode)
 			outputChar(inChar);
 		else {
@@ -1309,7 +1315,7 @@ Converter::Converter(const Byte* inTable, UInt32 inTableSize, bool inForward,
 			status = kStatus_InvalidMapping;
 			return;
 		}
-		if ((READ(fh->version) & 0xFFFF0000) != (kCurrentFileVersion & 0xFFFF0000)) {
+		if ((READ(fh->version) & 0xFFFF0000) > (kCurrentFileVersion & 0xFFFF0000)) {
 			status = kStatus_BadMappingVersion;
 			return;
 		}
