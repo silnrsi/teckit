@@ -2124,7 +2124,7 @@ TECkit_GetMappingFlags(
 			fh = &header;
 		}
 		if (status == kStatus_NoError && READ(fh->type) == kMagicNumber) {
-			if ((READ(fh->version) & 0xFFFF0000) != (kCurrentFileVersion & 0xFFFF0000))
+			if ((READ(fh->version) & 0xFFFF0000) > (kCurrentFileVersion & 0xFFFF0000))
 				status = kStatus_BadMappingVersion;
 			else {
 				*lhsFlags = READ(fh->formFlagsLHS);
@@ -2176,7 +2176,7 @@ TECkit_GetMappingName(
 			}
 		}
 		if (status == kStatus_NoError && READ(fh->type) == kMagicNumber) {
-			if ((READ(fh->version) & 0xFFFF0000) != (kCurrentFileVersion & 0xFFFF0000))
+			if ((READ(fh->version) & 0xFFFF0000) > (kCurrentFileVersion & 0xFFFF0000))
 				status = kStatus_BadMappingVersion;
 			else {
 				const Byte*	namePtr;
