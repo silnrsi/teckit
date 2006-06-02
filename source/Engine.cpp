@@ -1002,22 +1002,27 @@ Pass::DoMapping()
 	if (bInputIsUnicode) {
 		// Unicode lookup
 		UInt16	charIndex = 0;
-		UInt8	plane = inChar >> 16;
-		const UInt8*	pageMap = 0;
-		if (bSupplementaryChars) {
-			if ((plane < 17) && (READ(planeMap[plane]) != 0xff)) {
-				pageMap = (const UInt8*)(pageBase + 256 * READ(planeMap[plane]));
-				goto GOT_PAGE_MAP;
-			}
+		if ((const UInt8*)lookupBase == pageBase) {
+			// leave charIndex == 0 : pass with no rules
 		}
-		else if (plane == 0) {
-			pageMap = pageBase;
-		GOT_PAGE_MAP:
-			UInt8	page = (inChar >> 8) & 0xff;
-			if (READ(pageMap[page]) != 0xff) {
-				const UInt16*	charMapBase = (const UInt16*)(pageBase + 256 * numPageMaps);
-				const UInt16*	charMap = charMapBase + 256 * READ(pageMap[page]);
-				charIndex = READ(charMap[inChar & 0xff]);
+		else {
+			UInt8	plane = inChar >> 16;
+			const UInt8*	pageMap = 0;
+			if (bSupplementaryChars) {
+				if ((plane < 17) && (READ(planeMap[plane]) != 0xff)) {
+					pageMap = (const UInt8*)(pageBase + 256 * READ(planeMap[plane]));
+					goto GOT_PAGE_MAP;
+				}
+			}
+			else if (plane == 0) {
+				pageMap = pageBase;
+			GOT_PAGE_MAP:
+				UInt8	page = (inChar >> 8) & 0xff;
+				if (READ(pageMap[page]) != 0xff) {
+					const UInt16*	charMapBase = (const UInt16*)(pageBase + 256 * numPageMaps);
+					const UInt16*	charMap = charMapBase + 256 * READ(pageMap[page]);
+					charIndex = READ(charMap[inChar & 0xff]);
+				}
 			}
 		}
 		lookup = lookupBase + charIndex;
