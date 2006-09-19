@@ -13,6 +13,7 @@ Description:
 -------------------------------------------------------------------------*/
 
 /*
+	2006-06-19	jk			added new APIs to look up Unicode names
 	2006-01-12	jk			removed multi-char constants, use FOUR_CHAR_CODE to define UInt32 values instead
 							(no functional change, just to avoid compiler warnings)
     2005-07-07  jk  2.1.5   changed to use WORDS_BIGENDIAN rather than TARGET_RT_BIG_ENDIAN

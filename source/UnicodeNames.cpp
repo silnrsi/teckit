@@ -1,9 +1,4 @@
-struct CharName {
-	unsigned int	usv;
-	const char*		name;
-};
-
-extern "C" {
+#include "Compiler.h"
 
 CharName	gUnicodeNames[] = {
 {0x23E6,"AC CURRENT"},
@@ -17643,5 +17638,3 @@ CharName	gUnicodeNames[] = {
 {0x200B,"ZERO WIDTH SPACE"},
 {0,0}
 };
-
-}

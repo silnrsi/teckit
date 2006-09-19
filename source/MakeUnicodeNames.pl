@@ -16,12 +16,7 @@ while (<FH>) {
 close FH;
 
 print << '__END__';
-struct CharName {
-	unsigned int	usv;
-	const char*		name;
-};
-
-extern "C" {
+#include "Compiler.h"
 
 CharName	gUnicodeNames[] = {
 __END__
@@ -34,6 +29,4 @@ foreach (sort { $a->[1] cmp $b->[1] } @names) {
 print << '__END__';
 {0,0}
 };
-
-}
 __END__

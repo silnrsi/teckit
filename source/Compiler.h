@@ -334,10 +334,12 @@ protected:
 	string			getContextID(const vector<Item>& ctx, bool isUnicode);
 };
 
-struct CharName {
-	unsigned int	usv;
-	const char*		name;
-};
-extern CharName	gUnicodeNames[];
+extern "C" {
+	struct CharName {
+		unsigned int	usv;
+		const char*		name;
+	};
+	extern CharName	gUnicodeNames[];
+}
 
 #endif	/* __Compiler_H__ */
