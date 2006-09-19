@@ -21,6 +21,8 @@ struct CharName {
 	const char*		name;
 };
 
+extern "C" {
+
 CharName	gUnicodeNames[] = {
 __END__
 
@@ -32,4 +34,6 @@ foreach (sort { $a->[1] cmp $b->[1] } @names) {
 print << '__END__';
 {0,0}
 };
+
+}
 __END__

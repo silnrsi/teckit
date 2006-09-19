@@ -187,6 +187,77 @@ TECkit_DisposeCompiled(Byte* table)
 		free(table);
 }
 
+char*
+WINAPI
+TECkit_GetUnicodeName(UInt32 usv)
+{
+	const CharName	*c = &gUnicodeNames[0];
+	while (c->name != 0)
+		if (c->usv == usv)
+			return (char*)c->name;
+		else
+			++c;
+	return NULL;
+}
+
+char*
+WINAPI
+TECkit_GetTECkitName(UInt32 usv)
+{
+	static char	buffer[256];
+	const char*	name = TECkit_GetUnicodeName(usv);
+	if (name == NULL)
+		sprintf(buffer, "U+%04X", usv);
+	else {
+		char* cp = &buffer[0];
+		while (*name && (cp - buffer < 255)) {
+			if ((*name < '0') || (*name > '9' && *name < 'A') || (*name > 'Z'))
+				*cp++ = '_';
+			else
+				*cp++ = *name | 0x20;
+			++name;
+		}
+		*cp = 0;
+	}
+	return buffer;
+}
+
+static int
+unicodeNameCompare(const char* uniName, const char* idStr, UInt32 len)
+{ // idStr could be either a "real" unicode name or a teckit identifier
+  // when this is used by the TECkit_GetUnicodeValue API
+	while (*uniName || len != 0) {
+		if (len == 0)
+			return 1;
+		char	u = *uniName++;
+		char	i = *idStr++;
+		--len;
+		if ((i >= 'a') && (i <= 'z'))
+			i &= ~0x20;
+		if (u == i)
+			continue;
+		if ((u < '0') || (u > '9' && u < 'A') || (u > 'Z'))
+			u = '_';
+		if (u == i)
+			continue;
+		return u < i ? -1 : 1;
+	}
+	return 0;
+}
+
+int
+WINAPI
+TECkit_GetUnicodeValue(char* name)
+{
+	const CharName	*c = &gUnicodeNames[0];
+	int	len = strlen(name);
+	while (c->name != 0)
+		if (unicodeNameCompare(c->name, name, len) == 0)
+			return c->usv;
+		else
+			++c;
+	return -1;
+}
 
 static inline UInt8
 READ(const UInt8 p)
@@ -256,26 +327,6 @@ strmatch(const char* str, const char* txt, UInt32 len)
 		--len;
 	}
 	return true;
-}
-
-static int
-unicodeNameCompare(const char* uniName, const char* idStr, UInt32 len)
-{
-	while (*uniName || len != 0) {
-		if (len == 0)
-			return 1;
-		char	u = *uniName++;
-		char	i = *idStr++;
-		--len;
-		if ((u < '0') || (u > '9' && u < 'A') || (u > 'Z'))
-			u = '_';
-		if ((i >= 'a') && (i <= 'z'))
-			i &= ~0x20;
-		if (u == i)
-			continue;
-		return u < i ? -1 : 1;
-	}
-	return 0;
 }
 
 static const char*

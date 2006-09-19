@@ -3,6 +3,8 @@ struct CharName {
 	const char*		name;
 };
 
+extern "C" {
+
 CharName	gUnicodeNames[] = {
 {0x23E6,"AC CURRENT"},
 {0x2100,"ACCOUNT OF"},
@@ -17641,3 +17643,5 @@ CharName	gUnicodeNames[] = {
 {0x200B,"ZERO WIDTH SPACE"},
 {0,0}
 };
+
+}

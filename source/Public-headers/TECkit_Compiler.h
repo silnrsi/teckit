@@ -8,6 +8,7 @@
 					 5-Jul-2002		corrected placement of WINAPI/CALLBACK to keep MS compiler happy
 					18-Mar-2005		added option to generate XML representation
 					21-May-2005		changes based on Ulrik Petersen's patch for MS VC++ 6
+					16-Sep-2006		added APIs to convert USVs to names and vice versa
 */
 
 /*
@@ -62,6 +63,24 @@ TECkit_DisposeCompiled(Byte* table);
 UInt32
 WINAPI
 TECkit_GetCompilerVersion();
+
+/* new APIs for looking up Unicode names (as NUL-terminated C strings) */
+char*
+WINAPI
+TECkit_GetUnicodeName(UInt32 usv);
+	/* returns the Unicode name of usv, if available, else NULL */
+
+char*
+WINAPI
+TECkit_GetTECkitName(UInt32 usv);
+	/* returns the TECkit form of the name of usv, or "U+xxxx" if no name */
+	/* NB: returns value is a pointer to a static string, which will be
+	   overwritten by subsequent calls */
+
+int
+WINAPI
+TECkit_GetUnicodeValue(char* name);
+	/* returns Unicode value for a Unicode or TECkit name, or -1 if not known */
 
 #ifdef __cplusplus
 }
