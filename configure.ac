@@ -20,8 +20,10 @@ AC_PROG_LIBTOOL
 
 # Checks for libraries.
 AC_CHECK_LIB(z, compress)
-AC_CHECK_LIB(expat, XML_ExpatVersion)
+AM_CONDITIONAL(SYSTEM_ZLIB, test x$ac_cv_lib_z_compress = xyes)
+SYSTEM_ZLIB=no
 
+AC_CHECK_LIB(expat, XML_ExpatVersion)
 AM_CONDITIONAL(SYSTEM_EXPAT, test x$ac_cv_lib_expat_XML_ExpatVersion = xyes)
 
 # Checks for header files.

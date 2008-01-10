@@ -104,6 +104,8 @@ SHELL = @SHELL@
 STRIP = @STRIP@
 SYSTEM_EXPAT_FALSE = @SYSTEM_EXPAT_FALSE@
 SYSTEM_EXPAT_TRUE = @SYSTEM_EXPAT_TRUE@
+SYSTEM_ZLIB_FALSE = @SYSTEM_ZLIB_FALSE@
+SYSTEM_ZLIB_TRUE = @SYSTEM_ZLIB_TRUE@
 VERSION = @VERSION@
 ac_ct_AR = @ac_ct_AR@
 ac_ct_CC = @ac_ct_CC@
@@ -165,9 +167,9 @@ $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  test/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  test/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign  test/Makefile
+	  $(AUTOMAKE) --gnu  test/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \

@@ -21,9 +21,9 @@ AM_CPPFLAGS  += $(EXPAT_CFLAGS)
 AM_CFLAGS    = $(AM_CPPFLAGS)
 
 
-teckit_compile_SOURCES = $(top_srcdir)/source/Sample-tools/TECkit_Compile.c
+teckit_compile_SOURCES = $(top_srcdir)/source/Sample-tools/TECkit_Compile.cpp
 
-txtconv_SOURCES = $(top_srcdir)/source/Sample-tools/TxtConv.c
+txtconv_SOURCES = $(top_srcdir)/source/Sample-tools/TxtConv.cpp
 
 sfconv_SOURCES  = $(top_srcdir)/SFconv/SFconv.cpp
 sfconv_SOURCES += $(top_srcdir)/SFconv/ConvertUTF.c

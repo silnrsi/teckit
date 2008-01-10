@@ -152,6 +152,8 @@ SHELL = @SHELL@
 STRIP = @STRIP@
 SYSTEM_EXPAT_FALSE = @SYSTEM_EXPAT_FALSE@
 SYSTEM_EXPAT_TRUE = @SYSTEM_EXPAT_TRUE@
+SYSTEM_ZLIB_FALSE = @SYSTEM_ZLIB_FALSE@
+SYSTEM_ZLIB_TRUE = @SYSTEM_ZLIB_TRUE@
 VERSION = @VERSION@
 ac_ct_AR = @ac_ct_AR@
 ac_ct_CC = @ac_ct_CC@
@@ -207,8 +209,8 @@ expatdir = $(top_srcdir)/SFconv/expat
 @SYSTEM_EXPAT_FALSE@	$(expatdir)/xmltok/xmltok.c
 @SYSTEM_EXPAT_TRUE@EXPAT_SOURCES = 
 AM_CFLAGS = $(AM_CPPFLAGS)
-teckit_compile_SOURCES = $(top_srcdir)/source/Sample-tools/TECkit_Compile.c
-txtconv_SOURCES = $(top_srcdir)/source/Sample-tools/TxtConv.c
+teckit_compile_SOURCES = $(top_srcdir)/source/Sample-tools/TECkit_Compile.cpp
+txtconv_SOURCES = $(top_srcdir)/source/Sample-tools/TxtConv.cpp
 sfconv_SOURCES = $(top_srcdir)/SFconv/SFconv.cpp \
 	$(top_srcdir)/SFconv/ConvertUTF.c $(EXPAT_SOURCES)
 teckit_compile_LDADD = $(top_builddir)/lib/libTECkit_Compiler.la
@@ -227,9 +229,9 @@ $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  bin/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  bin/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign  bin/Makefile
+	  $(AUTOMAKE) --gnu  bin/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -280,10 +282,10 @@ sfconv$(EXEEXT): $(sfconv_OBJECTS) $(sfconv_DEPENDENCIES)
 	$(CXXLINK) $(sfconv_LDFLAGS) $(sfconv_OBJECTS) $(sfconv_LDADD) $(LIBS)
 teckit_compile$(EXEEXT): $(teckit_compile_OBJECTS) $(teckit_compile_DEPENDENCIES) 
 	@rm -f teckit_compile$(EXEEXT)
-	$(LINK) $(teckit_compile_LDFLAGS) $(teckit_compile_OBJECTS) $(teckit_compile_LDADD) $(LIBS)
+	$(CXXLINK) $(teckit_compile_LDFLAGS) $(teckit_compile_OBJECTS) $(teckit_compile_LDADD) $(LIBS)
 txtconv$(EXEEXT): $(txtconv_OBJECTS) $(txtconv_DEPENDENCIES) 
 	@rm -f txtconv$(EXEEXT)
-	$(LINK) $(txtconv_LDFLAGS) $(txtconv_OBJECTS) $(txtconv_LDADD) $(LIBS)
+	$(CXXLINK) $(txtconv_LDFLAGS) $(txtconv_OBJECTS) $(txtconv_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -391,34 +393,6 @@ xmltok.obj: $(expatdir)/xmltok/xmltok.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o xmltok.obj `if test -f '$(expatdir)/xmltok/xmltok.c'; then $(CYGPATH_W) '$(expatdir)/xmltok/xmltok.c'; else $(CYGPATH_W) '$(srcdir)/$(expatdir)/xmltok/xmltok.c'; fi`
 
-TECkit_Compile.o: $(top_srcdir)/source/Sample-tools/TECkit_Compile.c
-@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT TECkit_Compile.o -MD -MP -MF "$(DEPDIR)/TECkit_Compile.Tpo" -c -o TECkit_Compile.o `test -f '$(top_srcdir)/source/Sample-tools/TECkit_Compile.c' || echo '$(srcdir)/'`$(top_srcdir)/source/Sample-tools/TECkit_Compile.c; \
-@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/TECkit_Compile.Tpo" "$(DEPDIR)/TECkit_Compile.Po"; else rm -f "$(DEPDIR)/TECkit_Compile.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(top_srcdir)/source/Sample-tools/TECkit_Compile.c' object='TECkit_Compile.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o TECkit_Compile.o `test -f '$(top_srcdir)/source/Sample-tools/TECkit_Compile.c' || echo '$(srcdir)/'`$(top_srcdir)/source/Sample-tools/TECkit_Compile.c
-
-TECkit_Compile.obj: $(top_srcdir)/source/Sample-tools/TECkit_Compile.c
-@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT TECkit_Compile.obj -MD -MP -MF "$(DEPDIR)/TECkit_Compile.Tpo" -c -o TECkit_Compile.obj `if test -f '$(top_srcdir)/source/Sample-tools/TECkit_Compile.c'; then $(CYGPATH_W) '$(top_srcdir)/source/Sample-tools/TECkit_Compile.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/source/Sample-tools/TECkit_Compile.c'; fi`; \
-@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/TECkit_Compile.Tpo" "$(DEPDIR)/TECkit_Compile.Po"; else rm -f "$(DEPDIR)/TECkit_Compile.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(top_srcdir)/source/Sample-tools/TECkit_Compile.c' object='TECkit_Compile.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o TECkit_Compile.obj `if test -f '$(top_srcdir)/source/Sample-tools/TECkit_Compile.c'; then $(CYGPATH_W) '$(top_srcdir)/source/Sample-tools/TECkit_Compile.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/source/Sample-tools/TECkit_Compile.c'; fi`
-
-TxtConv.o: $(top_srcdir)/source/Sample-tools/TxtConv.c
-@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT TxtConv.o -MD -MP -MF "$(DEPDIR)/TxtConv.Tpo" -c -o TxtConv.o `test -f '$(top_srcdir)/source/Sample-tools/TxtConv.c' || echo '$(srcdir)/'`$(top_srcdir)/source/Sample-tools/TxtConv.c; \
-@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/TxtConv.Tpo" "$(DEPDIR)/TxtConv.Po"; else rm -f "$(DEPDIR)/TxtConv.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(top_srcdir)/source/Sample-tools/TxtConv.c' object='TxtConv.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o TxtConv.o `test -f '$(top_srcdir)/source/Sample-tools/TxtConv.c' || echo '$(srcdir)/'`$(top_srcdir)/source/Sample-tools/TxtConv.c
-
-TxtConv.obj: $(top_srcdir)/source/Sample-tools/TxtConv.c
-@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT TxtConv.obj -MD -MP -MF "$(DEPDIR)/TxtConv.Tpo" -c -o TxtConv.obj `if test -f '$(top_srcdir)/source/Sample-tools/TxtConv.c'; then $(CYGPATH_W) '$(top_srcdir)/source/Sample-tools/TxtConv.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/source/Sample-tools/TxtConv.c'; fi`; \
-@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/TxtConv.Tpo" "$(DEPDIR)/TxtConv.Po"; else rm -f "$(DEPDIR)/TxtConv.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(top_srcdir)/source/Sample-tools/TxtConv.c' object='TxtConv.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o TxtConv.obj `if test -f '$(top_srcdir)/source/Sample-tools/TxtConv.c'; then $(CYGPATH_W) '$(top_srcdir)/source/Sample-tools/TxtConv.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/source/Sample-tools/TxtConv.c'; fi`
-
 .cpp.o:
 @am__fastdepCXX_TRUE@	if $(CXXCOMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" -c -o $@ $<; \
 @am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/$*.Tpo" "$(DEPDIR)/$*.Po"; else rm -f "$(DEPDIR)/$*.Tpo"; exit 1; fi
@@ -453,6 +427,34 @@ SFconv.obj: $(top_srcdir)/SFconv/SFconv.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(top_srcdir)/SFconv/SFconv.cpp' object='SFconv.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o SFconv.obj `if test -f '$(top_srcdir)/SFconv/SFconv.cpp'; then $(CYGPATH_W) '$(top_srcdir)/SFconv/SFconv.cpp'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/SFconv/SFconv.cpp'; fi`
+
+TECkit_Compile.o: $(top_srcdir)/source/Sample-tools/TECkit_Compile.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT TECkit_Compile.o -MD -MP -MF "$(DEPDIR)/TECkit_Compile.Tpo" -c -o TECkit_Compile.o `test -f '$(top_srcdir)/source/Sample-tools/TECkit_Compile.cpp' || echo '$(srcdir)/'`$(top_srcdir)/source/Sample-tools/TECkit_Compile.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/TECkit_Compile.Tpo" "$(DEPDIR)/TECkit_Compile.Po"; else rm -f "$(DEPDIR)/TECkit_Compile.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(top_srcdir)/source/Sample-tools/TECkit_Compile.cpp' object='TECkit_Compile.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o TECkit_Compile.o `test -f '$(top_srcdir)/source/Sample-tools/TECkit_Compile.cpp' || echo '$(srcdir)/'`$(top_srcdir)/source/Sample-tools/TECkit_Compile.cpp
+
+TECkit_Compile.obj: $(top_srcdir)/source/Sample-tools/TECkit_Compile.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT TECkit_Compile.obj -MD -MP -MF "$(DEPDIR)/TECkit_Compile.Tpo" -c -o TECkit_Compile.obj `if test -f '$(top_srcdir)/source/Sample-tools/TECkit_Compile.cpp'; then $(CYGPATH_W) '$(top_srcdir)/source/Sample-tools/TECkit_Compile.cpp'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/source/Sample-tools/TECkit_Compile.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/TECkit_Compile.Tpo" "$(DEPDIR)/TECkit_Compile.Po"; else rm -f "$(DEPDIR)/TECkit_Compile.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(top_srcdir)/source/Sample-tools/TECkit_Compile.cpp' object='TECkit_Compile.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o TECkit_Compile.obj `if test -f '$(top_srcdir)/source/Sample-tools/TECkit_Compile.cpp'; then $(CYGPATH_W) '$(top_srcdir)/source/Sample-tools/TECkit_Compile.cpp'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/source/Sample-tools/TECkit_Compile.cpp'; fi`
+
+TxtConv.o: $(top_srcdir)/source/Sample-tools/TxtConv.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT TxtConv.o -MD -MP -MF "$(DEPDIR)/TxtConv.Tpo" -c -o TxtConv.o `test -f '$(top_srcdir)/source/Sample-tools/TxtConv.cpp' || echo '$(srcdir)/'`$(top_srcdir)/source/Sample-tools/TxtConv.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/TxtConv.Tpo" "$(DEPDIR)/TxtConv.Po"; else rm -f "$(DEPDIR)/TxtConv.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(top_srcdir)/source/Sample-tools/TxtConv.cpp' object='TxtConv.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o TxtConv.o `test -f '$(top_srcdir)/source/Sample-tools/TxtConv.cpp' || echo '$(srcdir)/'`$(top_srcdir)/source/Sample-tools/TxtConv.cpp
+
+TxtConv.obj: $(top_srcdir)/source/Sample-tools/TxtConv.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT TxtConv.obj -MD -MP -MF "$(DEPDIR)/TxtConv.Tpo" -c -o TxtConv.obj `if test -f '$(top_srcdir)/source/Sample-tools/TxtConv.cpp'; then $(CYGPATH_W) '$(top_srcdir)/source/Sample-tools/TxtConv.cpp'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/source/Sample-tools/TxtConv.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/TxtConv.Tpo" "$(DEPDIR)/TxtConv.Po"; else rm -f "$(DEPDIR)/TxtConv.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$(top_srcdir)/source/Sample-tools/TxtConv.cpp' object='TxtConv.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o TxtConv.obj `if test -f '$(top_srcdir)/source/Sample-tools/TxtConv.cpp'; then $(CYGPATH_W) '$(top_srcdir)/source/Sample-tools/TxtConv.cpp'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/source/Sample-tools/TxtConv.cpp'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo

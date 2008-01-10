@@ -59,14 +59,37 @@ am__installdirs = "$(DESTDIR)$(libdir)" "$(DESTDIR)$(pkgincludedir)"
 libLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(lib_LTLIBRARIES)
 libTECkit_la_LIBADD =
-am_libTECkit_la_OBJECTS = Engine.lo
+am__libTECkit_la_SOURCES_DIST = $(teckitdir)/Engine.cpp \
+	$(zlibdir)/adler32.c $(zlibdir)/compress.c $(zlibdir)/crc32.c \
+	$(zlibdir)/deflate.c $(zlibdir)/infback.c $(zlibdir)/inffast.c \
+	$(zlibdir)/inflate.c $(zlibdir)/inftrees.c $(zlibdir)/trees.c \
+	$(zlibdir)/uncompr.c $(zlibdir)/zutil.c
+@SYSTEM_ZLIB_FALSE@am__objects_1 = adler32.lo compress.lo crc32.lo \
+@SYSTEM_ZLIB_FALSE@	deflate.lo infback.lo inffast.lo inflate.lo \
+@SYSTEM_ZLIB_FALSE@	inftrees.lo trees.lo uncompr.lo zutil.lo
+am_libTECkit_la_OBJECTS = Engine.lo $(am__objects_1)
 libTECkit_la_OBJECTS = $(am_libTECkit_la_OBJECTS)
 libTECkit_Compiler_la_LIBADD =
-am_libTECkit_Compiler_la_OBJECTS = Compiler.lo UnicodeNames.lo
+am__libTECkit_Compiler_la_SOURCES_DIST = $(teckitdir)/Compiler.cpp \
+	$(zlibdir)/adler32.c $(zlibdir)/compress.c $(zlibdir)/crc32.c \
+	$(zlibdir)/deflate.c $(zlibdir)/infback.c $(zlibdir)/inffast.c \
+	$(zlibdir)/inflate.c $(zlibdir)/inftrees.c $(zlibdir)/trees.c \
+	$(zlibdir)/uncompr.c $(zlibdir)/zutil.c \
+	$(teckitdir)/UnicodeNames.cpp
+am_libTECkit_Compiler_la_OBJECTS = Compiler.lo $(am__objects_1) \
+	UnicodeNames.lo
 libTECkit_Compiler_la_OBJECTS = $(am_libTECkit_Compiler_la_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
+COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
+	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+LTCOMPILE = $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) \
+	$(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
+	$(AM_CFLAGS) $(CFLAGS)
+CCLD = $(CC)
+LINK = $(LIBTOOL) --tag=CC --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
+	$(AM_LDFLAGS) $(LDFLAGS) -o $@
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 LTCXXCOMPILE = $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) \
@@ -76,8 +99,8 @@ CXXLD = $(CXX)
 CXXLINK = $(LIBTOOL) --tag=CXX --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 SOURCES = $(libTECkit_la_SOURCES) $(libTECkit_Compiler_la_SOURCES)
-DIST_SOURCES = $(libTECkit_la_SOURCES) \
-	$(libTECkit_Compiler_la_SOURCES)
+DIST_SOURCES = $(am__libTECkit_la_SOURCES_DIST) \
+	$(am__libTECkit_Compiler_la_SOURCES_DIST)
 pkgincludeHEADERS_INSTALL = $(INSTALL_HEADER)
 HEADERS = $(noinst_HEADERS) $(pkginclude_HEADERS)
 ETAGS = etags
@@ -140,6 +163,8 @@ SHELL = @SHELL@
 STRIP = @STRIP@
 SYSTEM_EXPAT_FALSE = @SYSTEM_EXPAT_FALSE@
 SYSTEM_EXPAT_TRUE = @SYSTEM_EXPAT_TRUE@
+SYSTEM_ZLIB_FALSE = @SYSTEM_ZLIB_FALSE@
+SYSTEM_ZLIB_TRUE = @SYSTEM_ZLIB_TRUE@
 VERSION = @VERSION@
 ac_ct_AR = @ac_ct_AR@
 ac_ct_CC = @ac_ct_CC@
@@ -185,13 +210,23 @@ sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 AUTOMAKE_OPTIONS = 1.6
-AM_CPPFLAGS = -I$(top_srcdir)/source/Public-headers
-AM_CFLAGS = $(AM_CPPFLAGS)
+AM_CPPFLAGS = -I$(top_srcdir)/source/Public-headers $(ZLIB_CFLAGS)
 lib_LTLIBRARIES = libTECkit_Compiler.la libTECkit.la
 teckitdir = $(top_srcdir)/source
+zlibdir = $(top_srcdir)/zlib-1.2.3
+@SYSTEM_ZLIB_FALSE@ZLIB_CFLAGS = -I$(zlibdir)
+@SYSTEM_ZLIB_TRUE@ZLIB_CFLAGS = 
+@SYSTEM_ZLIB_FALSE@ZLIB_SOURCES = $(zlibdir)/adler32.c \
+@SYSTEM_ZLIB_FALSE@	$(zlibdir)/compress.c $(zlibdir)/crc32.c \
+@SYSTEM_ZLIB_FALSE@	$(zlibdir)/deflate.c $(zlibdir)/infback.c \
+@SYSTEM_ZLIB_FALSE@	$(zlibdir)/inffast.c $(zlibdir)/inflate.c \
+@SYSTEM_ZLIB_FALSE@	$(zlibdir)/inftrees.c $(zlibdir)/trees.c \
+@SYSTEM_ZLIB_FALSE@	$(zlibdir)/uncompr.c $(zlibdir)/zutil.c
+@SYSTEM_ZLIB_TRUE@ZLIB_SOURCES = 
+AM_CFLAGS = $(AM_CPPFLAGS)
 libTECkit_Compiler_la_SOURCES = $(teckitdir)/Compiler.cpp \
-	$(teckitdir)/UnicodeNames.cpp
-libTECkit_la_SOURCES = $(teckitdir)/Engine.cpp
+	$(ZLIB_SOURCES) $(teckitdir)/UnicodeNames.cpp
+libTECkit_la_SOURCES = $(teckitdir)/Engine.cpp $(ZLIB_SOURCES)
 noinst_HEADERS = $(teckitdir)/Compiler.h $(teckitdir)/Engine.h \
 	$(teckitdir)/ulong_chartraits.h $(teckitdir)/TECkit_Format.h
 EXTRA_DIST = $(teckitdir)/NormalizationData.c
@@ -202,7 +237,7 @@ pkginclude_HEADERS = $(publicheaderdir)/TECkit_Common.h \
 all: all-am
 
 .SUFFIXES:
-.SUFFIXES: .cpp .lo .o .obj
+.SUFFIXES: .c .cpp .lo .o .obj
 $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am $(srcdir)/../source/Makefile.am $(top_srcdir)/source/Public-headers/Makefile.am $(am__configure_deps)
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
@@ -212,9 +247,9 @@ $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am $(srcdir)/..
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  lib/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  lib/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign  lib/Makefile
+	  $(AUTOMAKE) --gnu  lib/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -273,6 +308,115 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Compiler.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Engine.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/UnicodeNames.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/adler32.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/compress.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/crc32.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/deflate.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/infback.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/inffast.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/inflate.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/inftrees.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/trees.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/uncompr.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/zutil.Plo@am__quote@
+
+.c.o:
+@am__fastdepCC_TRUE@	if $(COMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" -c -o $@ $<; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/$*.Tpo" "$(DEPDIR)/$*.Po"; else rm -f "$(DEPDIR)/$*.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(COMPILE) -c $<
+
+.c.obj:
+@am__fastdepCC_TRUE@	if $(COMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" -c -o $@ `$(CYGPATH_W) '$<'`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/$*.Tpo" "$(DEPDIR)/$*.Po"; else rm -f "$(DEPDIR)/$*.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(COMPILE) -c `$(CYGPATH_W) '$<'`
+
+.c.lo:
+@am__fastdepCC_TRUE@	if $(LTCOMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" -c -o $@ $<; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/$*.Tpo" "$(DEPDIR)/$*.Plo"; else rm -f "$(DEPDIR)/$*.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LTCOMPILE) -c -o $@ $<
+
+adler32.lo: $(zlibdir)/adler32.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT adler32.lo -MD -MP -MF "$(DEPDIR)/adler32.Tpo" -c -o adler32.lo `test -f '$(zlibdir)/adler32.c' || echo '$(srcdir)/'`$(zlibdir)/adler32.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/adler32.Tpo" "$(DEPDIR)/adler32.Plo"; else rm -f "$(DEPDIR)/adler32.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(zlibdir)/adler32.c' object='adler32.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o adler32.lo `test -f '$(zlibdir)/adler32.c' || echo '$(srcdir)/'`$(zlibdir)/adler32.c
+
+compress.lo: $(zlibdir)/compress.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT compress.lo -MD -MP -MF "$(DEPDIR)/compress.Tpo" -c -o compress.lo `test -f '$(zlibdir)/compress.c' || echo '$(srcdir)/'`$(zlibdir)/compress.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/compress.Tpo" "$(DEPDIR)/compress.Plo"; else rm -f "$(DEPDIR)/compress.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(zlibdir)/compress.c' object='compress.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o compress.lo `test -f '$(zlibdir)/compress.c' || echo '$(srcdir)/'`$(zlibdir)/compress.c
+
+crc32.lo: $(zlibdir)/crc32.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT crc32.lo -MD -MP -MF "$(DEPDIR)/crc32.Tpo" -c -o crc32.lo `test -f '$(zlibdir)/crc32.c' || echo '$(srcdir)/'`$(zlibdir)/crc32.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/crc32.Tpo" "$(DEPDIR)/crc32.Plo"; else rm -f "$(DEPDIR)/crc32.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(zlibdir)/crc32.c' object='crc32.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o crc32.lo `test -f '$(zlibdir)/crc32.c' || echo '$(srcdir)/'`$(zlibdir)/crc32.c
+
+deflate.lo: $(zlibdir)/deflate.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT deflate.lo -MD -MP -MF "$(DEPDIR)/deflate.Tpo" -c -o deflate.lo `test -f '$(zlibdir)/deflate.c' || echo '$(srcdir)/'`$(zlibdir)/deflate.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/deflate.Tpo" "$(DEPDIR)/deflate.Plo"; else rm -f "$(DEPDIR)/deflate.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(zlibdir)/deflate.c' object='deflate.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o deflate.lo `test -f '$(zlibdir)/deflate.c' || echo '$(srcdir)/'`$(zlibdir)/deflate.c
+
+infback.lo: $(zlibdir)/infback.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT infback.lo -MD -MP -MF "$(DEPDIR)/infback.Tpo" -c -o infback.lo `test -f '$(zlibdir)/infback.c' || echo '$(srcdir)/'`$(zlibdir)/infback.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/infback.Tpo" "$(DEPDIR)/infback.Plo"; else rm -f "$(DEPDIR)/infback.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(zlibdir)/infback.c' object='infback.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o infback.lo `test -f '$(zlibdir)/infback.c' || echo '$(srcdir)/'`$(zlibdir)/infback.c
+
+inffast.lo: $(zlibdir)/inffast.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT inffast.lo -MD -MP -MF "$(DEPDIR)/inffast.Tpo" -c -o inffast.lo `test -f '$(zlibdir)/inffast.c' || echo '$(srcdir)/'`$(zlibdir)/inffast.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/inffast.Tpo" "$(DEPDIR)/inffast.Plo"; else rm -f "$(DEPDIR)/inffast.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(zlibdir)/inffast.c' object='inffast.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o inffast.lo `test -f '$(zlibdir)/inffast.c' || echo '$(srcdir)/'`$(zlibdir)/inffast.c
+
+inflate.lo: $(zlibdir)/inflate.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT inflate.lo -MD -MP -MF "$(DEPDIR)/inflate.Tpo" -c -o inflate.lo `test -f '$(zlibdir)/inflate.c' || echo '$(srcdir)/'`$(zlibdir)/inflate.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/inflate.Tpo" "$(DEPDIR)/inflate.Plo"; else rm -f "$(DEPDIR)/inflate.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(zlibdir)/inflate.c' object='inflate.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o inflate.lo `test -f '$(zlibdir)/inflate.c' || echo '$(srcdir)/'`$(zlibdir)/inflate.c
+
+inftrees.lo: $(zlibdir)/inftrees.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT inftrees.lo -MD -MP -MF "$(DEPDIR)/inftrees.Tpo" -c -o inftrees.lo `test -f '$(zlibdir)/inftrees.c' || echo '$(srcdir)/'`$(zlibdir)/inftrees.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/inftrees.Tpo" "$(DEPDIR)/inftrees.Plo"; else rm -f "$(DEPDIR)/inftrees.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(zlibdir)/inftrees.c' object='inftrees.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o inftrees.lo `test -f '$(zlibdir)/inftrees.c' || echo '$(srcdir)/'`$(zlibdir)/inftrees.c
+
+trees.lo: $(zlibdir)/trees.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT trees.lo -MD -MP -MF "$(DEPDIR)/trees.Tpo" -c -o trees.lo `test -f '$(zlibdir)/trees.c' || echo '$(srcdir)/'`$(zlibdir)/trees.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/trees.Tpo" "$(DEPDIR)/trees.Plo"; else rm -f "$(DEPDIR)/trees.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(zlibdir)/trees.c' object='trees.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o trees.lo `test -f '$(zlibdir)/trees.c' || echo '$(srcdir)/'`$(zlibdir)/trees.c
+
+uncompr.lo: $(zlibdir)/uncompr.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT uncompr.lo -MD -MP -MF "$(DEPDIR)/uncompr.Tpo" -c -o uncompr.lo `test -f '$(zlibdir)/uncompr.c' || echo '$(srcdir)/'`$(zlibdir)/uncompr.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/uncompr.Tpo" "$(DEPDIR)/uncompr.Plo"; else rm -f "$(DEPDIR)/uncompr.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(zlibdir)/uncompr.c' object='uncompr.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o uncompr.lo `test -f '$(zlibdir)/uncompr.c' || echo '$(srcdir)/'`$(zlibdir)/uncompr.c
+
+zutil.lo: $(zlibdir)/zutil.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT zutil.lo -MD -MP -MF "$(DEPDIR)/zutil.Tpo" -c -o zutil.lo `test -f '$(zlibdir)/zutil.c' || echo '$(srcdir)/'`$(zlibdir)/zutil.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/zutil.Tpo" "$(DEPDIR)/zutil.Plo"; else rm -f "$(DEPDIR)/zutil.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(zlibdir)/zutil.c' object='zutil.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o zutil.lo `test -f '$(zlibdir)/zutil.c' || echo '$(srcdir)/'`$(zlibdir)/zutil.c
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	if $(CXXCOMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" -c -o $@ $<; \
