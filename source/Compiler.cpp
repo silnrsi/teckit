@@ -32,6 +32,7 @@ Description:
 #include <iostream>
 #include <iomanip>
 #include <algorithm>
+#include <cstring>
 
 #include "zlib.h"
 

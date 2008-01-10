@@ -64,6 +64,7 @@ int	traceLevel = 1;
 #endif
 
 #include <cstdlib>
+#include <cstring>
 #include <algorithm>
 
 #include "zlib.h"
