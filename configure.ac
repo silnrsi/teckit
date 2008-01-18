@@ -4,13 +4,7 @@ AM_CONFIG_HEADER([config.h])
 AC_CONFIG_SRCDIR([source/UnicodeNames.cpp])
 AM_INIT_AUTOMAKE
 
-# Optional features
-#AC_ARG_ENABLE(grcompiler,
-#    AC_HELP_STRING([--enable-grcompiler],
-#        [build the Graphite font compiler. (default=no)]),
-#    [package_grcompiler_enabled=yes], [package_grcompiler_enabled=no])
 AM_MAINTAINER_MODE
-
 
 # Checks for programs.
 AC_PROG_CXX
@@ -23,11 +17,8 @@ AC_CHECK_LIB(z, compress)
 AM_CONDITIONAL(SYSTEM_ZLIB, test x$ac_cv_lib_z_compress = xyes)
 SYSTEM_ZLIB=no
 
-AC_CHECK_LIB(expat, XML_ExpatVersion)
-AM_CONDITIONAL(SYSTEM_EXPAT, test x$ac_cv_lib_expat_XML_ExpatVersion = xyes)
-
 # Checks for header files.
-#AC_HEADER_STDC
+AC_HEADER_STDC
 #AC_CHECK_HEADERS([limits.h malloc.h memory.h stddef.h stdlib.h string.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
@@ -80,6 +71,18 @@ if test "$enable_profilefn" = yes; then
   LIBS="$LIBS -g -finstrument-functions -lfnccheck "
 fi
 
+# We only want expat for sfconv, so remember the libs setting without it
+# (this seems really hacky, but I don't know the proper way....!)
+noexpat_CFLAGS="$CFLAGS"
+noexpat_LIBS="$LIBS"
+AC_CHECK_LIB(expat, XML_ExpatVersion)
+AM_CONDITIONAL(SYSTEM_EXPAT, test x$ac_cv_lib_expat_XML_ExpatVersion = xyes)
+expat_CFLAGS="$CFLAGS"
+expat_LIBS="$LIBS"
+CFLAGS="$noexpat_CFLAGS"
+LIBS="$noexpat_LIBS"
+AC_SUBST(expat_CFLAGS)
+AC_SUBST(expat_LIBS)
 
 AC_CONFIG_FILES([ Makefile lib/Makefile bin/Makefile docs/Makefile test/Makefile])
 

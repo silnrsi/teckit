@@ -7,7 +7,7 @@ AM_CPPFLAGS  = -I$(top_srcdir)/source/Public-headers
 expatdir = $(top_srcdir)/SFconv/expat
 
 if SYSTEM_EXPAT
-EXPAT_CFLAGS = -DXML_DTD
+EXPAT_CFLAGS = -DXML_DTD @expat_CFLAGS@
 EXPAT_SOURCES =
 else
 EXPAT_CFLAGS = -I$(expatdir)/xmlparse -I$(expatdir)/xmltok -DXML_DTD
@@ -17,21 +17,19 @@ EXPAT_SOURCES += $(expatdir)/xmltok/xmlrole.c
 EXPAT_SOURCES += $(expatdir)/xmltok/xmltok.c
 endif
 
-AM_CPPFLAGS  += $(EXPAT_CFLAGS)
+# AM_CPPFLAGS  += $(EXPAT_CFLAGS)
 AM_CFLAGS    = $(AM_CPPFLAGS)
 
 
 teckit_compile_SOURCES = $(top_srcdir)/source/Sample-tools/TECkit_Compile.cpp
+teckit_compile_LDADD = $(top_builddir)/lib/libTECkit_Compiler.la
 
 txtconv_SOURCES = $(top_srcdir)/source/Sample-tools/TxtConv.cpp
+txtconv_LDADD = $(top_builddir)/lib/libTECkit.la
 
 sfconv_SOURCES  = $(top_srcdir)/SFconv/SFconv.cpp
 sfconv_SOURCES += $(top_srcdir)/SFconv/ConvertUTF.c
 sfconv_SOURCES += $(EXPAT_SOURCES)
-
-teckit_compile_LDADD = $(top_builddir)/lib/libTECkit_Compiler.la
-
-txtconv_LDADD = $(top_builddir)/lib/libTECkit.la
-
-sfconv_LDADD = $(top_builddir)/lib/libTECkit.la
-
+sfconv_LDADD = $(top_builddir)/lib/libTECkit.la @expat_LIBS@
+sfconv_CPPFLAGS = $(AM_CPPFLAGS) $(EXPAT_CFLAGS)
+sfconv_CFLAGS = $(AM_CPPFLAGS) $(EXPAT_CFLAGS)
