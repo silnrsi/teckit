@@ -13,6 +13,7 @@ Description:
 -------------------------------------------------------------------------*/
 
 /*
+	2008-01-23  jk  revised endian-ness stuff to allow Universal build
 	2006-06-02	jk	added support for extended string rules (>255 per initial char)
 	2006-06-02	jk	fixed bug handling passes with no mapping rules
 	2006-01-12	jk	remove multi-char constants, use kTableType_XXX from TECkit_Format.h
@@ -26,23 +27,26 @@ Description:
 
 #ifdef HAVE_CONFIG_H
 #	include "config.h"	/* a Unix-ish setup where we have config.h available */
-#else
-#	if	(defined __dest_os && (__dest_os == __win32_os)) || defined WIN32	/* Windows target: little-endian */
+#endif
+
+#if	(defined(__dest_os) && (__dest_os == __win32_os)) || defined(WIN32)	/* Windows target: little-endian */
+#	undef WORDS_BIGENDIAN
+#endif
+
+#ifdef __APPLE__
+#include <TargetConditionals.h>
+#endif
+
+#if defined(TARGET_RT_BIG_ENDIAN)	/* the CodeWarrior prefix files or Apple TargetConditionals.h sets this */
+#	if TARGET_RT_BIG_ENDIAN
 #		undef WORDS_BIGENDIAN
+#		define WORDS_BIGENDIAN 1
 #	else
-#		if (defined TARGET_RT_BIG_ENDIAN)	/* the CodeWarrior prefix files set this */
-#			if TARGET_RT_BIG_ENDIAN
-#				define WORDS_BIGENDIAN 1
-#			else
-#				undef WORDS_BIGENDIAN
-#			endif
-#		else
-#			error Unsure about endianness!
-#		endif
+#		undef WORDS_BIGENDIAN
 #	endif
 #endif
 
-#if	(defined __dest_os && (__dest_os == __win32_os)) || defined WIN32
+#if	(defined(__dest_os) && (__dest_os == __win32_os)) || defined(WIN32)
 #	define WIN32_LEAN_AND_MEAN
 #	define NOSERVICE
 #	define NOMCX

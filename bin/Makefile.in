@@ -36,12 +36,19 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
+target_triplet = @target@
 bin_PROGRAMS = teckit_compile$(EXEEXT) txtconv$(EXEEXT) \
 	sfconv$(EXEEXT)
+@OLD_LIB_NAMES_FALSE@teckit_compile_DEPENDENCIES = $(top_builddir)/lib/libTECkit_Compiler.la
+@OLD_LIB_NAMES_FALSE@txtconv_DEPENDENCIES =  \
+@OLD_LIB_NAMES_FALSE@	$(top_builddir)/lib/libTECkit.la
+@OLD_LIB_NAMES_FALSE@sfconv_DEPENDENCIES =  \
+@OLD_LIB_NAMES_FALSE@	$(top_builddir)/lib/libTECkit.la
 subdir = bin
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-am__aclocal_m4_deps = $(top_srcdir)/configure.ac
+am__aclocal_m4_deps = $(top_srcdir)/ax_misc.m4 \
+	$(top_srcdir)/ax_prog_rc.m4 $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
@@ -62,14 +69,10 @@ am__sfconv_SOURCES_DIST = $(top_srcdir)/SFconv/SFconv.cpp \
 am_sfconv_OBJECTS = sfconv-SFconv.$(OBJEXT) \
 	sfconv-ConvertUTF.$(OBJEXT) $(am__objects_1)
 sfconv_OBJECTS = $(am_sfconv_OBJECTS)
-sfconv_DEPENDENCIES = $(top_builddir)/lib/libTECkit.la
 am_teckit_compile_OBJECTS = TECkit_Compile.$(OBJEXT)
 teckit_compile_OBJECTS = $(am_teckit_compile_OBJECTS)
-teckit_compile_DEPENDENCIES =  \
-	$(top_builddir)/lib/libTECkit_Compiler.la
 am_txtconv_OBJECTS = TxtConv.$(OBJEXT)
 txtconv_OBJECTS = $(am_txtconv_OBJECTS)
-txtconv_DEPENDENCIES = $(top_builddir)/lib/libTECkit.la
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -100,6 +103,7 @@ ACLOCAL = @ACLOCAL@
 AMDEP_FALSE = @AMDEP_FALSE@
 AMDEP_TRUE = @AMDEP_TRUE@
 AMTAR = @AMTAR@
+AM_RCFLAGS = @AM_RCFLAGS@
 AR = @AR@
 AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
@@ -141,6 +145,8 @@ MAINTAINER_MODE_FALSE = @MAINTAINER_MODE_FALSE@
 MAINTAINER_MODE_TRUE = @MAINTAINER_MODE_TRUE@
 MAKEINFO = @MAKEINFO@
 OBJEXT = @OBJEXT@
+OLD_LIB_NAMES_FALSE = @OLD_LIB_NAMES_FALSE@
+OLD_LIB_NAMES_TRUE = @OLD_LIB_NAMES_TRUE@
 PACKAGE = @PACKAGE@
 PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
 PACKAGE_NAME = @PACKAGE_NAME@
@@ -149,6 +155,8 @@ PACKAGE_TARNAME = @PACKAGE_TARNAME@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
 RANLIB = @RANLIB@
+RC = @RC@
+RCFLAGS = @RCFLAGS@
 SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
@@ -206,10 +214,15 @@ psdir = @psdir@
 sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
+target = @target@
 target_alias = @target_alias@
+target_cpu = @target_cpu@
+target_os = @target_os@
+target_vendor = @target_vendor@
 AUTOMAKE_OPTIONS = 1.6
 AM_CPPFLAGS = -I$(top_srcdir)/source/Public-headers
 expatdir = $(top_srcdir)/SFconv/expat
+tool_src = $(top_srcdir)/source/Sample-tools
 @SYSTEM_EXPAT_FALSE@EXPAT_CFLAGS = -I$(expatdir)/xmlparse -I$(expatdir)/xmltok -DXML_DTD
 @SYSTEM_EXPAT_TRUE@EXPAT_CFLAGS = -DXML_DTD @expat_CFLAGS@
 @SYSTEM_EXPAT_FALSE@EXPAT_SOURCES = $(expatdir)/xmlparse/xmlparse.c \
@@ -221,14 +234,25 @@ expatdir = $(top_srcdir)/SFconv/expat
 # AM_CPPFLAGS  += $(EXPAT_CFLAGS)
 AM_CFLAGS = $(AM_CPPFLAGS)
 teckit_compile_SOURCES = $(top_srcdir)/source/Sample-tools/TECkit_Compile.cpp
-teckit_compile_LDADD = $(top_builddir)/lib/libTECkit_Compiler.la
 txtconv_SOURCES = $(top_srcdir)/source/Sample-tools/TxtConv.cpp
-txtconv_LDADD = $(top_builddir)/lib/libTECkit.la
 sfconv_SOURCES = $(top_srcdir)/SFconv/SFconv.cpp \
 	$(top_srcdir)/SFconv/ConvertUTF.c $(EXPAT_SOURCES)
-sfconv_LDADD = $(top_builddir)/lib/libTECkit.la @expat_LIBS@
 sfconv_CPPFLAGS = $(AM_CPPFLAGS) $(EXPAT_CFLAGS)
 sfconv_CFLAGS = $(AM_CPPFLAGS) $(EXPAT_CFLAGS)
+@OLD_LIB_NAMES_FALSE@teckit_compile_LDADD = $(top_builddir)/lib/libTECkit_Compiler.la
+@OLD_LIB_NAMES_TRUE@teckit_compile_LDADD = $(top_builddir)/lib/TECkit_Compiler_x86.la
+@OLD_LIB_NAMES_FALSE@txtconv_LDADD = $(top_builddir)/lib/libTECkit.la
+@OLD_LIB_NAMES_TRUE@txtconv_LDADD = $(top_builddir)/lib/TECkit_x86.la
+@OLD_LIB_NAMES_FALSE@sfconv_LDADD = $(top_builddir)/lib/libTECkit.la @expat_LIBS@
+@OLD_LIB_NAMES_TRUE@sfconv_LDADD = $(top_builddir)/lib/TECkit_x86.la @expat_LIBS@
+
+# --> RC Support
+@OLD_LIB_NAMES_TRUE@teckit_compile_DEPENDENCIES = TECkit_Compile_ver.o
+@OLD_LIB_NAMES_TRUE@teckit_compile_LDFLAGS = -Wl,TECkit_Compile_ver.o
+@OLD_LIB_NAMES_TRUE@txtconv_DEPENDENCIES = TxtConv_ver.o
+@OLD_LIB_NAMES_TRUE@txtconv_LDFLAGS = -Wl,TxtConv_ver.o
+@OLD_LIB_NAMES_TRUE@sfconv_DEPENDENCIES = SFconv_ver.o
+@OLD_LIB_NAMES_TRUE@sfconv_LDFLAGS = -Wl,SFconv_ver.o
 all: all-am
 
 .SUFFIXES:
@@ -647,6 +671,12 @@ uninstall-am: uninstall-binPROGRAMS uninstall-info-am
 	pdf pdf-am ps ps-am tags uninstall uninstall-am \
 	uninstall-binPROGRAMS uninstall-info-am
 
+@OLD_LIB_NAMES_TRUE@TECkit_Compile_ver.o: $(tool_src)/TECkit_Compile_ver.rc
+@OLD_LIB_NAMES_TRUE@	$(RC) $(AM_RCFLAGS) $(RCFLAGS) -o $@ $<
+@OLD_LIB_NAMES_TRUE@TxtConv_ver.o: $(tool_src)/TxtConv_ver.rc
+@OLD_LIB_NAMES_TRUE@	$(RC) $(AM_RCFLAGS) $(RCFLAGS) -o $@ $<
+@OLD_LIB_NAMES_TRUE@SFconv_ver.o: $(top_srcdir)/SFconv/SFconv_ver.rc
+@OLD_LIB_NAMES_TRUE@	$(RC) $(AM_RCFLAGS) $(RCFLAGS) -I$(tool_src) -o $@ $<
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

@@ -7454,3 +7454,5 @@ AC_SUBST([am__tar])
 AC_SUBST([am__untar])
 ]) # _AM_PROG_TAR
 
+m4_include([ax_misc.m4])
+m4_include([ax_prog_rc.m4])

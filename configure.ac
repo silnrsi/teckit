@@ -2,6 +2,8 @@ AC_PREREQ(2.54)
 AC_INIT(teckit, 2.1.3, jonathan_kew@sil.org)
 AM_CONFIG_HEADER([config.h])
 AC_CONFIG_SRCDIR([source/UnicodeNames.cpp])
+AC_CANONICAL_SYSTEM
+
 AM_INIT_AUTOMAKE
 
 AM_MAINTAINER_MODE
@@ -11,6 +13,19 @@ AC_PROG_CXX
 AC_PROG_CC
 AC_PROG_INSTALL
 AC_PROG_LIBTOOL
+
+if test "${target_os}" = "mingw32"; then
+AC_PROG_RC
+fi
+
+AC_ARG_WITH(old-lib-names,
+[  --with-old-lib-names    Use old library names (for Windows only)],
+[case "${withval}" in
+  yes) oldnames=true ;;
+  no)  oldnames=false ;;
+  *) AC_MSG_ERROR(bad value ${withval} for --with-old-lib-names) ;;
+esac],[oldnames=false])
+AM_CONDITIONAL(OLD_LIB_NAMES, test x$oldnames = xtrue)
 
 # Checks for libraries.
 AC_CHECK_LIB(z, compress)
