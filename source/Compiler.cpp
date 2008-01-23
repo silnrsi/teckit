@@ -1450,7 +1450,7 @@ Compiler::Compiler(const char* txt, UInt32 len, char inForm, bool cmp, bool genX
 					int	result = compress2(dest + 8, &destLen, compiledTable, compiledSize, Z_BEST_COMPRESSION);
 					if (result == Z_OK) {
 						destLen += 8;
-						realloc(dest, destLen);
+						dest = (Byte*)realloc(dest, destLen); // shrink dest to fit
 						WRITE(((FileHeader*)dest)->type, kMagicNumberCmp);
 						WRITE(((FileHeader*)dest)->version, compiledSize);
 						free(compiledTable);
