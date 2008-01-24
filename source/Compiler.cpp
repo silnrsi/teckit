@@ -2269,6 +2269,24 @@ Compiler::AppendClass(const string& className, bool negate)
 	AppendToRule(item);
 }
 
+bool
+Compiler::tagExists(bool rhs, const string& tag)
+{
+	if (rhs) {
+		if (   (findTag(tag, currentRule.rhsString) != -1)
+			|| (findTag(tag, currentRule.rhsPreContext) != -1)
+			|| (findTag(tag, currentRule.rhsPostContext) != -1))
+			return true;
+	}
+	else {
+		if (   (findTag(tag, currentRule.lhsString) != -1)
+			|| (findTag(tag, currentRule.lhsPreContext) != -1)
+			|| (findTag(tag, currentRule.lhsPostContext) != -1))
+			return true;
+	}
+	return false;
+}
+
 void
 Compiler::AssignTag(const string& tag)
 {
@@ -2276,29 +2294,45 @@ Compiler::AssignTag(const string& tag)
 		Error("item tag doesn't seem to be attached to a rule item", tag.c_str());
 		return;
 	}
-	Item*	item = 0;
+	Item*	item = NULL;
 	switch (ruleState) {
 		default:
-			// this can't happen
-			break;
+			Error("this can't happen (AssignTag)");
+			return;
 		case inLHSString:
+			if (tagExists(false, tag))
+				break;
 			item = &currentRule.lhsString.back();
 			break;
 		case inLHSPreContext:
+			if (tagExists(false, tag))
+				break;
 			item = &currentRule.lhsPreContext.back();
 			break;
 		case inLHSPostContext:
+			if (tagExists(false, tag))
+				break;
 			item = &currentRule.lhsPostContext.back();
 			break;
 		case inRHSString:
+			if (tagExists(true, tag))
+				break;
 			item = &currentRule.rhsString.back();
 			break;
 		case inRHSPreContext:
+			if (tagExists(true, tag))
+				break;
 			item = &currentRule.rhsPreContext.back();
 			break;
 		case inRHSPostContext:
+			if (tagExists(true, tag))
+				break;
 			item = &currentRule.rhsPostContext.back();
 			break;
+	}
+	if (item == NULL) {
+		Error("duplicate tag (ignored)", tag.c_str());
+		return;
 	}
 	if (item->tag.length() > 0) {
 		Error("rule item already has a tag", tag.c_str());

@@ -283,6 +283,7 @@ protected:
 	void			AppendSpecial(UInt8 type, bool negate = false);
 	void			AppendClass(const string& className, bool negate = false);
 	void			AppendToRule(const Item& item);
+	bool			tagExists(bool rhs, const string& tag);
 	void			AssignTag(const string& tag);
 	void			SetMinMax(int repeatMin, int repeatMax);
 	void			FinishPass();
