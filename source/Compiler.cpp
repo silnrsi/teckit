@@ -2408,7 +2408,8 @@ Compiler::setGroupPointers(vector<Item>::iterator b, vector<Item>::iterator e, i
 // set up the fwd and back pointers on bgroup/or/egroup
 // and propagate repeat counts from egroup to bgroup
 	vector<Item>::iterator	base = b;
-	vector<Item>::iterator	altStart = e; // initialize to an impossible value (but legal iterator)
+	vector<Item>::iterator	altStart = startIndex > 0 ? base - 1 : e;
+	bool altSeen = false;
 	while (b != e) {
 		if (b->repeatMin == 0xff)
 			b->repeatMin = 1;
@@ -2422,11 +2423,8 @@ Compiler::setGroupPointers(vector<Item>::iterator b, vector<Item>::iterator e, i
 				break;
 			
 			case kMatchElem_Type_OR:
-				if (altStart == e) {
-					Error("this can't happen (setGroupPointers 0)");
-					return;
-				}
-				if (startIndex > 0 && (altStart->type == kMatchElem_Type_OR || altStart->type == kMatchElem_Type_BGroup))
+				// if startIndex > 0, then initial altStart will be valid
+				if ((startIndex > 0 || altSeen) && (altStart->type == kMatchElem_Type_OR || altStart->type == kMatchElem_Type_BGroup))
 					altStart->next = startIndex + (b - base);
 				else {
 					Error("this can't happen (setGroupPointers 1)");
@@ -2434,6 +2432,7 @@ Compiler::setGroupPointers(vector<Item>::iterator b, vector<Item>::iterator e, i
 				}
 				altStart = b;
 				altStart->start = startIndex - 1;
+				altSeen = true;
 				break;
 
 			case kMatchElem_Type_EGroup:
@@ -2474,8 +2473,8 @@ Compiler::setGroupPointers(vector<Item>::iterator b, vector<Item>::iterator e, i
 		}
 		++b;
 	}
-	if (altStart != e) // check if altStart was ever actually set
-		altStart->next = startIndex + (b - base);	// if so, set NEXT pointer of last OR
+	if (altSeen)
+		altStart->next = startIndex + (b - base);	// set NEXT pointer of last OR
 	if (startIndex > 0) {	// we were handling a group, so set pointers of EGroup
 		if (b->type == kMatchElem_Type_EGroup)
 			b->start = startIndex - 1;
