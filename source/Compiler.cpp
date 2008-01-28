@@ -2408,7 +2408,7 @@ Compiler::setGroupPointers(vector<Item>::iterator b, vector<Item>::iterator e, i
 // set up the fwd and back pointers on bgroup/or/egroup
 // and propagate repeat counts from egroup to bgroup
 	vector<Item>::iterator	base = b;
-	vector<Item>::iterator	altStart = base - 1;
+	vector<Item>::iterator	altStart = e; // initialize to an impossible value (but legal iterator)
 	while (b != e) {
 		if (b->repeatMin == 0xff)
 			b->repeatMin = 1;
@@ -2422,6 +2422,10 @@ Compiler::setGroupPointers(vector<Item>::iterator b, vector<Item>::iterator e, i
 				break;
 			
 			case kMatchElem_Type_OR:
+				if (altStart == e) {
+					Error("this can't happen (setGroupPointers 0)");
+					return;
+				}
 				if (startIndex > 0 && (altStart->type == kMatchElem_Type_OR || altStart->type == kMatchElem_Type_BGroup))
 					altStart->next = startIndex + (b - base);
 				else {
@@ -2470,8 +2474,8 @@ Compiler::setGroupPointers(vector<Item>::iterator b, vector<Item>::iterator e, i
 		}
 		++b;
 	}
-	if (altStart != base - 1)
-		altStart->next = startIndex + (b - base);	// set NEXT pointer of last OR
+	if (altStart != e) // check if altStart was ever actually set
+		altStart->next = startIndex + (b - base);	// if so, set NEXT pointer of last OR
 	if (startIndex > 0) {	// we were handling a group, so set pointers of EGroup
 		if (b->type == kMatchElem_Type_EGroup)
 			b->start = startIndex - 1;
@@ -2498,7 +2502,6 @@ Compiler::calcMaxLen(vector<Item>::iterator b, vector<Item>::iterator e)
 	int	len = 0;
 	int	maxLen = 0;
 	vector<Item>::iterator	base = b;
-	vector<Item>::iterator	altStart = base - 1;
 	while (b != e) {
 		switch (b->type) {
 			case 0:	// literal
@@ -2512,7 +2515,6 @@ Compiler::calcMaxLen(vector<Item>::iterator b, vector<Item>::iterator e)
 				if (len > maxLen)
 					maxLen = len;
 				len = 0;
-				altStart = b;
 				break;
 
 			case kMatchElem_Type_EGroup:
@@ -2665,9 +2667,17 @@ Compiler::associateItems(vector<Rule>& rules, bool fromUni, bool toUni)
 			if (errorCount > 0)
 				break;
 			ir->index = matchIndex;
-			vector<Item>::const_iterator im = m.begin() + ir->index;
+			vector<Item>::const_iterator im;
+			if (ir->index < m.end() - m.begin())
+				im = m.begin() + ir->index;
+			else
+				im = m.end();
 			switch (ir->type) {
 				case kMatchElem_Type_Class:
+					if (im == m.end()) {
+						Error("class in replacement does not have corresponding match item", 0, i->lineNumber);
+						break;
+					}
 					switch (im->type) {
 						case kMatchElem_Type_Class:
 							{
@@ -2686,9 +2696,13 @@ Compiler::associateItems(vector<Rule>& rules, bool fromUni, bool toUni)
 					
 				case kMatchElem_Type_Copy:
 					// COPY can correspond to anything except COPY on LHS
+					if (im == m.end()) {
+						Error("COPY in replacement does not have corresponding match item", 0, i->lineNumber);
+						break;
+					}
 					switch (im->type) {
 						case kMatchElem_Type_Copy:	
-							Error("can't associate copy elements", 0, i->lineNumber);
+							Error("can't associate COPY elements", 0, i->lineNumber);
 							break;
 						case kMatchElem_Type_EGroup:
 							// change replacement item to point to the BGroup instead
@@ -2717,6 +2731,10 @@ Compiler::associateItems(vector<Rule>& rules, bool fromUni, bool toUni)
 
 				case kMatchElem_Type_ANY:
 					// ANY on RHS can only correspond with LITERAL or ANY on LHS
+					if (im == m.end()) {
+						Error("ANY in replacement does not have corresponding match item", 0, i->lineNumber);
+						break;
+					}
 					switch (im->type) {
 						case 0:
 						case kMatchElem_Type_ANY:
