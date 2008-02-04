@@ -327,7 +327,7 @@ protected:
 				table.append(1, *xp);
  			}
 #endif
-	};
+	}
 
 	vector<Item>	reverseContext(const vector<Item>& ctx);
 	void			align(string& table, int alignment);
