@@ -1,5 +1,5 @@
 AC_PREREQ(2.54)
-AC_INIT(teckit, 2.1.3, jonathan_kew@sil.org)
+AC_INIT(teckit, 2.5.1, jonathan_kew@sil.org)
 AM_CONFIG_HEADER([config.h])
 AC_CONFIG_SRCDIR([source/UnicodeNames.cpp])
 AC_CANONICAL_SYSTEM
@@ -11,6 +11,7 @@ AM_MAINTAINER_MODE
 # Checks for programs.
 AC_PROG_CXX
 AC_PROG_CC
+AM_PROG_CC_C_O
 AC_PROG_INSTALL
 AC_PROG_LIBTOOL
 
@@ -34,21 +35,9 @@ SYSTEM_ZLIB=no
 
 # Checks for header files.
 AC_HEADER_STDC
-#AC_CHECK_HEADERS([limits.h malloc.h memory.h stddef.h stdlib.h string.h])
+AC_CHECK_HEADERS([stdlib.h string.h])
 
-# Checks for typedefs, structures, and compiler characteristics.
-#AC_TYPE_SIZE_T
-#AC_STRUCT_TM
-#AC_CHECK_SIZEOF(wchar_t)
-#AC_SUBST(SIZEOF_WCHAR_T)
 
-# Checks for library functions.
-#AC_FUNC_ERROR_AT_LINE
-#AC_FUNC_MALLOC
-#AC_FUNC_MEMCMP
-#AC_FUNC_REALLOC
-#AC_FUNC_VPRINTF
-#AC_CHECK_FUNCS([isascii memmove memset strcasecmp strchr strrchr strtoul])
 AC_C_BIGENDIAN
 
 # Enable debug
