@@ -8,7 +8,6 @@ mkdir mac-build
 cd mac-build
 
 # configure for building Universal binaries
-#../configure CC='gcc -arch ppc -arch i386' CXX='g++ -arch ppc -arch i386' CXXCPP='g++ -E' CPP='gcc -E' --disable-dependency-tracking LDFLAGS='-arch ppc -arch i386'
 ../configure CFLAGS='-arch ppc -arch i386' CXXFLAGS='-arch ppc -arch i386' LDFLAGS='-arch ppc -arch i386' --disable-dependency-tracking
 make
 make install DESTDIR=`pwd`/inst

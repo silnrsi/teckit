@@ -31,7 +31,6 @@ AM_CONDITIONAL(OLD_LIB_NAMES, test x$oldnames = xtrue)
 # Checks for libraries.
 AC_CHECK_LIB(z, compress)
 AM_CONDITIONAL(SYSTEM_ZLIB, test x$ac_cv_lib_z_compress = xyes)
-SYSTEM_ZLIB=no
 
 # Checks for header files.
 AC_HEADER_STDC

@@ -43,8 +43,8 @@ bin_PROGRAMS = teckit_compile$(EXEEXT) txtconv$(EXEEXT) \
 subdir = bin
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-am__aclocal_m4_deps = $(top_srcdir)/ax_misc.m4 \
-	$(top_srcdir)/ax_prog_rc.m4 $(top_srcdir)/configure.ac
+am__aclocal_m4_deps = $(top_srcdir)/m4/ax_misc.m4 \
+	$(top_srcdir)/m4/ax_prog_rc.m4 $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs

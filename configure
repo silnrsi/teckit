@@ -20419,7 +20419,6 @@ else
   SYSTEM_ZLIB_FALSE=
 fi
 
-SYSTEM_ZLIB=no
 
 # Checks for header files.
 { $as_echo "$as_me:$LINENO: checking for ANSI C header files" >&5
