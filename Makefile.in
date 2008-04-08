@@ -192,6 +192,7 @@ target_vendor = @target_vendor@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AUTOMAKE_OPTIONS = 1.6
+ACLOCAL_AMFLAGS = -I m4
 SUBDIRS = lib bin docs test
 EXTRA_DIST = license/License_CPLv05.txt license/License_LGPLv21.txt \
 	license/LICENSING.txt
