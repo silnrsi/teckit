@@ -2,7 +2,7 @@
 
 # Any existing mac-build and teckit-mac/{bin,lib} directories will be deleted.
 
-rm -rf mac-build teckit-mac-bin
+rm -rf mac-build teckit-mac
 
 mkdir mac-build
 cd mac-build

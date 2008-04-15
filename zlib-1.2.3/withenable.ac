@@ -1,0 +1,8 @@
+AC_ARG_WITH([system_zlib],
+[  --without-system-zlib   Don't use installed zlib library],,[with_system_zlib=yes])
+
+AC_ARG_WITH([zlib_libdir],
+[  --with-zlib-libdir=DIR  Specify directory where the zlib library resides.])
+
+AC_ARG_WITH([zlib_include],
+[  --with-zlib-include=DIR Specify the zlib header files location.])

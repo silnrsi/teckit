@@ -29,8 +29,20 @@ esac],[oldnames=false])
 AM_CONDITIONAL(OLD_LIB_NAMES, test x$oldnames = xtrue)
 
 # Checks for libraries.
-AC_CHECK_LIB(z, compress)
-AM_CONDITIONAL(SYSTEM_ZLIB, test x$ac_cv_lib_z_compress = xyes)
+if test x$enable_tetex_build = xyes; then
+  AC_MSG_NOTICE([Building within teTeX/TeXLive])
+  sinclude(../zlib/withenable.ac)
+  sinclude(../zlib/zlib.ac)
+  ZLIBSRCDIR="\$(top_srcdir)"/../zlib
+else
+  AC_MSG_NOTICE([Not doing a teTeX/TeXLive-style build])
+  sinclude(zlib-1.2.3/withenable.ac)
+  sinclude(zlib-1.2.3/zlib.ac)
+  ZLIBSRCDIR="\$(top_srcdir)"/zlib-1.2.3
+fi
+AC_SUBST(ZLIBSRCDIR)
+
+AM_CONDITIONAL(SYSTEM_ZLIB, test x$using_system_zlib = xyes)
 
 # Checks for header files.
 AC_HEADER_STDC

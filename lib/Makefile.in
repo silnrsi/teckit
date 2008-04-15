@@ -41,7 +41,9 @@ DIST_COMMON = $(noinst_HEADERS) $(pkginclude_HEADERS) \
 subdir = lib
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/ax_misc.m4 \
-	$(top_srcdir)/m4/ax_prog_rc.m4 $(top_srcdir)/configure.ac
+	$(top_srcdir)/m4/ax_prog_rc.m4 \
+	$(top_srcdir)/zlib-1.2.3/withenable.ac \
+	$(top_srcdir)/zlib-1.2.3/zlib.ac $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
@@ -58,14 +60,23 @@ libLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(lib_LTLIBRARIES)
 TECkit_Compiler_x86_la_LIBADD =
 am__TECkit_Compiler_x86_la_SOURCES_DIST = $(teckitdir)/Compiler.cpp \
-	$(zlibdir)/adler32.c $(zlibdir)/compress.c $(zlibdir)/crc32.c \
-	$(zlibdir)/deflate.c $(zlibdir)/infback.c $(zlibdir)/inffast.c \
-	$(zlibdir)/inflate.c $(zlibdir)/inftrees.c $(zlibdir)/trees.c \
-	$(zlibdir)/uncompr.c $(zlibdir)/zutil.c \
-	$(teckitdir)/UnicodeNames.cpp
-@SYSTEM_ZLIB_FALSE@am__objects_1 = adler32.lo compress.lo crc32.lo \
-@SYSTEM_ZLIB_FALSE@	deflate.lo infback.lo inffast.lo inflate.lo \
-@SYSTEM_ZLIB_FALSE@	inftrees.lo trees.lo uncompr.lo zutil.lo
+	$(ZLIBSRCDIR)/adler32.c $(ZLIBSRCDIR)/compress.c \
+	$(ZLIBSRCDIR)/crc32.c $(ZLIBSRCDIR)/deflate.c \
+	$(ZLIBSRCDIR)/infback.c $(ZLIBSRCDIR)/inffast.c \
+	$(ZLIBSRCDIR)/inflate.c $(ZLIBSRCDIR)/inftrees.c \
+	$(ZLIBSRCDIR)/trees.c $(ZLIBSRCDIR)/uncompr.c \
+	$(ZLIBSRCDIR)/zutil.c $(teckitdir)/UnicodeNames.cpp
+@SYSTEM_ZLIB_FALSE@am__objects_1 = TECkit_Compiler_x86_la-adler32.lo \
+@SYSTEM_ZLIB_FALSE@	TECkit_Compiler_x86_la-compress.lo \
+@SYSTEM_ZLIB_FALSE@	TECkit_Compiler_x86_la-crc32.lo \
+@SYSTEM_ZLIB_FALSE@	TECkit_Compiler_x86_la-deflate.lo \
+@SYSTEM_ZLIB_FALSE@	TECkit_Compiler_x86_la-infback.lo \
+@SYSTEM_ZLIB_FALSE@	TECkit_Compiler_x86_la-inffast.lo \
+@SYSTEM_ZLIB_FALSE@	TECkit_Compiler_x86_la-inflate.lo \
+@SYSTEM_ZLIB_FALSE@	TECkit_Compiler_x86_la-inftrees.lo \
+@SYSTEM_ZLIB_FALSE@	TECkit_Compiler_x86_la-trees.lo \
+@SYSTEM_ZLIB_FALSE@	TECkit_Compiler_x86_la-uncompr.lo \
+@SYSTEM_ZLIB_FALSE@	TECkit_Compiler_x86_la-zutil.lo
 @OLD_LIB_NAMES_TRUE@am_TECkit_Compiler_x86_la_OBJECTS = Compiler.lo \
 @OLD_LIB_NAMES_TRUE@	$(am__objects_1) UnicodeNames.lo
 TECkit_Compiler_x86_la_OBJECTS = $(am_TECkit_Compiler_x86_la_OBJECTS)
@@ -75,13 +86,25 @@ TECkit_Compiler_x86_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 @OLD_LIB_NAMES_TRUE@am_TECkit_Compiler_x86_la_rpath = -rpath $(libdir)
 TECkit_x86_la_LIBADD =
 am__TECkit_x86_la_SOURCES_DIST = $(teckitdir)/Engine.cpp \
-	$(teckitdir)/Engine_ver.rc $(zlibdir)/adler32.c \
-	$(zlibdir)/compress.c $(zlibdir)/crc32.c $(zlibdir)/deflate.c \
-	$(zlibdir)/infback.c $(zlibdir)/inffast.c $(zlibdir)/inflate.c \
-	$(zlibdir)/inftrees.c $(zlibdir)/trees.c $(zlibdir)/uncompr.c \
-	$(zlibdir)/zutil.c
+	$(teckitdir)/Engine_ver.rc $(ZLIBSRCDIR)/adler32.c \
+	$(ZLIBSRCDIR)/compress.c $(ZLIBSRCDIR)/crc32.c \
+	$(ZLIBSRCDIR)/deflate.c $(ZLIBSRCDIR)/infback.c \
+	$(ZLIBSRCDIR)/inffast.c $(ZLIBSRCDIR)/inflate.c \
+	$(ZLIBSRCDIR)/inftrees.c $(ZLIBSRCDIR)/trees.c \
+	$(ZLIBSRCDIR)/uncompr.c $(ZLIBSRCDIR)/zutil.c
+@SYSTEM_ZLIB_FALSE@am__objects_2 = TECkit_x86_la-adler32.lo \
+@SYSTEM_ZLIB_FALSE@	TECkit_x86_la-compress.lo \
+@SYSTEM_ZLIB_FALSE@	TECkit_x86_la-crc32.lo \
+@SYSTEM_ZLIB_FALSE@	TECkit_x86_la-deflate.lo \
+@SYSTEM_ZLIB_FALSE@	TECkit_x86_la-infback.lo \
+@SYSTEM_ZLIB_FALSE@	TECkit_x86_la-inffast.lo \
+@SYSTEM_ZLIB_FALSE@	TECkit_x86_la-inflate.lo \
+@SYSTEM_ZLIB_FALSE@	TECkit_x86_la-inftrees.lo \
+@SYSTEM_ZLIB_FALSE@	TECkit_x86_la-trees.lo \
+@SYSTEM_ZLIB_FALSE@	TECkit_x86_la-uncompr.lo \
+@SYSTEM_ZLIB_FALSE@	TECkit_x86_la-zutil.lo
 @OLD_LIB_NAMES_TRUE@am_TECkit_x86_la_OBJECTS = Engine.lo \
-@OLD_LIB_NAMES_TRUE@	$(am__objects_1)
+@OLD_LIB_NAMES_TRUE@	$(am__objects_2)
 TECkit_x86_la_OBJECTS = $(am_TECkit_x86_la_OBJECTS)
 TECkit_x86_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
@@ -89,12 +112,25 @@ TECkit_x86_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 @OLD_LIB_NAMES_TRUE@am_TECkit_x86_la_rpath = -rpath $(libdir)
 libTECkit_la_LIBADD =
 am__libTECkit_la_SOURCES_DIST = $(teckitdir)/Engine.cpp \
-	$(zlibdir)/adler32.c $(zlibdir)/compress.c $(zlibdir)/crc32.c \
-	$(zlibdir)/deflate.c $(zlibdir)/infback.c $(zlibdir)/inffast.c \
-	$(zlibdir)/inflate.c $(zlibdir)/inftrees.c $(zlibdir)/trees.c \
-	$(zlibdir)/uncompr.c $(zlibdir)/zutil.c
+	$(ZLIBSRCDIR)/adler32.c $(ZLIBSRCDIR)/compress.c \
+	$(ZLIBSRCDIR)/crc32.c $(ZLIBSRCDIR)/deflate.c \
+	$(ZLIBSRCDIR)/infback.c $(ZLIBSRCDIR)/inffast.c \
+	$(ZLIBSRCDIR)/inflate.c $(ZLIBSRCDIR)/inftrees.c \
+	$(ZLIBSRCDIR)/trees.c $(ZLIBSRCDIR)/uncompr.c \
+	$(ZLIBSRCDIR)/zutil.c
+@SYSTEM_ZLIB_FALSE@am__objects_3 = libTECkit_la-adler32.lo \
+@SYSTEM_ZLIB_FALSE@	libTECkit_la-compress.lo \
+@SYSTEM_ZLIB_FALSE@	libTECkit_la-crc32.lo \
+@SYSTEM_ZLIB_FALSE@	libTECkit_la-deflate.lo \
+@SYSTEM_ZLIB_FALSE@	libTECkit_la-infback.lo \
+@SYSTEM_ZLIB_FALSE@	libTECkit_la-inffast.lo \
+@SYSTEM_ZLIB_FALSE@	libTECkit_la-inflate.lo \
+@SYSTEM_ZLIB_FALSE@	libTECkit_la-inftrees.lo \
+@SYSTEM_ZLIB_FALSE@	libTECkit_la-trees.lo \
+@SYSTEM_ZLIB_FALSE@	libTECkit_la-uncompr.lo \
+@SYSTEM_ZLIB_FALSE@	libTECkit_la-zutil.lo
 @OLD_LIB_NAMES_FALSE@am_libTECkit_la_OBJECTS = Engine.lo \
-@OLD_LIB_NAMES_FALSE@	$(am__objects_1)
+@OLD_LIB_NAMES_FALSE@	$(am__objects_3)
 libTECkit_la_OBJECTS = $(am_libTECkit_la_OBJECTS)
 libTECkit_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
@@ -102,13 +138,25 @@ libTECkit_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 @OLD_LIB_NAMES_FALSE@am_libTECkit_la_rpath = -rpath $(libdir)
 libTECkit_Compiler_la_LIBADD =
 am__libTECkit_Compiler_la_SOURCES_DIST = $(teckitdir)/Compiler.cpp \
-	$(zlibdir)/adler32.c $(zlibdir)/compress.c $(zlibdir)/crc32.c \
-	$(zlibdir)/deflate.c $(zlibdir)/infback.c $(zlibdir)/inffast.c \
-	$(zlibdir)/inflate.c $(zlibdir)/inftrees.c $(zlibdir)/trees.c \
-	$(zlibdir)/uncompr.c $(zlibdir)/zutil.c \
-	$(teckitdir)/UnicodeNames.cpp
+	$(ZLIBSRCDIR)/adler32.c $(ZLIBSRCDIR)/compress.c \
+	$(ZLIBSRCDIR)/crc32.c $(ZLIBSRCDIR)/deflate.c \
+	$(ZLIBSRCDIR)/infback.c $(ZLIBSRCDIR)/inffast.c \
+	$(ZLIBSRCDIR)/inflate.c $(ZLIBSRCDIR)/inftrees.c \
+	$(ZLIBSRCDIR)/trees.c $(ZLIBSRCDIR)/uncompr.c \
+	$(ZLIBSRCDIR)/zutil.c $(teckitdir)/UnicodeNames.cpp
+@SYSTEM_ZLIB_FALSE@am__objects_4 = libTECkit_Compiler_la-adler32.lo \
+@SYSTEM_ZLIB_FALSE@	libTECkit_Compiler_la-compress.lo \
+@SYSTEM_ZLIB_FALSE@	libTECkit_Compiler_la-crc32.lo \
+@SYSTEM_ZLIB_FALSE@	libTECkit_Compiler_la-deflate.lo \
+@SYSTEM_ZLIB_FALSE@	libTECkit_Compiler_la-infback.lo \
+@SYSTEM_ZLIB_FALSE@	libTECkit_Compiler_la-inffast.lo \
+@SYSTEM_ZLIB_FALSE@	libTECkit_Compiler_la-inflate.lo \
+@SYSTEM_ZLIB_FALSE@	libTECkit_Compiler_la-inftrees.lo \
+@SYSTEM_ZLIB_FALSE@	libTECkit_Compiler_la-trees.lo \
+@SYSTEM_ZLIB_FALSE@	libTECkit_Compiler_la-uncompr.lo \
+@SYSTEM_ZLIB_FALSE@	libTECkit_Compiler_la-zutil.lo
 @OLD_LIB_NAMES_FALSE@am_libTECkit_Compiler_la_OBJECTS = Compiler.lo \
-@OLD_LIB_NAMES_FALSE@	$(am__objects_1) UnicodeNames.lo
+@OLD_LIB_NAMES_FALSE@	$(am__objects_4) UnicodeNames.lo
 libTECkit_Compiler_la_OBJECTS = $(am_libTECkit_Compiler_la_OBJECTS)
 libTECkit_Compiler_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
@@ -182,6 +230,7 @@ INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 LDFLAGS = @LDFLAGS@
+LDZLIB = @LDZLIB@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
 LIBTOOL = @LIBTOOL@
@@ -207,6 +256,9 @@ SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
 VERSION = @VERSION@
+ZLIBCPPFLAGS = @ZLIBCPPFLAGS@
+ZLIBDEP = @ZLIBDEP@
+ZLIBSRCDIR = @ZLIBSRCDIR@
 abs_builddir = @abs_builddir@
 abs_srcdir = @abs_srcdir@
 abs_top_builddir = @abs_top_builddir@
@@ -265,42 +317,54 @@ target_vendor = @target_vendor@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AUTOMAKE_OPTIONS = 1.6
-AM_CPPFLAGS = -I$(top_srcdir)/source/Public-headers $(ZLIB_CFLAGS)
+AM_CPPFLAGS = -I$(top_srcdir)/source/Public-headers $(ZLIBCPPFLAGS)
 @OLD_LIB_NAMES_FALSE@lib_LTLIBRARIES = libTECkit_Compiler.la libTECkit.la
 @OLD_LIB_NAMES_TRUE@lib_LTLIBRARIES = TECkit_Compiler_x86.la TECkit_x86.la
 teckitdir = $(top_srcdir)/source
-zlibdir = $(top_srcdir)/zlib-1.2.3
-@SYSTEM_ZLIB_FALSE@ZLIB_CFLAGS = -I$(zlibdir)
-@SYSTEM_ZLIB_TRUE@ZLIB_CFLAGS = 
-@SYSTEM_ZLIB_FALSE@ZLIB_SOURCES = $(zlibdir)/adler32.c \
-@SYSTEM_ZLIB_FALSE@	$(zlibdir)/compress.c $(zlibdir)/crc32.c \
-@SYSTEM_ZLIB_FALSE@	$(zlibdir)/deflate.c $(zlibdir)/infback.c \
-@SYSTEM_ZLIB_FALSE@	$(zlibdir)/inffast.c $(zlibdir)/inflate.c \
-@SYSTEM_ZLIB_FALSE@	$(zlibdir)/inftrees.c $(zlibdir)/trees.c \
-@SYSTEM_ZLIB_FALSE@	$(zlibdir)/uncompr.c $(zlibdir)/zutil.c
+@SYSTEM_ZLIB_FALSE@ZLIB_CFLAGS = -I$(ZLIBSRCDIR)
+@SYSTEM_ZLIB_TRUE@ZLIB_CFLAGS = @ZLIBCPPFLAGS@
+@SYSTEM_ZLIB_FALSE@ZLIB_SOURCES = $(ZLIBSRCDIR)/adler32.c \
+@SYSTEM_ZLIB_FALSE@	$(ZLIBSRCDIR)/compress.c \
+@SYSTEM_ZLIB_FALSE@	$(ZLIBSRCDIR)/crc32.c \
+@SYSTEM_ZLIB_FALSE@	$(ZLIBSRCDIR)/deflate.c \
+@SYSTEM_ZLIB_FALSE@	$(ZLIBSRCDIR)/infback.c \
+@SYSTEM_ZLIB_FALSE@	$(ZLIBSRCDIR)/inffast.c \
+@SYSTEM_ZLIB_FALSE@	$(ZLIBSRCDIR)/inflate.c \
+@SYSTEM_ZLIB_FALSE@	$(ZLIBSRCDIR)/inftrees.c \
+@SYSTEM_ZLIB_FALSE@	$(ZLIBSRCDIR)/trees.c \
+@SYSTEM_ZLIB_FALSE@	$(ZLIBSRCDIR)/uncompr.c \
+@SYSTEM_ZLIB_FALSE@	$(ZLIBSRCDIR)/zutil.c
 @SYSTEM_ZLIB_TRUE@ZLIB_SOURCES = 
 AM_CFLAGS = $(AM_CPPFLAGS)
 @OLD_LIB_NAMES_TRUE@OLD_LIB_LDFLAGS = -module -avoid-version -Wl,--add-stdcall-alias
+@OLD_LIB_NAMES_TRUE@TECkit_x86_la_CFLAGS = $(ZLIB_CFLAGS)
 @OLD_LIB_NAMES_TRUE@TECkit_x86_la_SOURCES = $(teckitdir)/Engine.cpp $(teckitdir)/Engine_ver.rc $(ZLIB_SOURCES)
 @OLD_LIB_NAMES_TRUE@TECkit_x86_la_LDFLAGS = $(LDFLAGS) \
-@OLD_LIB_NAMES_TRUE@	$(OLD_LIB_LDFLAGS) -no-undefined \
+@OLD_LIB_NAMES_TRUE@	$(OLD_LIB_LDFLAGS) -no-undefined $(LDZLIB) \
 @OLD_LIB_NAMES_TRUE@	-Wl,Engine_ver.o
+
+# --> RC Support, only for the Windows libs
+@OLD_LIB_NAMES_TRUE@TECkit_x86_la_DEPENDENCIES = $(ZLIBDEP) \
+@OLD_LIB_NAMES_TRUE@	Engine_ver.o
+@OLD_LIB_NAMES_TRUE@TECkit_Compiler_x86_la_CFLAGS = $(ZLIB_CFLAGS)
 @OLD_LIB_NAMES_TRUE@TECkit_Compiler_x86_la_SOURCES =  \
 @OLD_LIB_NAMES_TRUE@	$(teckitdir)/Compiler.cpp $(ZLIB_SOURCES) \
 @OLD_LIB_NAMES_TRUE@	$(teckitdir)/UnicodeNames.cpp
 @OLD_LIB_NAMES_TRUE@TECkit_Compiler_x86_la_LDFLAGS = $(LDFLAGS) \
-@OLD_LIB_NAMES_TRUE@	$(OLD_LIB_LDFLAGS) -no-undefined \
+@OLD_LIB_NAMES_TRUE@	$(OLD_LIB_LDFLAGS) -no-undefined $(LDZLIB) \
 @OLD_LIB_NAMES_TRUE@	-Wl,Compiler_ver.o
+@OLD_LIB_NAMES_TRUE@TECkit_Compiler_x86_la_DEPENDENCIES = $(ZLIBDEP) \
+@OLD_LIB_NAMES_TRUE@	Compiler_ver.o
+@OLD_LIB_NAMES_FALSE@libTECkit_la_CFLAGS = $(ZLIB_CFLAGS)
 @OLD_LIB_NAMES_FALSE@libTECkit_la_SOURCES = $(teckitdir)/Engine.cpp $(ZLIB_SOURCES)
-@OLD_LIB_NAMES_FALSE@libTECkit_la_LDFLAGS = $(LDFLAGS) -no-undefined
+@OLD_LIB_NAMES_FALSE@libTECkit_la_LDFLAGS = $(LDFLAGS) -no-undefined $(LDZLIB)
+@OLD_LIB_NAMES_FALSE@libTECkit_la_DEPENDENCIES = $(ZLIBDEP)
+@OLD_LIB_NAMES_FALSE@libTECkit_Compiler_la_CFLAGS = $(ZLIB_CFLAGS)
 @OLD_LIB_NAMES_FALSE@libTECkit_Compiler_la_SOURCES =  \
 @OLD_LIB_NAMES_FALSE@	$(teckitdir)/Compiler.cpp $(ZLIB_SOURCES) \
 @OLD_LIB_NAMES_FALSE@	$(teckitdir)/UnicodeNames.cpp
-@OLD_LIB_NAMES_FALSE@libTECkit_Compiler_la_LDFLAGS = $(LDFLAGS) -no-undefined
-
-# --> RC Support, only for the Windows libs
-@OLD_LIB_NAMES_TRUE@TECkit_x86_la_DEPENDENCIES = Engine_ver.o
-@OLD_LIB_NAMES_TRUE@TECkit_Compiler_x86_la_DEPENDENCIES = Compiler_ver.o
+@OLD_LIB_NAMES_FALSE@libTECkit_Compiler_la_LDFLAGS = $(LDFLAGS) -no-undefined $(LDZLIB)
+@OLD_LIB_NAMES_FALSE@libTECkit_Compiler_la_DEPENDENCIES = $(ZLIBDEP)
 # <-- RC Support	
 noinst_HEADERS = $(teckitdir)/Compiler.h $(teckitdir)/Engine.h \
 	$(teckitdir)/ulong_chartraits.h $(teckitdir)/TECkit_Format.h
@@ -386,18 +450,51 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Compiler.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Engine.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TECkit_Compiler_x86_la-adler32.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TECkit_Compiler_x86_la-compress.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TECkit_Compiler_x86_la-crc32.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TECkit_Compiler_x86_la-deflate.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TECkit_Compiler_x86_la-infback.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TECkit_Compiler_x86_la-inffast.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TECkit_Compiler_x86_la-inflate.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TECkit_Compiler_x86_la-inftrees.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TECkit_Compiler_x86_la-trees.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TECkit_Compiler_x86_la-uncompr.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TECkit_Compiler_x86_la-zutil.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TECkit_x86_la-adler32.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TECkit_x86_la-compress.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TECkit_x86_la-crc32.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TECkit_x86_la-deflate.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TECkit_x86_la-infback.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TECkit_x86_la-inffast.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TECkit_x86_la-inflate.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TECkit_x86_la-inftrees.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TECkit_x86_la-trees.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TECkit_x86_la-uncompr.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TECkit_x86_la-zutil.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/UnicodeNames.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/adler32.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/compress.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/crc32.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/deflate.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/infback.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/inffast.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/inflate.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/inftrees.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/trees.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/uncompr.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/zutil.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libTECkit_Compiler_la-adler32.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libTECkit_Compiler_la-compress.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libTECkit_Compiler_la-crc32.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libTECkit_Compiler_la-deflate.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libTECkit_Compiler_la-infback.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libTECkit_Compiler_la-inffast.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libTECkit_Compiler_la-inflate.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libTECkit_Compiler_la-inftrees.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libTECkit_Compiler_la-trees.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libTECkit_Compiler_la-uncompr.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libTECkit_Compiler_la-zutil.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libTECkit_la-adler32.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libTECkit_la-compress.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libTECkit_la-crc32.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libTECkit_la-deflate.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libTECkit_la-infback.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libTECkit_la-inffast.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libTECkit_la-inflate.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libTECkit_la-inftrees.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libTECkit_la-trees.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libTECkit_la-uncompr.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libTECkit_la-zutil.Plo@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -420,82 +517,313 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LTCOMPILE) -c -o $@ $<
 
-adler32.lo: $(zlibdir)/adler32.c
-@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT adler32.lo -MD -MP -MF $(DEPDIR)/adler32.Tpo -c -o adler32.lo `test -f '$(zlibdir)/adler32.c' || echo '$(srcdir)/'`$(zlibdir)/adler32.c
-@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/adler32.Tpo $(DEPDIR)/adler32.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(zlibdir)/adler32.c' object='adler32.lo' libtool=yes @AMDEPBACKSLASH@
+TECkit_Compiler_x86_la-adler32.lo: $(ZLIBSRCDIR)/adler32.c
+@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(TECkit_Compiler_x86_la_CFLAGS) $(CFLAGS) -MT TECkit_Compiler_x86_la-adler32.lo -MD -MP -MF $(DEPDIR)/TECkit_Compiler_x86_la-adler32.Tpo -c -o TECkit_Compiler_x86_la-adler32.lo `test -f '$(ZLIBSRCDIR)/adler32.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/adler32.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/TECkit_Compiler_x86_la-adler32.Tpo $(DEPDIR)/TECkit_Compiler_x86_la-adler32.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(ZLIBSRCDIR)/adler32.c' object='TECkit_Compiler_x86_la-adler32.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o adler32.lo `test -f '$(zlibdir)/adler32.c' || echo '$(srcdir)/'`$(zlibdir)/adler32.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(TECkit_Compiler_x86_la_CFLAGS) $(CFLAGS) -c -o TECkit_Compiler_x86_la-adler32.lo `test -f '$(ZLIBSRCDIR)/adler32.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/adler32.c
 
-compress.lo: $(zlibdir)/compress.c
-@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT compress.lo -MD -MP -MF $(DEPDIR)/compress.Tpo -c -o compress.lo `test -f '$(zlibdir)/compress.c' || echo '$(srcdir)/'`$(zlibdir)/compress.c
-@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/compress.Tpo $(DEPDIR)/compress.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(zlibdir)/compress.c' object='compress.lo' libtool=yes @AMDEPBACKSLASH@
+TECkit_Compiler_x86_la-compress.lo: $(ZLIBSRCDIR)/compress.c
+@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(TECkit_Compiler_x86_la_CFLAGS) $(CFLAGS) -MT TECkit_Compiler_x86_la-compress.lo -MD -MP -MF $(DEPDIR)/TECkit_Compiler_x86_la-compress.Tpo -c -o TECkit_Compiler_x86_la-compress.lo `test -f '$(ZLIBSRCDIR)/compress.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/compress.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/TECkit_Compiler_x86_la-compress.Tpo $(DEPDIR)/TECkit_Compiler_x86_la-compress.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(ZLIBSRCDIR)/compress.c' object='TECkit_Compiler_x86_la-compress.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o compress.lo `test -f '$(zlibdir)/compress.c' || echo '$(srcdir)/'`$(zlibdir)/compress.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(TECkit_Compiler_x86_la_CFLAGS) $(CFLAGS) -c -o TECkit_Compiler_x86_la-compress.lo `test -f '$(ZLIBSRCDIR)/compress.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/compress.c
 
-crc32.lo: $(zlibdir)/crc32.c
-@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT crc32.lo -MD -MP -MF $(DEPDIR)/crc32.Tpo -c -o crc32.lo `test -f '$(zlibdir)/crc32.c' || echo '$(srcdir)/'`$(zlibdir)/crc32.c
-@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/crc32.Tpo $(DEPDIR)/crc32.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(zlibdir)/crc32.c' object='crc32.lo' libtool=yes @AMDEPBACKSLASH@
+TECkit_Compiler_x86_la-crc32.lo: $(ZLIBSRCDIR)/crc32.c
+@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(TECkit_Compiler_x86_la_CFLAGS) $(CFLAGS) -MT TECkit_Compiler_x86_la-crc32.lo -MD -MP -MF $(DEPDIR)/TECkit_Compiler_x86_la-crc32.Tpo -c -o TECkit_Compiler_x86_la-crc32.lo `test -f '$(ZLIBSRCDIR)/crc32.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/crc32.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/TECkit_Compiler_x86_la-crc32.Tpo $(DEPDIR)/TECkit_Compiler_x86_la-crc32.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(ZLIBSRCDIR)/crc32.c' object='TECkit_Compiler_x86_la-crc32.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o crc32.lo `test -f '$(zlibdir)/crc32.c' || echo '$(srcdir)/'`$(zlibdir)/crc32.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(TECkit_Compiler_x86_la_CFLAGS) $(CFLAGS) -c -o TECkit_Compiler_x86_la-crc32.lo `test -f '$(ZLIBSRCDIR)/crc32.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/crc32.c
 
-deflate.lo: $(zlibdir)/deflate.c
-@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT deflate.lo -MD -MP -MF $(DEPDIR)/deflate.Tpo -c -o deflate.lo `test -f '$(zlibdir)/deflate.c' || echo '$(srcdir)/'`$(zlibdir)/deflate.c
-@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/deflate.Tpo $(DEPDIR)/deflate.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(zlibdir)/deflate.c' object='deflate.lo' libtool=yes @AMDEPBACKSLASH@
+TECkit_Compiler_x86_la-deflate.lo: $(ZLIBSRCDIR)/deflate.c
+@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(TECkit_Compiler_x86_la_CFLAGS) $(CFLAGS) -MT TECkit_Compiler_x86_la-deflate.lo -MD -MP -MF $(DEPDIR)/TECkit_Compiler_x86_la-deflate.Tpo -c -o TECkit_Compiler_x86_la-deflate.lo `test -f '$(ZLIBSRCDIR)/deflate.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/deflate.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/TECkit_Compiler_x86_la-deflate.Tpo $(DEPDIR)/TECkit_Compiler_x86_la-deflate.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(ZLIBSRCDIR)/deflate.c' object='TECkit_Compiler_x86_la-deflate.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o deflate.lo `test -f '$(zlibdir)/deflate.c' || echo '$(srcdir)/'`$(zlibdir)/deflate.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(TECkit_Compiler_x86_la_CFLAGS) $(CFLAGS) -c -o TECkit_Compiler_x86_la-deflate.lo `test -f '$(ZLIBSRCDIR)/deflate.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/deflate.c
 
-infback.lo: $(zlibdir)/infback.c
-@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT infback.lo -MD -MP -MF $(DEPDIR)/infback.Tpo -c -o infback.lo `test -f '$(zlibdir)/infback.c' || echo '$(srcdir)/'`$(zlibdir)/infback.c
-@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/infback.Tpo $(DEPDIR)/infback.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(zlibdir)/infback.c' object='infback.lo' libtool=yes @AMDEPBACKSLASH@
+TECkit_Compiler_x86_la-infback.lo: $(ZLIBSRCDIR)/infback.c
+@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(TECkit_Compiler_x86_la_CFLAGS) $(CFLAGS) -MT TECkit_Compiler_x86_la-infback.lo -MD -MP -MF $(DEPDIR)/TECkit_Compiler_x86_la-infback.Tpo -c -o TECkit_Compiler_x86_la-infback.lo `test -f '$(ZLIBSRCDIR)/infback.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/infback.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/TECkit_Compiler_x86_la-infback.Tpo $(DEPDIR)/TECkit_Compiler_x86_la-infback.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(ZLIBSRCDIR)/infback.c' object='TECkit_Compiler_x86_la-infback.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o infback.lo `test -f '$(zlibdir)/infback.c' || echo '$(srcdir)/'`$(zlibdir)/infback.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(TECkit_Compiler_x86_la_CFLAGS) $(CFLAGS) -c -o TECkit_Compiler_x86_la-infback.lo `test -f '$(ZLIBSRCDIR)/infback.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/infback.c
 
-inffast.lo: $(zlibdir)/inffast.c
-@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT inffast.lo -MD -MP -MF $(DEPDIR)/inffast.Tpo -c -o inffast.lo `test -f '$(zlibdir)/inffast.c' || echo '$(srcdir)/'`$(zlibdir)/inffast.c
-@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/inffast.Tpo $(DEPDIR)/inffast.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(zlibdir)/inffast.c' object='inffast.lo' libtool=yes @AMDEPBACKSLASH@
+TECkit_Compiler_x86_la-inffast.lo: $(ZLIBSRCDIR)/inffast.c
+@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(TECkit_Compiler_x86_la_CFLAGS) $(CFLAGS) -MT TECkit_Compiler_x86_la-inffast.lo -MD -MP -MF $(DEPDIR)/TECkit_Compiler_x86_la-inffast.Tpo -c -o TECkit_Compiler_x86_la-inffast.lo `test -f '$(ZLIBSRCDIR)/inffast.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/inffast.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/TECkit_Compiler_x86_la-inffast.Tpo $(DEPDIR)/TECkit_Compiler_x86_la-inffast.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(ZLIBSRCDIR)/inffast.c' object='TECkit_Compiler_x86_la-inffast.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o inffast.lo `test -f '$(zlibdir)/inffast.c' || echo '$(srcdir)/'`$(zlibdir)/inffast.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(TECkit_Compiler_x86_la_CFLAGS) $(CFLAGS) -c -o TECkit_Compiler_x86_la-inffast.lo `test -f '$(ZLIBSRCDIR)/inffast.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/inffast.c
 
-inflate.lo: $(zlibdir)/inflate.c
-@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT inflate.lo -MD -MP -MF $(DEPDIR)/inflate.Tpo -c -o inflate.lo `test -f '$(zlibdir)/inflate.c' || echo '$(srcdir)/'`$(zlibdir)/inflate.c
-@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/inflate.Tpo $(DEPDIR)/inflate.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(zlibdir)/inflate.c' object='inflate.lo' libtool=yes @AMDEPBACKSLASH@
+TECkit_Compiler_x86_la-inflate.lo: $(ZLIBSRCDIR)/inflate.c
+@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(TECkit_Compiler_x86_la_CFLAGS) $(CFLAGS) -MT TECkit_Compiler_x86_la-inflate.lo -MD -MP -MF $(DEPDIR)/TECkit_Compiler_x86_la-inflate.Tpo -c -o TECkit_Compiler_x86_la-inflate.lo `test -f '$(ZLIBSRCDIR)/inflate.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/inflate.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/TECkit_Compiler_x86_la-inflate.Tpo $(DEPDIR)/TECkit_Compiler_x86_la-inflate.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(ZLIBSRCDIR)/inflate.c' object='TECkit_Compiler_x86_la-inflate.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o inflate.lo `test -f '$(zlibdir)/inflate.c' || echo '$(srcdir)/'`$(zlibdir)/inflate.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(TECkit_Compiler_x86_la_CFLAGS) $(CFLAGS) -c -o TECkit_Compiler_x86_la-inflate.lo `test -f '$(ZLIBSRCDIR)/inflate.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/inflate.c
 
-inftrees.lo: $(zlibdir)/inftrees.c
-@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT inftrees.lo -MD -MP -MF $(DEPDIR)/inftrees.Tpo -c -o inftrees.lo `test -f '$(zlibdir)/inftrees.c' || echo '$(srcdir)/'`$(zlibdir)/inftrees.c
-@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/inftrees.Tpo $(DEPDIR)/inftrees.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(zlibdir)/inftrees.c' object='inftrees.lo' libtool=yes @AMDEPBACKSLASH@
+TECkit_Compiler_x86_la-inftrees.lo: $(ZLIBSRCDIR)/inftrees.c
+@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(TECkit_Compiler_x86_la_CFLAGS) $(CFLAGS) -MT TECkit_Compiler_x86_la-inftrees.lo -MD -MP -MF $(DEPDIR)/TECkit_Compiler_x86_la-inftrees.Tpo -c -o TECkit_Compiler_x86_la-inftrees.lo `test -f '$(ZLIBSRCDIR)/inftrees.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/inftrees.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/TECkit_Compiler_x86_la-inftrees.Tpo $(DEPDIR)/TECkit_Compiler_x86_la-inftrees.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(ZLIBSRCDIR)/inftrees.c' object='TECkit_Compiler_x86_la-inftrees.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o inftrees.lo `test -f '$(zlibdir)/inftrees.c' || echo '$(srcdir)/'`$(zlibdir)/inftrees.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(TECkit_Compiler_x86_la_CFLAGS) $(CFLAGS) -c -o TECkit_Compiler_x86_la-inftrees.lo `test -f '$(ZLIBSRCDIR)/inftrees.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/inftrees.c
 
-trees.lo: $(zlibdir)/trees.c
-@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT trees.lo -MD -MP -MF $(DEPDIR)/trees.Tpo -c -o trees.lo `test -f '$(zlibdir)/trees.c' || echo '$(srcdir)/'`$(zlibdir)/trees.c
-@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/trees.Tpo $(DEPDIR)/trees.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(zlibdir)/trees.c' object='trees.lo' libtool=yes @AMDEPBACKSLASH@
+TECkit_Compiler_x86_la-trees.lo: $(ZLIBSRCDIR)/trees.c
+@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(TECkit_Compiler_x86_la_CFLAGS) $(CFLAGS) -MT TECkit_Compiler_x86_la-trees.lo -MD -MP -MF $(DEPDIR)/TECkit_Compiler_x86_la-trees.Tpo -c -o TECkit_Compiler_x86_la-trees.lo `test -f '$(ZLIBSRCDIR)/trees.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/trees.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/TECkit_Compiler_x86_la-trees.Tpo $(DEPDIR)/TECkit_Compiler_x86_la-trees.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(ZLIBSRCDIR)/trees.c' object='TECkit_Compiler_x86_la-trees.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o trees.lo `test -f '$(zlibdir)/trees.c' || echo '$(srcdir)/'`$(zlibdir)/trees.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(TECkit_Compiler_x86_la_CFLAGS) $(CFLAGS) -c -o TECkit_Compiler_x86_la-trees.lo `test -f '$(ZLIBSRCDIR)/trees.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/trees.c
 
-uncompr.lo: $(zlibdir)/uncompr.c
-@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT uncompr.lo -MD -MP -MF $(DEPDIR)/uncompr.Tpo -c -o uncompr.lo `test -f '$(zlibdir)/uncompr.c' || echo '$(srcdir)/'`$(zlibdir)/uncompr.c
-@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/uncompr.Tpo $(DEPDIR)/uncompr.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(zlibdir)/uncompr.c' object='uncompr.lo' libtool=yes @AMDEPBACKSLASH@
+TECkit_Compiler_x86_la-uncompr.lo: $(ZLIBSRCDIR)/uncompr.c
+@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(TECkit_Compiler_x86_la_CFLAGS) $(CFLAGS) -MT TECkit_Compiler_x86_la-uncompr.lo -MD -MP -MF $(DEPDIR)/TECkit_Compiler_x86_la-uncompr.Tpo -c -o TECkit_Compiler_x86_la-uncompr.lo `test -f '$(ZLIBSRCDIR)/uncompr.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/uncompr.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/TECkit_Compiler_x86_la-uncompr.Tpo $(DEPDIR)/TECkit_Compiler_x86_la-uncompr.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(ZLIBSRCDIR)/uncompr.c' object='TECkit_Compiler_x86_la-uncompr.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o uncompr.lo `test -f '$(zlibdir)/uncompr.c' || echo '$(srcdir)/'`$(zlibdir)/uncompr.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(TECkit_Compiler_x86_la_CFLAGS) $(CFLAGS) -c -o TECkit_Compiler_x86_la-uncompr.lo `test -f '$(ZLIBSRCDIR)/uncompr.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/uncompr.c
 
-zutil.lo: $(zlibdir)/zutil.c
-@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT zutil.lo -MD -MP -MF $(DEPDIR)/zutil.Tpo -c -o zutil.lo `test -f '$(zlibdir)/zutil.c' || echo '$(srcdir)/'`$(zlibdir)/zutil.c
-@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/zutil.Tpo $(DEPDIR)/zutil.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(zlibdir)/zutil.c' object='zutil.lo' libtool=yes @AMDEPBACKSLASH@
+TECkit_Compiler_x86_la-zutil.lo: $(ZLIBSRCDIR)/zutil.c
+@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(TECkit_Compiler_x86_la_CFLAGS) $(CFLAGS) -MT TECkit_Compiler_x86_la-zutil.lo -MD -MP -MF $(DEPDIR)/TECkit_Compiler_x86_la-zutil.Tpo -c -o TECkit_Compiler_x86_la-zutil.lo `test -f '$(ZLIBSRCDIR)/zutil.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/zutil.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/TECkit_Compiler_x86_la-zutil.Tpo $(DEPDIR)/TECkit_Compiler_x86_la-zutil.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(ZLIBSRCDIR)/zutil.c' object='TECkit_Compiler_x86_la-zutil.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o zutil.lo `test -f '$(zlibdir)/zutil.c' || echo '$(srcdir)/'`$(zlibdir)/zutil.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(TECkit_Compiler_x86_la_CFLAGS) $(CFLAGS) -c -o TECkit_Compiler_x86_la-zutil.lo `test -f '$(ZLIBSRCDIR)/zutil.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/zutil.c
+
+TECkit_x86_la-adler32.lo: $(ZLIBSRCDIR)/adler32.c
+@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(TECkit_x86_la_CFLAGS) $(CFLAGS) -MT TECkit_x86_la-adler32.lo -MD -MP -MF $(DEPDIR)/TECkit_x86_la-adler32.Tpo -c -o TECkit_x86_la-adler32.lo `test -f '$(ZLIBSRCDIR)/adler32.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/adler32.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/TECkit_x86_la-adler32.Tpo $(DEPDIR)/TECkit_x86_la-adler32.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(ZLIBSRCDIR)/adler32.c' object='TECkit_x86_la-adler32.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(TECkit_x86_la_CFLAGS) $(CFLAGS) -c -o TECkit_x86_la-adler32.lo `test -f '$(ZLIBSRCDIR)/adler32.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/adler32.c
+
+TECkit_x86_la-compress.lo: $(ZLIBSRCDIR)/compress.c
+@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(TECkit_x86_la_CFLAGS) $(CFLAGS) -MT TECkit_x86_la-compress.lo -MD -MP -MF $(DEPDIR)/TECkit_x86_la-compress.Tpo -c -o TECkit_x86_la-compress.lo `test -f '$(ZLIBSRCDIR)/compress.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/compress.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/TECkit_x86_la-compress.Tpo $(DEPDIR)/TECkit_x86_la-compress.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(ZLIBSRCDIR)/compress.c' object='TECkit_x86_la-compress.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(TECkit_x86_la_CFLAGS) $(CFLAGS) -c -o TECkit_x86_la-compress.lo `test -f '$(ZLIBSRCDIR)/compress.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/compress.c
+
+TECkit_x86_la-crc32.lo: $(ZLIBSRCDIR)/crc32.c
+@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(TECkit_x86_la_CFLAGS) $(CFLAGS) -MT TECkit_x86_la-crc32.lo -MD -MP -MF $(DEPDIR)/TECkit_x86_la-crc32.Tpo -c -o TECkit_x86_la-crc32.lo `test -f '$(ZLIBSRCDIR)/crc32.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/crc32.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/TECkit_x86_la-crc32.Tpo $(DEPDIR)/TECkit_x86_la-crc32.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(ZLIBSRCDIR)/crc32.c' object='TECkit_x86_la-crc32.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(TECkit_x86_la_CFLAGS) $(CFLAGS) -c -o TECkit_x86_la-crc32.lo `test -f '$(ZLIBSRCDIR)/crc32.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/crc32.c
+
+TECkit_x86_la-deflate.lo: $(ZLIBSRCDIR)/deflate.c
+@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(TECkit_x86_la_CFLAGS) $(CFLAGS) -MT TECkit_x86_la-deflate.lo -MD -MP -MF $(DEPDIR)/TECkit_x86_la-deflate.Tpo -c -o TECkit_x86_la-deflate.lo `test -f '$(ZLIBSRCDIR)/deflate.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/deflate.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/TECkit_x86_la-deflate.Tpo $(DEPDIR)/TECkit_x86_la-deflate.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(ZLIBSRCDIR)/deflate.c' object='TECkit_x86_la-deflate.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(TECkit_x86_la_CFLAGS) $(CFLAGS) -c -o TECkit_x86_la-deflate.lo `test -f '$(ZLIBSRCDIR)/deflate.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/deflate.c
+
+TECkit_x86_la-infback.lo: $(ZLIBSRCDIR)/infback.c
+@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(TECkit_x86_la_CFLAGS) $(CFLAGS) -MT TECkit_x86_la-infback.lo -MD -MP -MF $(DEPDIR)/TECkit_x86_la-infback.Tpo -c -o TECkit_x86_la-infback.lo `test -f '$(ZLIBSRCDIR)/infback.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/infback.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/TECkit_x86_la-infback.Tpo $(DEPDIR)/TECkit_x86_la-infback.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(ZLIBSRCDIR)/infback.c' object='TECkit_x86_la-infback.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(TECkit_x86_la_CFLAGS) $(CFLAGS) -c -o TECkit_x86_la-infback.lo `test -f '$(ZLIBSRCDIR)/infback.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/infback.c
+
+TECkit_x86_la-inffast.lo: $(ZLIBSRCDIR)/inffast.c
+@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(TECkit_x86_la_CFLAGS) $(CFLAGS) -MT TECkit_x86_la-inffast.lo -MD -MP -MF $(DEPDIR)/TECkit_x86_la-inffast.Tpo -c -o TECkit_x86_la-inffast.lo `test -f '$(ZLIBSRCDIR)/inffast.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/inffast.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/TECkit_x86_la-inffast.Tpo $(DEPDIR)/TECkit_x86_la-inffast.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(ZLIBSRCDIR)/inffast.c' object='TECkit_x86_la-inffast.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(TECkit_x86_la_CFLAGS) $(CFLAGS) -c -o TECkit_x86_la-inffast.lo `test -f '$(ZLIBSRCDIR)/inffast.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/inffast.c
+
+TECkit_x86_la-inflate.lo: $(ZLIBSRCDIR)/inflate.c
+@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(TECkit_x86_la_CFLAGS) $(CFLAGS) -MT TECkit_x86_la-inflate.lo -MD -MP -MF $(DEPDIR)/TECkit_x86_la-inflate.Tpo -c -o TECkit_x86_la-inflate.lo `test -f '$(ZLIBSRCDIR)/inflate.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/inflate.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/TECkit_x86_la-inflate.Tpo $(DEPDIR)/TECkit_x86_la-inflate.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(ZLIBSRCDIR)/inflate.c' object='TECkit_x86_la-inflate.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(TECkit_x86_la_CFLAGS) $(CFLAGS) -c -o TECkit_x86_la-inflate.lo `test -f '$(ZLIBSRCDIR)/inflate.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/inflate.c
+
+TECkit_x86_la-inftrees.lo: $(ZLIBSRCDIR)/inftrees.c
+@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(TECkit_x86_la_CFLAGS) $(CFLAGS) -MT TECkit_x86_la-inftrees.lo -MD -MP -MF $(DEPDIR)/TECkit_x86_la-inftrees.Tpo -c -o TECkit_x86_la-inftrees.lo `test -f '$(ZLIBSRCDIR)/inftrees.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/inftrees.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/TECkit_x86_la-inftrees.Tpo $(DEPDIR)/TECkit_x86_la-inftrees.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(ZLIBSRCDIR)/inftrees.c' object='TECkit_x86_la-inftrees.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(TECkit_x86_la_CFLAGS) $(CFLAGS) -c -o TECkit_x86_la-inftrees.lo `test -f '$(ZLIBSRCDIR)/inftrees.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/inftrees.c
+
+TECkit_x86_la-trees.lo: $(ZLIBSRCDIR)/trees.c
+@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(TECkit_x86_la_CFLAGS) $(CFLAGS) -MT TECkit_x86_la-trees.lo -MD -MP -MF $(DEPDIR)/TECkit_x86_la-trees.Tpo -c -o TECkit_x86_la-trees.lo `test -f '$(ZLIBSRCDIR)/trees.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/trees.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/TECkit_x86_la-trees.Tpo $(DEPDIR)/TECkit_x86_la-trees.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(ZLIBSRCDIR)/trees.c' object='TECkit_x86_la-trees.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(TECkit_x86_la_CFLAGS) $(CFLAGS) -c -o TECkit_x86_la-trees.lo `test -f '$(ZLIBSRCDIR)/trees.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/trees.c
+
+TECkit_x86_la-uncompr.lo: $(ZLIBSRCDIR)/uncompr.c
+@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(TECkit_x86_la_CFLAGS) $(CFLAGS) -MT TECkit_x86_la-uncompr.lo -MD -MP -MF $(DEPDIR)/TECkit_x86_la-uncompr.Tpo -c -o TECkit_x86_la-uncompr.lo `test -f '$(ZLIBSRCDIR)/uncompr.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/uncompr.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/TECkit_x86_la-uncompr.Tpo $(DEPDIR)/TECkit_x86_la-uncompr.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(ZLIBSRCDIR)/uncompr.c' object='TECkit_x86_la-uncompr.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(TECkit_x86_la_CFLAGS) $(CFLAGS) -c -o TECkit_x86_la-uncompr.lo `test -f '$(ZLIBSRCDIR)/uncompr.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/uncompr.c
+
+TECkit_x86_la-zutil.lo: $(ZLIBSRCDIR)/zutil.c
+@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(TECkit_x86_la_CFLAGS) $(CFLAGS) -MT TECkit_x86_la-zutil.lo -MD -MP -MF $(DEPDIR)/TECkit_x86_la-zutil.Tpo -c -o TECkit_x86_la-zutil.lo `test -f '$(ZLIBSRCDIR)/zutil.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/zutil.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/TECkit_x86_la-zutil.Tpo $(DEPDIR)/TECkit_x86_la-zutil.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(ZLIBSRCDIR)/zutil.c' object='TECkit_x86_la-zutil.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(TECkit_x86_la_CFLAGS) $(CFLAGS) -c -o TECkit_x86_la-zutil.lo `test -f '$(ZLIBSRCDIR)/zutil.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/zutil.c
+
+libTECkit_la-adler32.lo: $(ZLIBSRCDIR)/adler32.c
+@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libTECkit_la_CFLAGS) $(CFLAGS) -MT libTECkit_la-adler32.lo -MD -MP -MF $(DEPDIR)/libTECkit_la-adler32.Tpo -c -o libTECkit_la-adler32.lo `test -f '$(ZLIBSRCDIR)/adler32.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/adler32.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/libTECkit_la-adler32.Tpo $(DEPDIR)/libTECkit_la-adler32.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(ZLIBSRCDIR)/adler32.c' object='libTECkit_la-adler32.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libTECkit_la_CFLAGS) $(CFLAGS) -c -o libTECkit_la-adler32.lo `test -f '$(ZLIBSRCDIR)/adler32.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/adler32.c
+
+libTECkit_la-compress.lo: $(ZLIBSRCDIR)/compress.c
+@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libTECkit_la_CFLAGS) $(CFLAGS) -MT libTECkit_la-compress.lo -MD -MP -MF $(DEPDIR)/libTECkit_la-compress.Tpo -c -o libTECkit_la-compress.lo `test -f '$(ZLIBSRCDIR)/compress.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/compress.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/libTECkit_la-compress.Tpo $(DEPDIR)/libTECkit_la-compress.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(ZLIBSRCDIR)/compress.c' object='libTECkit_la-compress.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libTECkit_la_CFLAGS) $(CFLAGS) -c -o libTECkit_la-compress.lo `test -f '$(ZLIBSRCDIR)/compress.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/compress.c
+
+libTECkit_la-crc32.lo: $(ZLIBSRCDIR)/crc32.c
+@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libTECkit_la_CFLAGS) $(CFLAGS) -MT libTECkit_la-crc32.lo -MD -MP -MF $(DEPDIR)/libTECkit_la-crc32.Tpo -c -o libTECkit_la-crc32.lo `test -f '$(ZLIBSRCDIR)/crc32.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/crc32.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/libTECkit_la-crc32.Tpo $(DEPDIR)/libTECkit_la-crc32.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(ZLIBSRCDIR)/crc32.c' object='libTECkit_la-crc32.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libTECkit_la_CFLAGS) $(CFLAGS) -c -o libTECkit_la-crc32.lo `test -f '$(ZLIBSRCDIR)/crc32.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/crc32.c
+
+libTECkit_la-deflate.lo: $(ZLIBSRCDIR)/deflate.c
+@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libTECkit_la_CFLAGS) $(CFLAGS) -MT libTECkit_la-deflate.lo -MD -MP -MF $(DEPDIR)/libTECkit_la-deflate.Tpo -c -o libTECkit_la-deflate.lo `test -f '$(ZLIBSRCDIR)/deflate.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/deflate.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/libTECkit_la-deflate.Tpo $(DEPDIR)/libTECkit_la-deflate.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(ZLIBSRCDIR)/deflate.c' object='libTECkit_la-deflate.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libTECkit_la_CFLAGS) $(CFLAGS) -c -o libTECkit_la-deflate.lo `test -f '$(ZLIBSRCDIR)/deflate.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/deflate.c
+
+libTECkit_la-infback.lo: $(ZLIBSRCDIR)/infback.c
+@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libTECkit_la_CFLAGS) $(CFLAGS) -MT libTECkit_la-infback.lo -MD -MP -MF $(DEPDIR)/libTECkit_la-infback.Tpo -c -o libTECkit_la-infback.lo `test -f '$(ZLIBSRCDIR)/infback.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/infback.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/libTECkit_la-infback.Tpo $(DEPDIR)/libTECkit_la-infback.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(ZLIBSRCDIR)/infback.c' object='libTECkit_la-infback.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libTECkit_la_CFLAGS) $(CFLAGS) -c -o libTECkit_la-infback.lo `test -f '$(ZLIBSRCDIR)/infback.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/infback.c
+
+libTECkit_la-inffast.lo: $(ZLIBSRCDIR)/inffast.c
+@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libTECkit_la_CFLAGS) $(CFLAGS) -MT libTECkit_la-inffast.lo -MD -MP -MF $(DEPDIR)/libTECkit_la-inffast.Tpo -c -o libTECkit_la-inffast.lo `test -f '$(ZLIBSRCDIR)/inffast.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/inffast.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/libTECkit_la-inffast.Tpo $(DEPDIR)/libTECkit_la-inffast.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(ZLIBSRCDIR)/inffast.c' object='libTECkit_la-inffast.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libTECkit_la_CFLAGS) $(CFLAGS) -c -o libTECkit_la-inffast.lo `test -f '$(ZLIBSRCDIR)/inffast.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/inffast.c
+
+libTECkit_la-inflate.lo: $(ZLIBSRCDIR)/inflate.c
+@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libTECkit_la_CFLAGS) $(CFLAGS) -MT libTECkit_la-inflate.lo -MD -MP -MF $(DEPDIR)/libTECkit_la-inflate.Tpo -c -o libTECkit_la-inflate.lo `test -f '$(ZLIBSRCDIR)/inflate.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/inflate.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/libTECkit_la-inflate.Tpo $(DEPDIR)/libTECkit_la-inflate.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(ZLIBSRCDIR)/inflate.c' object='libTECkit_la-inflate.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libTECkit_la_CFLAGS) $(CFLAGS) -c -o libTECkit_la-inflate.lo `test -f '$(ZLIBSRCDIR)/inflate.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/inflate.c
+
+libTECkit_la-inftrees.lo: $(ZLIBSRCDIR)/inftrees.c
+@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libTECkit_la_CFLAGS) $(CFLAGS) -MT libTECkit_la-inftrees.lo -MD -MP -MF $(DEPDIR)/libTECkit_la-inftrees.Tpo -c -o libTECkit_la-inftrees.lo `test -f '$(ZLIBSRCDIR)/inftrees.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/inftrees.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/libTECkit_la-inftrees.Tpo $(DEPDIR)/libTECkit_la-inftrees.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(ZLIBSRCDIR)/inftrees.c' object='libTECkit_la-inftrees.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libTECkit_la_CFLAGS) $(CFLAGS) -c -o libTECkit_la-inftrees.lo `test -f '$(ZLIBSRCDIR)/inftrees.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/inftrees.c
+
+libTECkit_la-trees.lo: $(ZLIBSRCDIR)/trees.c
+@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libTECkit_la_CFLAGS) $(CFLAGS) -MT libTECkit_la-trees.lo -MD -MP -MF $(DEPDIR)/libTECkit_la-trees.Tpo -c -o libTECkit_la-trees.lo `test -f '$(ZLIBSRCDIR)/trees.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/trees.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/libTECkit_la-trees.Tpo $(DEPDIR)/libTECkit_la-trees.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(ZLIBSRCDIR)/trees.c' object='libTECkit_la-trees.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libTECkit_la_CFLAGS) $(CFLAGS) -c -o libTECkit_la-trees.lo `test -f '$(ZLIBSRCDIR)/trees.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/trees.c
+
+libTECkit_la-uncompr.lo: $(ZLIBSRCDIR)/uncompr.c
+@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libTECkit_la_CFLAGS) $(CFLAGS) -MT libTECkit_la-uncompr.lo -MD -MP -MF $(DEPDIR)/libTECkit_la-uncompr.Tpo -c -o libTECkit_la-uncompr.lo `test -f '$(ZLIBSRCDIR)/uncompr.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/uncompr.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/libTECkit_la-uncompr.Tpo $(DEPDIR)/libTECkit_la-uncompr.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(ZLIBSRCDIR)/uncompr.c' object='libTECkit_la-uncompr.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libTECkit_la_CFLAGS) $(CFLAGS) -c -o libTECkit_la-uncompr.lo `test -f '$(ZLIBSRCDIR)/uncompr.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/uncompr.c
+
+libTECkit_la-zutil.lo: $(ZLIBSRCDIR)/zutil.c
+@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libTECkit_la_CFLAGS) $(CFLAGS) -MT libTECkit_la-zutil.lo -MD -MP -MF $(DEPDIR)/libTECkit_la-zutil.Tpo -c -o libTECkit_la-zutil.lo `test -f '$(ZLIBSRCDIR)/zutil.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/zutil.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/libTECkit_la-zutil.Tpo $(DEPDIR)/libTECkit_la-zutil.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(ZLIBSRCDIR)/zutil.c' object='libTECkit_la-zutil.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libTECkit_la_CFLAGS) $(CFLAGS) -c -o libTECkit_la-zutil.lo `test -f '$(ZLIBSRCDIR)/zutil.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/zutil.c
+
+libTECkit_Compiler_la-adler32.lo: $(ZLIBSRCDIR)/adler32.c
+@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libTECkit_Compiler_la_CFLAGS) $(CFLAGS) -MT libTECkit_Compiler_la-adler32.lo -MD -MP -MF $(DEPDIR)/libTECkit_Compiler_la-adler32.Tpo -c -o libTECkit_Compiler_la-adler32.lo `test -f '$(ZLIBSRCDIR)/adler32.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/adler32.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/libTECkit_Compiler_la-adler32.Tpo $(DEPDIR)/libTECkit_Compiler_la-adler32.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(ZLIBSRCDIR)/adler32.c' object='libTECkit_Compiler_la-adler32.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libTECkit_Compiler_la_CFLAGS) $(CFLAGS) -c -o libTECkit_Compiler_la-adler32.lo `test -f '$(ZLIBSRCDIR)/adler32.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/adler32.c
+
+libTECkit_Compiler_la-compress.lo: $(ZLIBSRCDIR)/compress.c
+@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libTECkit_Compiler_la_CFLAGS) $(CFLAGS) -MT libTECkit_Compiler_la-compress.lo -MD -MP -MF $(DEPDIR)/libTECkit_Compiler_la-compress.Tpo -c -o libTECkit_Compiler_la-compress.lo `test -f '$(ZLIBSRCDIR)/compress.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/compress.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/libTECkit_Compiler_la-compress.Tpo $(DEPDIR)/libTECkit_Compiler_la-compress.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(ZLIBSRCDIR)/compress.c' object='libTECkit_Compiler_la-compress.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libTECkit_Compiler_la_CFLAGS) $(CFLAGS) -c -o libTECkit_Compiler_la-compress.lo `test -f '$(ZLIBSRCDIR)/compress.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/compress.c
+
+libTECkit_Compiler_la-crc32.lo: $(ZLIBSRCDIR)/crc32.c
+@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libTECkit_Compiler_la_CFLAGS) $(CFLAGS) -MT libTECkit_Compiler_la-crc32.lo -MD -MP -MF $(DEPDIR)/libTECkit_Compiler_la-crc32.Tpo -c -o libTECkit_Compiler_la-crc32.lo `test -f '$(ZLIBSRCDIR)/crc32.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/crc32.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/libTECkit_Compiler_la-crc32.Tpo $(DEPDIR)/libTECkit_Compiler_la-crc32.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(ZLIBSRCDIR)/crc32.c' object='libTECkit_Compiler_la-crc32.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libTECkit_Compiler_la_CFLAGS) $(CFLAGS) -c -o libTECkit_Compiler_la-crc32.lo `test -f '$(ZLIBSRCDIR)/crc32.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/crc32.c
+
+libTECkit_Compiler_la-deflate.lo: $(ZLIBSRCDIR)/deflate.c
+@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libTECkit_Compiler_la_CFLAGS) $(CFLAGS) -MT libTECkit_Compiler_la-deflate.lo -MD -MP -MF $(DEPDIR)/libTECkit_Compiler_la-deflate.Tpo -c -o libTECkit_Compiler_la-deflate.lo `test -f '$(ZLIBSRCDIR)/deflate.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/deflate.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/libTECkit_Compiler_la-deflate.Tpo $(DEPDIR)/libTECkit_Compiler_la-deflate.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(ZLIBSRCDIR)/deflate.c' object='libTECkit_Compiler_la-deflate.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libTECkit_Compiler_la_CFLAGS) $(CFLAGS) -c -o libTECkit_Compiler_la-deflate.lo `test -f '$(ZLIBSRCDIR)/deflate.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/deflate.c
+
+libTECkit_Compiler_la-infback.lo: $(ZLIBSRCDIR)/infback.c
+@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libTECkit_Compiler_la_CFLAGS) $(CFLAGS) -MT libTECkit_Compiler_la-infback.lo -MD -MP -MF $(DEPDIR)/libTECkit_Compiler_la-infback.Tpo -c -o libTECkit_Compiler_la-infback.lo `test -f '$(ZLIBSRCDIR)/infback.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/infback.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/libTECkit_Compiler_la-infback.Tpo $(DEPDIR)/libTECkit_Compiler_la-infback.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(ZLIBSRCDIR)/infback.c' object='libTECkit_Compiler_la-infback.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libTECkit_Compiler_la_CFLAGS) $(CFLAGS) -c -o libTECkit_Compiler_la-infback.lo `test -f '$(ZLIBSRCDIR)/infback.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/infback.c
+
+libTECkit_Compiler_la-inffast.lo: $(ZLIBSRCDIR)/inffast.c
+@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libTECkit_Compiler_la_CFLAGS) $(CFLAGS) -MT libTECkit_Compiler_la-inffast.lo -MD -MP -MF $(DEPDIR)/libTECkit_Compiler_la-inffast.Tpo -c -o libTECkit_Compiler_la-inffast.lo `test -f '$(ZLIBSRCDIR)/inffast.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/inffast.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/libTECkit_Compiler_la-inffast.Tpo $(DEPDIR)/libTECkit_Compiler_la-inffast.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(ZLIBSRCDIR)/inffast.c' object='libTECkit_Compiler_la-inffast.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libTECkit_Compiler_la_CFLAGS) $(CFLAGS) -c -o libTECkit_Compiler_la-inffast.lo `test -f '$(ZLIBSRCDIR)/inffast.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/inffast.c
+
+libTECkit_Compiler_la-inflate.lo: $(ZLIBSRCDIR)/inflate.c
+@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libTECkit_Compiler_la_CFLAGS) $(CFLAGS) -MT libTECkit_Compiler_la-inflate.lo -MD -MP -MF $(DEPDIR)/libTECkit_Compiler_la-inflate.Tpo -c -o libTECkit_Compiler_la-inflate.lo `test -f '$(ZLIBSRCDIR)/inflate.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/inflate.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/libTECkit_Compiler_la-inflate.Tpo $(DEPDIR)/libTECkit_Compiler_la-inflate.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(ZLIBSRCDIR)/inflate.c' object='libTECkit_Compiler_la-inflate.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libTECkit_Compiler_la_CFLAGS) $(CFLAGS) -c -o libTECkit_Compiler_la-inflate.lo `test -f '$(ZLIBSRCDIR)/inflate.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/inflate.c
+
+libTECkit_Compiler_la-inftrees.lo: $(ZLIBSRCDIR)/inftrees.c
+@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libTECkit_Compiler_la_CFLAGS) $(CFLAGS) -MT libTECkit_Compiler_la-inftrees.lo -MD -MP -MF $(DEPDIR)/libTECkit_Compiler_la-inftrees.Tpo -c -o libTECkit_Compiler_la-inftrees.lo `test -f '$(ZLIBSRCDIR)/inftrees.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/inftrees.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/libTECkit_Compiler_la-inftrees.Tpo $(DEPDIR)/libTECkit_Compiler_la-inftrees.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(ZLIBSRCDIR)/inftrees.c' object='libTECkit_Compiler_la-inftrees.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libTECkit_Compiler_la_CFLAGS) $(CFLAGS) -c -o libTECkit_Compiler_la-inftrees.lo `test -f '$(ZLIBSRCDIR)/inftrees.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/inftrees.c
+
+libTECkit_Compiler_la-trees.lo: $(ZLIBSRCDIR)/trees.c
+@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libTECkit_Compiler_la_CFLAGS) $(CFLAGS) -MT libTECkit_Compiler_la-trees.lo -MD -MP -MF $(DEPDIR)/libTECkit_Compiler_la-trees.Tpo -c -o libTECkit_Compiler_la-trees.lo `test -f '$(ZLIBSRCDIR)/trees.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/trees.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/libTECkit_Compiler_la-trees.Tpo $(DEPDIR)/libTECkit_Compiler_la-trees.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(ZLIBSRCDIR)/trees.c' object='libTECkit_Compiler_la-trees.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libTECkit_Compiler_la_CFLAGS) $(CFLAGS) -c -o libTECkit_Compiler_la-trees.lo `test -f '$(ZLIBSRCDIR)/trees.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/trees.c
+
+libTECkit_Compiler_la-uncompr.lo: $(ZLIBSRCDIR)/uncompr.c
+@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libTECkit_Compiler_la_CFLAGS) $(CFLAGS) -MT libTECkit_Compiler_la-uncompr.lo -MD -MP -MF $(DEPDIR)/libTECkit_Compiler_la-uncompr.Tpo -c -o libTECkit_Compiler_la-uncompr.lo `test -f '$(ZLIBSRCDIR)/uncompr.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/uncompr.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/libTECkit_Compiler_la-uncompr.Tpo $(DEPDIR)/libTECkit_Compiler_la-uncompr.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(ZLIBSRCDIR)/uncompr.c' object='libTECkit_Compiler_la-uncompr.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libTECkit_Compiler_la_CFLAGS) $(CFLAGS) -c -o libTECkit_Compiler_la-uncompr.lo `test -f '$(ZLIBSRCDIR)/uncompr.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/uncompr.c
+
+libTECkit_Compiler_la-zutil.lo: $(ZLIBSRCDIR)/zutil.c
+@am__fastdepCC_TRUE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libTECkit_Compiler_la_CFLAGS) $(CFLAGS) -MT libTECkit_Compiler_la-zutil.lo -MD -MP -MF $(DEPDIR)/libTECkit_Compiler_la-zutil.Tpo -c -o libTECkit_Compiler_la-zutil.lo `test -f '$(ZLIBSRCDIR)/zutil.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/zutil.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/libTECkit_Compiler_la-zutil.Tpo $(DEPDIR)/libTECkit_Compiler_la-zutil.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(ZLIBSRCDIR)/zutil.c' object='libTECkit_Compiler_la-zutil.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libTECkit_Compiler_la_CFLAGS) $(CFLAGS) -c -o libTECkit_Compiler_la-zutil.lo `test -f '$(ZLIBSRCDIR)/zutil.c' || echo '$(srcdir)/'`$(ZLIBSRCDIR)/zutil.c
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<

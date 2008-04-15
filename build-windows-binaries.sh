@@ -9,7 +9,7 @@ rm -rf windows-build teckit-windows-bin
 mkdir windows-build
 cd windows-build
 
-../configure --build=i386-darwin --host=i386-mingw32 --with-old-lib-names
+../configure --build=i386-darwin --host=i386-mingw32 --with-old-lib-names --without-system-zlib
 make
 make install-strip DESTDIR=`pwd`/inst
 i386-mingw32-strip --strip-unneeded inst/usr/local/lib/*.dll
