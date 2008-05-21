@@ -99,6 +99,9 @@ LIBS="$noexpat_LIBS"
 AC_SUBST(expat_CFLAGS)
 AC_SUBST(expat_LIBS)
 
-AC_CONFIG_FILES([ Makefile lib/Makefile bin/Makefile docs/Makefile test/Makefile])
+AC_CONFIG_FILES([ Makefile \
+        teckit.pc:installed-top.pc.in:teckit.pc.in \
+        teckit-uninstalled.pc:uninstalled-top.pc.in:teckit.pc.in \
+        lib/Makefile bin/Makefile docs/Makefile test/Makefile])
 
 AC_OUTPUT

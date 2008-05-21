@@ -31,7 +31,7 @@ sfconv_SOURCES += $(top_srcdir)/SFconv/ConvertUTF.c
 sfconv_SOURCES += $(EXPAT_SOURCES)
 sfconv_CPPFLAGS = $(AM_CPPFLAGS) $(EXPAT_CFLAGS)
 sfconv_CFLAGS = $(AM_CPPFLAGS) $(EXPAT_CFLAGS)
-
+sfconv_SOURCES += $(top_srcdir)/SFconv/sfReader.h $(top_srcdir)/SFconv/ConvertUTF.h $(top_srcdir)/SFconv/Debug_Prefix.h $(top_srcdir)/SFconv/Final_Prefix.h $(top_srcdir)/SFconv/ushort_chartraits.h
 if OLD_LIB_NAMES
 teckit_compile_LDADD = $(top_builddir)/lib/TECkit_Compiler_x86.la
 txtconv_LDADD = $(top_builddir)/lib/TECkit_x86.la

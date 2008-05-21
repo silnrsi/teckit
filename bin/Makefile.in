@@ -59,7 +59,11 @@ am__sfconv_SOURCES_DIST = $(top_srcdir)/SFconv/SFconv.cpp \
 	$(top_srcdir)/SFconv/ConvertUTF.c \
 	$(expatdir)/xmlparse/xmlparse.c \
 	$(expatdir)/xmlparse/hashtable.c $(expatdir)/xmltok/xmlrole.c \
-	$(expatdir)/xmltok/xmltok.c
+	$(expatdir)/xmltok/xmltok.c $(top_srcdir)/SFconv/sfReader.h \
+	$(top_srcdir)/SFconv/ConvertUTF.h \
+	$(top_srcdir)/SFconv/Debug_Prefix.h \
+	$(top_srcdir)/SFconv/Final_Prefix.h \
+	$(top_srcdir)/SFconv/ushort_chartraits.h
 @SYSTEM_EXPAT_FALSE@am__objects_1 = sfconv-xmlparse.$(OBJEXT) \
 @SYSTEM_EXPAT_FALSE@	sfconv-hashtable.$(OBJEXT) \
 @SYSTEM_EXPAT_FALSE@	sfconv-xmlrole.$(OBJEXT) \
@@ -247,7 +251,12 @@ AM_CFLAGS = $(AM_CPPFLAGS)
 teckit_compile_SOURCES = $(top_srcdir)/source/Sample-tools/TECkit_Compile.cpp
 txtconv_SOURCES = $(top_srcdir)/source/Sample-tools/TxtConv.cpp
 sfconv_SOURCES = $(top_srcdir)/SFconv/SFconv.cpp \
-	$(top_srcdir)/SFconv/ConvertUTF.c $(EXPAT_SOURCES)
+	$(top_srcdir)/SFconv/ConvertUTF.c $(EXPAT_SOURCES) \
+	$(top_srcdir)/SFconv/sfReader.h \
+	$(top_srcdir)/SFconv/ConvertUTF.h \
+	$(top_srcdir)/SFconv/Debug_Prefix.h \
+	$(top_srcdir)/SFconv/Final_Prefix.h \
+	$(top_srcdir)/SFconv/ushort_chartraits.h
 sfconv_CPPFLAGS = $(AM_CPPFLAGS) $(EXPAT_CFLAGS)
 sfconv_CFLAGS = $(AM_CPPFLAGS) $(EXPAT_CFLAGS)
 @OLD_LIB_NAMES_FALSE@teckit_compile_LDADD = $(top_builddir)/lib/libTECkit_Compiler.la
