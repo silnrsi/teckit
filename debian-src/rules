@@ -1,0 +1,23 @@
+#!/usr/bin/make -f
+
+#DEB_AUTO_UPDATE_DEBIAN_CONTROL:=yes
+
+DEB_TAR_SRCDIR := teckit-2.5.1
+
+include /usr/share/cdbs/1/rules/tarball.mk
+
+#include /usr/share/cdbs/1/rules/patchsys-quilt.mk
+
+DEB_DH_INSTALL_SOURCEDIR := debian
+include /usr/share/cdbs/1/rules/debhelper.mk
+include /usr/share/cdbs/1/class/autotools.mk
+
+DEB_DH_SHLIBDEPS_ARGS_teckit := -lteckit
+
+build/libteckit-perl ::
+	cd $(DEB_SRCDIR)/source/Perl ; perl Makefile.PL INSTALLDIRS=vendor
+	cd $(DEB_SRCDIR)/source/Perl ; $(MAKE) OPTIMIZE="-O2 -g -Wall"
+
+install/libteckit-perl ::
+	cd $(DEB_SRCDIR)/source/Perl ; $(MAKE) install PREFIX=$(CURDIR)/debian/tmp/usr
+

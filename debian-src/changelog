@@ -1,0 +1,9 @@
+teckit (2.5.1-1ubuntu1~hardy) hardy; urgency=low
+
+  * Package v2.5.1
+
+ -- Martin Hosken <martin_hosken@sil.org>  Thu, 03 Apr 2008 15:11:04 +0700
+
+Local variables:
+mode: debian-changelog
+End:

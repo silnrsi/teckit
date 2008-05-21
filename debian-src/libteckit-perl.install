@@ -1,0 +1,2 @@
+tmp/usr/lib/perl5/*     /usr/lib/perl5
+tmp/usr/share/man/man3/*    /usr/share/man/man3

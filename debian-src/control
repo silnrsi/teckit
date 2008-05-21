@@ -1,0 +1,33 @@
+Source: teckit
+Build-Depends: autotools-dev, cdbs (>= 0.4.27-1), perl (>= 5.8.0), debhelper (>= 4.2.21), pkg-config, zlib1g-dev, libexpat1-dev
+Section: devel
+Priority: optional
+Maintainer: Daniel Glassey <wdg@debian.org>
+Standards-Version: 3.7.2
+
+Package: teckit
+Architecture: any
+Section: devel
+Depends: ${shlibs:Depends}
+Description: Encoding conversion library
+ Provides a generic library for converting data too and from Unicode
+ And also from Unicode <> Unicode.
+ .
+ It also includes a compiler for a description language that allows
+ for bidirectional conversion description (the same description is
+ used for conversion too and from Unicode, for example).
+
+Package: libteckit-dev
+Architecture: any
+Section: libdevel
+Depends: libteckit (= ${Source-Version})
+Description: Development files for TECkit
+ Development files to allow linking to libteckit for data conversion
+
+Package: libteckit-perl
+Architecture: any
+Section: perl
+Depends: perl (>= 5.8.0)
+Description: Perl module to access TECkit converter
+ This Perl module is a statically linked teckit engine
+
