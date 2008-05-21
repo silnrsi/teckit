@@ -66,7 +66,12 @@ noinst_HEADERS += $(teckitdir)/Engine.h
 noinst_HEADERS += $(teckitdir)/ulong_chartraits.h
 noinst_HEADERS += $(teckitdir)/TECkit_Format.h
 
-EXTRA_DIST = $(teckitdir)/NormalizationData.c
+EXTRA_DIST = $(teckitdir)/NormalizationData.c \
+	$(teckitdir)/Perl/TECkit.xs \
+	$(teckitdir)/Perl/typemap \
+	$(teckitdir)/Perl/lib/Encode/TECkit.pm \
+	$(teckitdir)/Perl/Makefile.PL \
+	$(teckitdir)/Perl/test.pl
 
 include $(top_srcdir)/source/Public-headers/Makefile.am
 

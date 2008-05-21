@@ -368,7 +368,13 @@ AM_CFLAGS = $(AM_CPPFLAGS)
 # <-- RC Support	
 noinst_HEADERS = $(teckitdir)/Compiler.h $(teckitdir)/Engine.h \
 	$(teckitdir)/ulong_chartraits.h $(teckitdir)/TECkit_Format.h
-EXTRA_DIST = $(teckitdir)/NormalizationData.c
+EXTRA_DIST = $(teckitdir)/NormalizationData.c \
+	$(teckitdir)/Perl/TECkit.xs \
+	$(teckitdir)/Perl/typemap \
+	$(teckitdir)/Perl/lib/Encode/TECkit.pm \
+	$(teckitdir)/Perl/Makefile.PL \
+	$(teckitdir)/Perl/test.pl
+
 publicheaderdir = $(top_srcdir)/source/Public-headers
 pkginclude_HEADERS = $(publicheaderdir)/TECkit_Common.h \
 	$(publicheaderdir)/TECkit_Compiler.h \
