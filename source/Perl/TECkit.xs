@@ -137,6 +137,8 @@ convert(converter, input, style, isComplete)
         if (isComplete)
             TECkit_ResetConverter((TECkit_Converter)converter);
         isComplete = (Byte)hr;
+        if (!outLen)
+        { *outBuff = 0; }
         RETVAL = newSVpv((char *)outBuff, (STRLEN)outLen);
         if (style & 2)
             SvUTF8_on(RETVAL);
