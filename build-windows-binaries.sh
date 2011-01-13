@@ -1,3 +1,5 @@
+#!/bin/sh
+
 # This is how the Windows binaries for release are built, so I don't forget!
 
 # Any existing windows-build and teckit-windows-bin directories will be deleted.
@@ -9,10 +11,21 @@ rm -rf windows-build teckit-windows-bin
 mkdir windows-build
 cd windows-build
 
-../configure --build=i386-darwin --host=i386-mingw32 --with-old-lib-names --without-system-zlib
+BUILD=$(../config.guess)
+
+if which i586-mingw32msvc-gcc >/dev/null
+then
+	# Debian
+	HOST=i586-mingw32msvc
+else
+	# Others, eg Mac, or built from source
+	HOST=i386-mingw32
+fi
+
+../configure --build=$BUILD --host=$HOST --with-old-lib-names --without-system-zlib
 make
 make install-strip DESTDIR=`pwd`/inst
-i386-mingw32-strip --strip-unneeded inst/usr/local/lib/*.dll
+$HOST-strip --strip-unneeded inst/usr/local/lib/*.dll
 
 cd ..
 mkdir teckit-windows-bin
