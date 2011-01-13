@@ -13,19 +13,29 @@ cd windows-build
 
 BUILD=$(../config.guess)
 
-if which i586-mingw32msvc-gcc >/dev/null
+# Check the various names used for mingw
+for HOST in mingw32 i586-mingw32msvc i386-mingw32
+do
+	if which $HOST-gcc >/dev/null
+	then
+		break
+	fi
+done
+
+if [ -z "$HOST" ]
 then
-	# Debian
-	HOST=i586-mingw32msvc
-else
-	# Others, eg Mac, or built from source
-	HOST=i386-mingw32
+	echo "Could not find mingw. Please install it!" >&2
+	exit 1
 fi
 
 ../configure --build=$BUILD --host=$HOST --with-old-lib-names --without-system-zlib
 make
 make install-strip DESTDIR=`pwd`/inst
-$HOST-strip --strip-unneeded inst/usr/local/lib/*.dll
+
+if which $HOST-strip >/dev/null
+then
+	$HOST-strip --strip-unneeded inst/usr/local/lib/*.dll
+fi
 
 cd ..
 mkdir teckit-windows-bin
