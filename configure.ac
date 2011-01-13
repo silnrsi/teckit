@@ -1,5 +1,5 @@
 AC_PREREQ(2.54)
-AC_INIT(teckit, 2.5.2, jonathan_kew@sil.org)
+AC_INIT(teckit, 2.5.2, nrsi@sil.org)
 AM_CONFIG_HEADER([config.h])
 AC_CONFIG_SRCDIR([source/UnicodeNames.cpp])
 AC_CONFIG_MACRO_DIR([m4])
