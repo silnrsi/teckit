@@ -24,6 +24,6 @@ sudo chown -R root:admin ./Archive/Documents
 	-i ./Info.plist				\
 	-d ./Description.plist
 
-rm TECkit.dmg
+rm -f TECkit.dmg
 hdiutil create -srcfolder "TECkit 2.5.3.pkg" TECkit.dmg
 hdiutil internet-enable TECkit.dmg
