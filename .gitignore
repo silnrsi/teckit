@@ -1,0 +1,16 @@
+m4/
+aclocal.m4
+autom4te.cache
+config.guess
+config.sub
+compile
+depcomp
+ltmain.sh
+install-sh
+missing
+mkinstalldirs
+
+configure
+Makefile.in
+config.h.in
+
