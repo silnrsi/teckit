@@ -14,3 +14,9 @@ configure
 Makefile.in
 config.h.in
 
+/linux-build/
+/mac-build/
+/windows-build/
+/teckit-linux/
+/teckit-mac/
+/teckit-windows-bin/
