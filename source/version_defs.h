@@ -1,5 +1,5 @@
 /*------------------------------------------------------------------------
-Copyright (c) 2008 SIL International. All rights reserved.
+Copyright (c) 2008-2011 SIL International. All rights reserved.
 
 Distributable under the terms of either the Common Public License or the
 GNU Lesser General Public License, as specified in the LICENSING.txt file.
@@ -18,7 +18,7 @@ GNU Lesser General Public License, as specified in the LICENSING.txt file.
 
 // constants used in all the binaries, shouldn't need changing (until next year)
 #define VER_COMPANY_NAME_STR        "SIL International\0"
-#define VER_COPYRIGHT_STR           "Copyright (c) 2002-08\0"
+#define VER_COPYRIGHT_STR           "Copyright (c) 2002-2011\0"
 #define VER_PRODUCT_NAME_STR        "TECkit core\0"
 
 #ifndef DEBUG
