@@ -14,12 +14,12 @@ cp -pRf ../license ./Archive/Documents/TECkit
 
 /Developer/Tools/packagemaker	\
 	-build						\
-	-p "TECkit 2.5.1.pkg"		\
+	-p "TECkit 2.5.2.pkg"		\
 	-f ./Archive/				\
 	-ds							\
 	-r ./Resources/				\
 	-i ./Info.plist				\
 	-d ./Description.plist
 
-hdiutil create -srcfolder "TECkit 2.5.1.pkg" TECkit.dmg
+hdiutil create -srcfolder "TECkit 2.5.2.pkg" TECkit.dmg
 hdiutil internet-enable TECkit.dmg

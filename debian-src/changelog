@@ -1,3 +1,9 @@
+teckit (2.5.2) maverick; urgency=low
+
+  * package v2.5.2
+
+ -- Neil Mayhew <neil_mayhew@sil.org>  Wed, 15 Dec 2010 23:17:01 -0700
+
 teckit (2.5.1-1ubuntu1~hardy) hardy; urgency=low
 
   * Package v2.5.1
