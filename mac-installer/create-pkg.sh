@@ -17,7 +17,7 @@ sudo chown -R root:admin ./Archive/Documents
 
 /Developer/usr/bin/packagemaker	\
 	-build						\
-	-p "TECkit 2.5.2.pkg"		\
+	-p "TECkit 2.5.3.pkg"		\
 	-f ./Archive/				\
 	-ds							\
 	-r ./Resources/				\
@@ -25,5 +25,5 @@ sudo chown -R root:admin ./Archive/Documents
 	-d ./Description.plist
 
 rm TECkit.dmg
-hdiutil create -srcfolder "TECkit 2.5.2.pkg" TECkit.dmg
+hdiutil create -srcfolder "TECkit 2.5.3.pkg" TECkit.dmg
 hdiutil internet-enable TECkit.dmg

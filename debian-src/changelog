@@ -1,3 +1,10 @@
+teckit (2.5.3) maverick; urgency=low
+
+  * Package v2.5.3
+  * Unicode 6.0.0
+
+ -- Neil Mayhew <neil_mayhew@sil.org>  Wed, 12 Jan 2011 21:26:48 -0700
+
 teckit (2.5.2) maverick; urgency=low
 
   * package v2.5.2

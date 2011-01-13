@@ -2,7 +2,7 @@
 
 #DEB_AUTO_UPDATE_DEBIAN_CONTROL:=yes
 
-DEB_TAR_SRCDIR := teckit-2.5.2
+DEB_TAR_SRCDIR := teckit-2.5.3
 
 include /usr/share/cdbs/1/rules/tarball.mk
 
