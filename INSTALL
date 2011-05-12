@@ -83,7 +83,7 @@ directory, you will need to initialize the directory using GNU autotools.
 
 On Windows, install the autotools by running:
 
-	mingw-get mingw32-autotools
+	mingw-get install mingw32-autotools
 
 On Mac or Linux, use the package system (MacPorts on Mac).
 
