@@ -30,15 +30,13 @@ extern "C" {
 static
 void
 CALLBACK
-errFunc(void* userData, char* msg, char* param, UInt32 line)
+errFunc(void* /*userData*/, char* msg, char* param, UInt32 line)
 {
-#pragma unused(userData)
-
 	fprintf(stderr, "%s", msg);
 	if (param != 0)
 		fprintf(stderr, ": \"%s\"", param);
 	if (line != 0)
-		fprintf(stderr, " at line %lu", line);
+		fprintf(stderr, " at line %lu", (unsigned long)line);
 	fprintf(stderr, "\n");
 }
 

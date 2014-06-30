@@ -69,11 +69,9 @@ firstByteMark[7] = {
 
 const int halfShift					= 10;
 const UInt32 halfBase				= 0x0010000UL;
-const UInt32 halfMask				= 0x3FFUL;
 const UInt32 kSurrogateHighStart	= 0xD800UL;
 const UInt32 kSurrogateHighEnd		= 0xDBFFUL;
 const UInt32 kSurrogateLowStart		= 0xDC00UL;
-const UInt32 kSurrogateLowEnd		= 0xDFFFUL;
 const UInt32 byteMask				= 0x000000BFUL;
 const UInt32 byteMark				= 0x00000080UL;
 
@@ -630,7 +628,7 @@ Compiler::Compiler(const char* txt, UInt32 len, char inForm, bool cmp, bool genX
 		errorState = false;
 
 		string32::const_iterator i;
-		switch (tok.type) {
+		switch ((int)tok.type) {
 			default:
 				Error("this can't happen!");
 				break;
@@ -773,7 +771,7 @@ Compiler::Compiler(const char* txt, UInt32 len, char inForm, bool cmp, bool genX
 			case '^':
 				// negation can only apply to a few things:
 				GetNextToken();
-				switch (tok.type) {
+				switch ((int)tok.type) {
 					case tok_Number:
 						AppendLiteral(tok.val, true);
 						break;
@@ -1131,7 +1129,7 @@ Compiler::Compiler(const char* txt, UInt32 len, char inForm, bool cmp, bool genX
 					bool	ellipsisOK = false;
 					while (tok.type != ')' && tok.type != tok_Newline) {
 						GetNextToken();
-						switch (tok.type) {
+						switch ((int)tok.type) {
 							case tok_USV:
 								if (classType == 'B') {
 									Error("can't use Unicode value in byte encoding");
@@ -1953,20 +1951,22 @@ Compiler::GetNextToken()
 	
 			case '<':
 				tok.type = (tokenType)'<';
-				if (textPtr < textEnd)
+				if (textPtr < textEnd) {
 					if ((currCh = getChar()) == '>')
 						tok.type = tok_Map;
 					else
 						ungetChar(currCh);
+				}
 				return true;
 	
 			case '.':
 				tok.type = (tokenType)'.';
-				if (textPtr < textEnd)
+				if (textPtr < textEnd) {
 					if ((currCh = getChar()) == '.')
 						tok.type = tok_Ellipsis;
 					else
 						ungetChar(currCh);
+				}
 				return true;
 			
 			case '_':
@@ -2502,7 +2502,6 @@ Compiler::calcMaxLen(vector<Item>::iterator b, vector<Item>::iterator e)
 {
 	int	len = 0;
 	int	maxLen = 0;
-	vector<Item>::iterator	base = b;
 	while (b != e) {
 		switch (b->type) {
 			case 0:	// literal
@@ -2717,13 +2716,14 @@ Compiler::associateItems(vector<Rule>& rules, bool fromUni, bool toUni)
 									--im;
 									if (im->type == kMatchElem_Type_EGroup)
 										++nestingLevel;
-									else if (im->type == kMatchElem_Type_BGroup)
+									else if (im->type == kMatchElem_Type_BGroup) {
 										if (nestingLevel > 0)
 											--nestingLevel;
 										else {
 											ir->index = im - m.begin();
 											break;
 										}
+									}
 								}
 							}
 							break;
@@ -2961,7 +2961,7 @@ Compiler::appendMatchElem(string& packedRule, Item& item, int index,
 
 		case kMatchElem_Type_Class:
 			{
-				WRITE(m.flags.type, READ(m.flags.type) | kMatchElem_NonLit + kMatchElem_Type_Class);
+				WRITE(m.flags.type, READ(m.flags.type) | (kMatchElem_NonLit + kMatchElem_Type_Class));
 				UInt32 i;
 				for (i = 0; i < matchClasses.size(); ++i)
 					if (matchClasses[i].membersClass == item.val)
@@ -2973,28 +2973,28 @@ Compiler::appendMatchElem(string& packedRule, Item& item, int index,
 			break;
 
 		case kMatchElem_Type_BGroup:
-			WRITE(m.flags.type, READ(m.flags.type) | kMatchElem_NonLit + kMatchElem_Type_BGroup);
+			WRITE(m.flags.type, READ(m.flags.type) | (kMatchElem_NonLit + kMatchElem_Type_BGroup));
 			WRITE(m.value.bgroup.dNext, item.next - index);
 			WRITE(m.value.bgroup.dAfter, item.after - index);
 			break;
 
 		case kMatchElem_Type_EGroup:
-			WRITE(m.flags.type, READ(m.flags.type) | kMatchElem_NonLit + kMatchElem_Type_EGroup);
+			WRITE(m.flags.type, READ(m.flags.type) | (kMatchElem_NonLit + kMatchElem_Type_EGroup));
 			WRITE(m.value.egroup.dStart, index - item.start);
 			break;
 
 		case kMatchElem_Type_OR:
-			WRITE(m.flags.type, READ(m.flags.type) | kMatchElem_NonLit + kMatchElem_Type_OR);
+			WRITE(m.flags.type, READ(m.flags.type) | (kMatchElem_NonLit + kMatchElem_Type_OR));
 			WRITE(m.value.egroup.dNext, item.next - index);
 			WRITE(m.value.egroup.dStart, index - item.start);
 			break;
 
 		case kMatchElem_Type_ANY:
-			WRITE(m.flags.type, READ(m.flags.type) | kMatchElem_NonLit + kMatchElem_Type_ANY);
+			WRITE(m.flags.type, READ(m.flags.type) | (kMatchElem_NonLit + kMatchElem_Type_ANY));
 			break;
 
 		case kMatchElem_Type_EOS:
-			WRITE(m.flags.type, READ(m.flags.type) | kMatchElem_NonLit + kMatchElem_Type_EOS);
+			WRITE(m.flags.type, READ(m.flags.type) | (kMatchElem_NonLit + kMatchElem_Type_EOS));
 			break;
 	}
 	const char*	p = (const char*)&m;

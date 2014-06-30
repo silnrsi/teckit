@@ -349,10 +349,10 @@ read_control_file(const char* controlFile)
 	
 	int	status = 0;
 	do {
-		long	len = fread(buf, 1, sizeof(buf), ctlFile);
+		size_t	len = fread(buf, 1, sizeof(buf), ctlFile);
 		done = len < sizeof(buf);
 		if (!XML_Parse(parser, buf, len, done)) {
-			fprintf(stderr, "XML parse error: %s at line %d\n", XML_ErrorString(XML_GetErrorCode(parser)), XML_GetCurrentLineNumber(parser));
+			fprintf(stderr, "XML parse error: %s at line %lu\n", XML_ErrorString(XML_GetErrorCode(parser)), (unsigned long)XML_GetCurrentLineNumber(parser));
 			status = 1;
 		}
 	} while (!status && !done);
@@ -559,7 +559,7 @@ process(const char* inputFile, const char* outputFile)
 		TECkit_Converter	markerMapping = makeConverter(sfmMapping, kDirection_U_8);
 		
 		reader.escapeChar		= convertSingleChar(escapeCharU, markerMapping);
-		for (int i = 0; i < sfmCharsU.length(); ++i)
+		for (size_t i = 0; i < sfmCharsU.length(); ++i)
 			reader.sfmChars.append(1, convertSingleChar(sfmCharsU[i], markerMapping));
 
 		if (inlineEscapeCharU != -1) {
@@ -570,7 +570,7 @@ process(const char* inputFile, const char* outputFile)
 			reader.inlineEscapeChar	= convertSingleChar(inlineEscapeCharU, markerMapping);
 			reader.startInline		= convertSingleChar(startInlineU, markerMapping);
 			reader.endInline		= convertSingleChar(endInlineU, markerMapping);
-				for (int i = 0; i < inlineCharsU.length(); ++i)
+				for (size_t i = 0; i < inlineCharsU.length(); ++i)
 					reader.inlineChars.append(1, convertSingleChar(inlineCharsU[i], markerMapping));
 		}
 		

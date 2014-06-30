@@ -45,8 +45,8 @@ protected:
 
 template<class C>
 sfReader<C>::sfReader(std::FILE* f, char i)
-	: inFile(f)
-	, inForm(i)
+	: inForm(i)
+	, inFile(f)
 {
 	escapeChar			= '\\';
 	inlineEscapeChar	= -1;
@@ -160,8 +160,9 @@ template<class C>
 int
 sfReader<C>::next(bool checkInlineEnd)
 {
+	const long	eof = traitsT::eof();
 	long	c = get();
-	if (c == traitsT::eof())
+	if (c == eof)
 		return END_OF_FILE;
 
 	text.clear();
@@ -169,7 +170,7 @@ sfReader<C>::next(bool checkInlineEnd)
 	if (c == escapeChar) {
 		while (1) {
 			c = get();
-			if (c == traitsT::eof()) {
+			if (c == eof) {
 				return SFM;
 			}
 			if (sfmChars.find(c, 0) != stringT::npos) {
@@ -189,7 +190,7 @@ sfReader<C>::next(bool checkInlineEnd)
 	if (c == inlineEscapeChar) {
 		while (1) {
 			c = get();
-			if (c == traitsT::eof()) {
+			if (c == eof) {
 				return INLINE_MARKER;
 			}
 			if (inlineChars.find(c, 0) != stringT::npos)
@@ -224,7 +225,7 @@ sfReader<C>::next(bool checkInlineEnd)
 
 	while (1) {
 		c = get();
-		if (c == traitsT::eof() || c == escapeChar || c == inlineEscapeChar || (checkInlineEnd && c == endInline)) {
+		if (c == eof || c == escapeChar || c == inlineEscapeChar || (checkInlineEnd && c == endInline)) {
 			putback(c);
 			return BODY_TEXT;
 		}

@@ -1485,7 +1485,6 @@ const UInt32 halfMask				= 0x3FFUL;
 const UInt32 kSurrogateHighStart	= 0xD800UL;
 const UInt32 kSurrogateHighEnd		= 0xDBFFUL;
 const UInt32 kSurrogateLowStart		= 0xDC00UL;
-const UInt32 kSurrogateLowEnd		= 0xDFFFUL;
 const UInt32 byteMask				= 0x000000BFUL;
 const UInt32 byteMark				= 0x00000080UL;
 

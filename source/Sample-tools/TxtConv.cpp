@@ -91,7 +91,7 @@ doConversion(TECkit_Converter cnv, FILE* inFile, FILE* outFile, UInt32 opts)
 
 				case kStatus_UnmappedChar:
 					fprintf(stderr, "processing aborted at unmappable character, within %lu characters before file offset %lu\n",
-								lookahead, offset - amountToRead + inUsed);
+								(unsigned long)lookahead, (unsigned long)(offset - amountToRead + inUsed));
 					break;
 
 				default:
@@ -110,7 +110,7 @@ doConversion(TECkit_Converter cnv, FILE* inFile, FILE* outFile, UInt32 opts)
 			} while ((status & kStatusMask_Basic) == kStatus_OutputBufferFull);
 
 			if ((status & kStatusMask_Basic) == kStatus_UnmappedChar)
-				fprintf(stderr, "processing aborted at unmappable character, within %lu characters before end of input\n", lookahead);
+				fprintf(stderr, "processing aborted at unmappable character, within %lu characters before end of input\n", (unsigned long)lookahead);
 			else if ((status & kStatusMask_Basic) != kStatus_NoError)
 				fprintf(stderr, "bad returned status from TECkit_Flush: %ld\n", status);
 		}
