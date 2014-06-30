@@ -32,9 +32,9 @@ while (<FH>) {
 }
 close FH;
 
-foreach $plane (keys %dc) {
-	foreach $page (keys %{$dc{$plane}}) {
-		foreach $ch (keys %{$dc{$plane}{$page}}) {
+foreach $plane (sort(keys %dc)) {
+	foreach $page (sort(keys %{$dc{$plane}})) {
+		foreach $ch (sort(keys %{$dc{$plane}{$page}})) {
 			next if scalar @{$dc{$plane}{$page}{$ch}} == 1;
 			next if exists $exclusions{$plane * 0x10000 + $page * 0x100 + $ch};
 			$d1 = $dc{$plane}{$page}{$ch}[0];
