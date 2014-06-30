@@ -113,9 +113,9 @@ sfReader<UniChar>::get()
 	else {
 		if (inForm == kForm_UTF8) {
 			long	t1, t2 = -1;
-			register unsigned long ch = c1;
-			register unsigned short extraBytes = bytesFromUTF8[c1];
-			register long	c2;
+			unsigned long ch = c1;
+			unsigned short extraBytes = bytesFromUTF8[c1];
+			long	c2;
 			switch(extraBytes) {	/* note: code falls through cases! */
 				case 5:	c2 = getc(inFile); if (c2 == -1) return -1; ch <<= 6; ch += c2;
 				case 4:	c2 = getc(inFile); if (c2 == -1) return -1; ch <<= 6; ch += c2;
