@@ -32,6 +32,9 @@ esac],[oldnames=false])
 AM_CONDITIONAL(OLD_LIB_NAMES, test x$oldnames = xtrue)
 
 # Checks for libraries.
+AC_ARG_ENABLE(tetex-build,
+  AC_HELP_STRING([--enable-tetex-build],
+    [build within teTeX/TeXLive. (default=no)]))
 if test x$enable_tetex_build = xyes; then
   AC_MSG_NOTICE([Building within teTeX/TeXLive])
   sinclude(../zlib/withenable.ac)
@@ -55,6 +58,9 @@ AC_CHECK_HEADERS([stdlib.h string.h])
 AC_C_BIGENDIAN
 
 # Enable debug
+AC_ARG_ENABLE(debug,
+  AC_HELP_STRING([--enable-debug],
+    [build for debugging. (default=no)]))
 if test "$enable_debug" = yes; then
   CFLAGS="$CFLAGS -O0"
   CXXFLAGS="$CXXFLAGS -O0"
@@ -64,8 +70,8 @@ if test "$enable_debug" = yes; then
   if test "$ac_cv_prog_cxx_g" = yes; then
     CXXFLAGS="$CXXFLAGS -g"
   fi
-  CFLAGS="$CFLAGS -Wno-unknown-pragmas -Wparentheses -Werror "
-  CXXFLAGS="$CXXFLAGS -Wno-unknown-pragmas -Wparentheses -Werror "
+  CFLAGS="$CFLAGS -Wno-unknown-pragmas -Wall -Wextra -Werror "
+  CXXFLAGS="$CXXFLAGS -Wno-unknown-pragmas -Wall -Wextra -Werror "
 #  AC_DEFINE(DEBUG)
 else
     CFLAGS="$CFLAGS -DNDEBUG"
@@ -73,16 +79,25 @@ else
 fi
 
 # Enable final
+AC_ARG_ENABLE(final,
+  AC_HELP_STRING([--enable-final],
+    [build for release. (default=no)]))
 if test "$enable_final" = yes; then
   CFLAGS="-O3 -DNDEBUG"
   CXXFLAGS="-O3 -DNDEBUG"
 fi
 
 # Enable profile
+AC_ARG_ENABLE(profile,
+  AC_HELP_STRING([--enable-profile],
+    [build for profiling. (default=no)]))
 if test "$enable_profile" = yes; then
   CFLAGS="$CFLAGS -pg "
   CXXFLAGS="$CXXFLAGS -pg "
 fi
+AC_ARG_ENABLE(profilefn,
+  AC_HELP_STRING([--enable-profilefn],
+    [build with function instrumentation. (default=no)]))
 if test "$enable_profilefn" = yes; then
   CFLAGS="$CFLAGS -g -finstrument-functions "
   CXXFLAGS="$CXXFLAGS -g -finstrument-functions "
