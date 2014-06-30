@@ -1,64 +1,70 @@
 #!/usr/bin/perl
 
-print "compiling Greek mapping (uncompressed)...";
-$errs = `../bin/teckit_compile SILGreek2004-04-27.map -z -o SILGreek.uncompressed.tec`;
-print (($errs eq "" ? "ok" : "failed: $errs") . "\n");
+$srcdir = $ENV{'SRCDIR'};
+$bindir = $ENV{'BINDIR'} || "../bin";
 
-print "comparing...";
-$errs = `diff SILGreek.uncompressed.tec SILGreek2004-04-27.uncompressed.tec.orig`;
-print (($errs eq "" ? "ok" : "failed: $errs") . "\n");
+if ($srcdir =~ /[^\/]$/) { $srcdir .= "/"; }
+if ($bindir =~ /[^\/]$/) { $bindir .= "/"; }
 
-print "compiling Greek mapping (compressed)...";
-$errs = `../bin/teckit_compile SILGreek2004-04-27.map -o SILGreek.tec`;
-print (($errs eq "" ? "ok" : "failed: $errs") . "\n");
+$status = 0; # OK
 
-print "comparing...";
-$errs = `diff SILGreek.tec SILGreek2004-04-27.tec.orig`;
-print (($errs eq "" ? "ok" : "failed: $errs") . "\n");
+sub dotest {
+	my ($description, $command) = @_;
+	print "$description...";
+	my $errs = `$command 2>&1`;
+	my $output = "ok\n";
+	if ($errs) {
+		$status = 1;
+		$output = "failed: $errs";
+	}
+	print " $output";
+}
 
-print "converting plain-text file to unicode...";
-$errs = `../bin/txtconv -t SILGreek.tec -i mrk.txt -o mrk.utf8.txt -nfc`;
-print (($errs eq "" ? "ok" : "failed: $errs") . "\n");
+dotest("compiling Greek mapping (uncompressed)",
+	"${bindir}teckit_compile ${srcdir}SILGreek2004-04-27.map -z -o SILGreek.uncompressed.tec");
 
-print "converting back to legacy encoding...";
-$errs = `../bin/txtconv -t SILGreek.tec -r -i mrk.utf8.txt -o mrk.bytes.txt`;
-print (($errs eq "" ? "ok" : "failed: $errs") . "\n");
+dotest("comparing",
+	"diff ${srcdir}SILGreek2004-04-27.uncompressed.tec.orig SILGreek.uncompressed.tec");
 
-print "comparing...";
-$errs = `diff mrk.txt mrk.bytes.txt`;
-print (($errs eq "" ? "ok" : "failed: $errs") . "\n");
+dotest("compiling Greek mapping (compressed)",
+	"${bindir}teckit_compile ${srcdir}SILGreek2004-04-27.map -o SILGreek.tec");
 
-print "converting unicode to utf16 and nfd...";
-$errs = `../bin/txtconv -i mrk.utf8.txt -o mrk.utf16be.txt -of utf16be -nfd`;
-print (($errs eq "" ? "ok" : "failed: $errs") . "\n");
+dotest("comparing",
+	"diff ${srcdir}SILGreek2004-04-27.tec.orig SILGreek.tec");
 
-print "converting back to utf8 and nfc...";
-$errs = `../bin/txtconv -i mrk.utf16be.txt -o mrk.utf8b.txt -of utf8 -nfc`;
-print (($errs eq "" ? "ok" : "failed: $errs") . "\n");
+dotest("converting plain-text file to unicode",
+	"${bindir}txtconv -t SILGreek.tec -i ${srcdir}mrk.txt -o mrk.utf8.txt -nfc");
 
-print "comparing...";
-$errs = `diff mrk.utf8.txt mrk.utf8b.txt`;
-print (($errs eq "" ? "ok" : "failed: $errs") . "\n");
+dotest("converting back to legacy encoding",
+	"${bindir}txtconv -t SILGreek.tec -r -i mrk.utf8.txt -o mrk.bytes.txt");
 
-print "compiling ISO-8859-1 mapping for sfconv test...";
-$errs = `../bin/teckit_compile ISO-8859-1.map`;
-print (($errs eq "" ? "ok" : "failed: $errs") . "\n");
+dotest("comparing",
+	"diff ${srcdir}mrk.txt mrk.bytes.txt");
 
-print "converting standard format file to unicode...";
-$errs = `../bin/sfconv -8u -c GNT-map.xml -i Mrk-GNT.sf -o mrk.sf.utf8.txt -utf8 -bom`;
-print (($errs eq "" ? "ok" : "failed: $errs") . "\n");
+dotest("converting unicode to utf16 and nfd",
+	"${bindir}txtconv -i mrk.utf8.txt -o mrk.utf16be.txt -of utf16be -nfd");
 
-print "converting back to legacy encodings...";
-$errs = `../bin/sfconv -u8 -c GNT-map.xml -i mrk.sf.utf8.txt -o mrk.sf.legacy.txt`;
-print (($errs eq "" ? "ok" : "failed: $errs") . "\n");
+dotest("converting back to utf8 and nfc",
+	"${bindir}txtconv -i mrk.utf16be.txt -o mrk.utf8b.txt -of utf8 -nfc");
 
-print "comparing...";
-$errs = `diff mrk.sf.legacy.txt mrk.sf.legacy.txt.orig`;
-print (($errs eq "" ? "ok" : "failed: $errs") . "\n");
+dotest("comparing",
+	"diff mrk.utf8.txt mrk.utf8b.txt");
+
+dotest("compiling ISO-8859-1 mapping for sfconv test",
+	"${bindir}teckit_compile ${srcdir}ISO-8859-1.map -o ISO-8859-1.tec");
+
+dotest("converting standard format file to unicode",
+	"${bindir}sfconv -8u -c ${srcdir}GNT-map.xml -i ${srcdir}Mrk-GNT.sf -o mrk.sf.utf8.txt -utf8 -bom");
+
+dotest("converting back to legacy encodings",
+	"${bindir}sfconv -u8 -c ${srcdir}GNT-map.xml -i mrk.sf.utf8.txt -o mrk.sf.legacy.txt");
+
+dotest("comparing",
+	"diff ${srcdir}mrk.sf.legacy.txt.orig mrk.sf.legacy.txt");
 
 
-print "preparing normalization tests...";
-open(FH, "< NormalizationTest.txt") or die "can't open NormalizationTest.txt";
+print "preparing normalization tests...\n";
+open(FH, "< ${srcdir}NormalizationTest.txt") or die "can't open NormalizationTest.txt";
 while (<FH>) {
 	s/\#.*//;
 	@cols = split(/;/);
@@ -72,21 +78,17 @@ close(FH);
 foreach (1..5) {
 	open(FH, ">:utf8", "NormCol$_.txt") or die "can't write to NormCol$_.txt";
 	print FH $col[$_];
-	system("../bin/txtconv -i NormCol$_.txt -o NormCol$_.NFC.txt -of utf8 -nfc -nobom");
-	system("../bin/txtconv -i NormCol$_.txt -o NormCol$_.NFD.txt -of utf8 -nfd -nobom");
+	system("${bindir}txtconv -i NormCol$_.txt -o NormCol$_.NFC.txt -of utf8 -nfc -nobom");
+	system("${bindir}txtconv -i NormCol$_.txt -o NormCol$_.NFD.txt -of utf8 -nfd -nobom");
 	close FH;
 }
 foreach $diff ("2,1.NFC", "2,2.NFC", "2,3.NFC", "4,4.NFC", "4,5.NFC",
-				"3,1.NFD", "3,2.NFD", "3,3.NFD", "5,4.NFD", "5,5.NFD") {
+               "3,1.NFD", "3,2.NFD", "3,3.NFD", "5,4.NFD", "5,5.NFD") {
 	@pair = split(/,/, $diff);
 	$cmd = "diff NormCol$pair[0].txt NormCol$pair[1].txt";
-	print "\n$cmd ...";
-	$errs .= `$cmd`;
-	if ($errs ne "") {
-		print "\n", $errs;
-	}
+	dotest($cmd, $cmd);
 }
-print "\ndone\n";
+print "done\n";
 
 if (1) {
 	print "removing working files...";
@@ -100,5 +102,7 @@ if (1) {
 	unlink("mrk.sf.utf8.txt");
 	unlink("mrk.sf.legacy.txt");
 	system("rm NormCol*.txt");
-	print "done\n";
+	print " done\n";
 }
+
+exit $status;
