@@ -1,3 +1,11 @@
+2014-06-30
+    Version 2.5.4
+    Updated Unicode character names and normalization data to 7.0.0
+    Fixed data normalization bug
+    Updated tests
+    Improved Unicode version updating
+    Fixed compiler warnings
+
 2011-01-13
     Updated Unicode character names and normalization data to 6.0.0
     Updated copyright dates and contact details
@@ -11,6 +19,6 @@
     minor compiler bugfixes and code cleanup for portability
 
 2006-03-16
-	updated Unicode character names and normalization data to 5.0
-	added license files and docs to subversion repository
-	released new Windows binary package, supporting -x option in teckit_compile
+    updated Unicode character names and normalization data to 5.0
+    added license files and docs to subversion repository
+    released new Windows binary package, supporting -x option in teckit_compile
