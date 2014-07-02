@@ -10,10 +10,10 @@ GNU Lesser General Public License, as specified in the LICENSING.txt file.
 #include <windows.h>
 
 // version numbers that should be updated for each release
-#define VER_FILEVERSION             2,5,3,0
+#define VER_FILEVERSION             2,5,4,0
 #define VER_FILEVERSION_STR         "2.5.4.0\0"
 
-#define VER_PRODUCTVERSION          2,5,3,0
+#define VER_PRODUCTVERSION          2,5,4,0
 #define VER_PRODUCTVERSION_STR      "2.5.4\0"
 
 // constants used in all the binaries, shouldn't need changing (until next year)
