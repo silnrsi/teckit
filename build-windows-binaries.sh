@@ -12,12 +12,14 @@ mkdir windows-build
 cd windows-build
 
 BUILD=$(../config.guess)
+HOST=
 
 # Check the various names used for mingw
-for HOST in mingw32 i586-mingw32msvc i386-mingw32
+for PREFIX in mingw32 i586-mingw32msvc i386-mingw32 i686-w64-mingw32
 do
-	if which $HOST-gcc >/dev/null
+	if which $PREFIX-gcc >/dev/null
 	then
+		HOST=$PREFIX
 		break
 	fi
 done
