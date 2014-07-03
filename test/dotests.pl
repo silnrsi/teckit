@@ -1,17 +1,20 @@
 #!/usr/bin/perl
 
-$isWindows = $^O =~ /^MSWin/i;
+use strict;
+use warnings;
 
-$sep  = $isWindows ? '\\' : '/';
-$diff = $isWindows ? "fc" : "diff";
+my $isWindows = $^O =~ /^MSWin/i;
 
-$srcdir = $ENV{'SRCDIR'};
-$bindir = $ENV{'BINDIR'} || "../bin";
+my $sep  = $isWindows ? '\\' : '/';
+my $diff = $isWindows ? "fc" : "diff";
+
+my $srcdir = $ENV{'SRCDIR'} || "";
+my $bindir = $ENV{'BINDIR'} || "../bin";
 
 if ($srcdir && substr($srcdir, -1) ne $sep) { $srcdir .= ${sep}; }
 if ($bindir && substr($bindir, -1) ne $sep) { $bindir .= ${sep}; }
 
-$status = 0; # OK
+my $status = 0; # OK
 
 sub dotest {
 	my ($description, $command) = @_;
@@ -69,10 +72,11 @@ compare("${srcdir}mrk.sf.legacy.txt.orig", "mrk.sf.legacy.txt");
 
 
 print "preparing normalization tests...\n";
+my @col;
 open(FH, "< ${srcdir}NormalizationTest.txt") or die "can't open NormalizationTest.txt";
 while (<FH>) {
 	s/\#.*//;
-	@cols = split(/;/);
+	my @cols = split(/;/);
 	if (defined $cols[4]) {
 		foreach (1..5) {
 			$col[$_] .= pack('U*', map { hex "0x$_" } split(/ /,$cols[$_ - 1])) . "\n";
@@ -89,7 +93,7 @@ foreach (1..5) {
 }
 foreach ("2,1.NFC", "2,2.NFC", "2,3.NFC", "4,4.NFC", "4,5.NFC",
                "3,1.NFD", "3,2.NFD", "3,3.NFD", "5,4.NFD", "5,5.NFD") {
-	@pair = split(/,/, $_);
+	my @pair = split(/,/, $_);
 	compare("NormCol$pair[0].txt", "NormCol$pair[1].txt");
 }
 print "done\n";
