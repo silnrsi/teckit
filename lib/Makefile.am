@@ -1,5 +1,3 @@
-AUTOMAKE_OPTIONS = 1.6
-
 AM_CPPFLAGS  = -I$(top_srcdir)/source/Public-headers
 
 if OLD_LIB_NAMES

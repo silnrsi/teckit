@@ -1,5 +1,3 @@
-AUTOMAKE_OPTIONS = 1.6
-
 ACLOCAL_AMFLAGS = -I m4
 
 SUBDIRS = lib bin docs test

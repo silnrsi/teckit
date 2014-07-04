@@ -1,4 +1,4 @@
-AUTOMAKE_OPTIONS = 1.6
+AUTOMAKE_OPTIONS = -Wno-portability
 
 bin_PROGRAMS = teckit_compile txtconv sfconv
 
