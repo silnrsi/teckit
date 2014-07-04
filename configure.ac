@@ -5,7 +5,7 @@ AC_CONFIG_SRCDIR([source/UnicodeNames.cpp])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CANONICAL_TARGET
 
-AM_INIT_AUTOMAKE([1.11])
+AM_INIT_AUTOMAKE([1.11 subdir-objects])
 
 AM_MAINTAINER_MODE
 AM_SILENT_RULES([yes])
@@ -40,14 +40,14 @@ if test x$enable_tetex_build = xyes; then
   AC_MSG_NOTICE([Building within teTeX/TeXLive])
   sinclude(../zlib/withenable.ac)
   sinclude(../zlib/zlib.ac)
-  ZLIBSRCDIR="\$(top_srcdir)"/../zlib
+  ZLIBDIR=../zlib
 else
   AC_MSG_NOTICE([Not doing a teTeX/TeXLive-style build])
   sinclude(zlib-1.2.3/withenable.ac)
   sinclude(zlib-1.2.3/zlib.ac)
-  ZLIBSRCDIR="\$(top_srcdir)"/zlib-1.2.3
+  ZLIBDIR=zlib-1.2.3
 fi
-AC_SUBST(ZLIBSRCDIR)
+AC_SUBST(ZLIBDIR)
 
 AM_CONDITIONAL(SYSTEM_ZLIB, test x$using_system_zlib = xyes)
 
