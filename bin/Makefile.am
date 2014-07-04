@@ -10,13 +10,15 @@ tool_src = $(top_srcdir)/source/Sample-tools
 
 if SYSTEM_EXPAT
 EXPAT_CFLAGS = -DXML_DTD @expat_CFLAGS@
-EXPAT_SOURCES =
 else
 EXPAT_CFLAGS = -I$(expatdir)/xmlparse -I$(expatdir)/xmltok -DXML_DTD
-EXPAT_SOURCES  = $(expatdir)/xmlparse/xmlparse.c
-EXPAT_SOURCES += $(expatdir)/xmlparse/hashtable.c
-EXPAT_SOURCES += $(expatdir)/xmltok/xmlrole.c
-EXPAT_SOURCES += $(expatdir)/xmltok/xmltok.c
+noinst_LIBRARIES = libexpat.a
+libexpat_a_SOURCES  = $(expatdir)/xmlparse/xmlparse.c
+libexpat_a_SOURCES += $(expatdir)/xmlparse/hashtable.c
+libexpat_a_SOURCES += $(expatdir)/xmltok/xmlrole.c
+libexpat_a_SOURCES += $(expatdir)/xmltok/xmltok.c
+libexpat_a_CFLAGS = $(AM_CPPFLAGS) $(EXPAT_CFLAGS)
+$(am_libexpat_a_OBJECTS): CFLAGS := $(filter-out -Wextra, $(CFLAGS))
 endif
 
 # AM_CPPFLAGS  += $(EXPAT_CFLAGS)
@@ -28,7 +30,6 @@ txtconv_SOURCES = $(top_srcdir)/source/Sample-tools/TxtConv.cpp
 
 sfconv_SOURCES  = $(top_srcdir)/SFconv/SFconv.cpp
 sfconv_SOURCES += $(top_srcdir)/SFconv/ConvertUTF.c
-sfconv_SOURCES += $(EXPAT_SOURCES)
 sfconv_CPPFLAGS = $(AM_CPPFLAGS) $(EXPAT_CFLAGS)
 sfconv_CFLAGS = $(AM_CPPFLAGS) $(EXPAT_CFLAGS)
 sfconv_SOURCES += $(top_srcdir)/SFconv/sfReader.h $(top_srcdir)/SFconv/ConvertUTF.h $(top_srcdir)/SFconv/Debug_Prefix.h $(top_srcdir)/SFconv/Final_Prefix.h $(top_srcdir)/SFconv/ushort_chartraits.h
@@ -41,6 +42,7 @@ teckit_compile_LDADD = $(top_builddir)/lib/libTECkit_Compiler.la
 txtconv_LDADD = $(top_builddir)/lib/libTECkit.la
 sfconv_LDADD = $(top_builddir)/lib/libTECkit.la @expat_LIBS@
 endif
+sfconv_LDADD += $(noinst_LIBRARIES)
 
 # --> RC Support
 if OLD_LIB_NAMES
