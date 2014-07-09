@@ -30,7 +30,7 @@ then
 	exit 1
 fi
 
-../configure --build=$BUILD --host=$HOST --with-old-lib-names --without-system-zlib
+../configure --build=$BUILD --host=$HOST --with-old-lib-names --without-system-zlib --enable-final --disable-dependency-tracking
 make
 make install-strip DESTDIR=`pwd`/inst
 

@@ -7,8 +7,7 @@ rm -rf mac-build teckit-mac
 mkdir mac-build
 cd mac-build
 
-# configure for building Universal binaries
-../configure CFLAGS='-arch ppc -arch i386' CXXFLAGS='-arch ppc -arch i386' LDFLAGS='-arch ppc -arch i386' --disable-dependency-tracking
+../configure --enable-final --disable-dependency-tracking
 make
 make install DESTDIR=`pwd`/inst
 
