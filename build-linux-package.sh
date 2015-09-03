@@ -17,4 +17,4 @@ cd teckit
 mv ../teckit-*.tar.gz .
 cp -a ../../debian-src debian
 
-debuild
+debuild "$@"

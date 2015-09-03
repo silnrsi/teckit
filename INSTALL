@@ -63,6 +63,10 @@ Run the following script:
 
 The results will be in the teckit-linux subdirectory.
 
+To build just a source package that can be passed to an external package builder
+(such as `pbuilder`) add `-S` to the command line. Other `debuild` options can
+be given as well.
+
 BUILDING a MAC PACKAGE
 
 Run the following script:
