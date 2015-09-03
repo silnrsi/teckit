@@ -84,8 +84,8 @@ AC_ARG_ENABLE(final,
   AC_HELP_STRING([--enable-final],
     [build for release. (default=no)]))
 if test "$enable_final" = yes; then
-  CFLAGS="-O3 -DNDEBUG"
-  CXXFLAGS="-O3 -DNDEBUG"
+  CFLAGS="$CFLAGS -O3 -DNDEBUG"
+  CXXFLAGS="$CXXFLAGS -O3 -DNDEBUG"
 fi
 
 # Enable profile
