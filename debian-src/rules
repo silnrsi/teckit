@@ -8,6 +8,12 @@ include /usr/share/cdbs/1/rules/tarball.mk
 
 #include /usr/share/cdbs/1/rules/patchsys-quilt.mk
 
+common-install-arch:: $(patsubst %.in,%,$(wildcard debian/*.install.in))
+	# Remove this when Perl versions <5.20 are gone (Ubuntu vivid onwards)
+	if [ ! -d /usr/lib/$(DEB_HOST_MULTIARCH)/perl5 ]; then \
+		sed -i 's/\*\///g' debian/libteckit-perl.install; \
+	fi
+
 include /usr/share/cdbs/1/rules/debhelper.mk
 include /usr/share/cdbs/1/class/autotools.mk
 
@@ -19,4 +25,3 @@ build/libteckit-perl ::
 
 install/libteckit-perl ::
 	cd $(DEB_SRCDIR)/source/Perl ; $(MAKE) install DESTDIR=$(CURDIR)/debian/tmp
-
