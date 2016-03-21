@@ -20,7 +20,7 @@ Description: Encoding conversion library
 Package: libteckit-dev
 Architecture: any
 Section: libdevel
-Depends: libteckit (= ${Source-Version})
+Depends: teckit (= ${Source-Version})
 Description: Development files for TECkit
  Development files to allow linking to libteckit for data conversion
 
