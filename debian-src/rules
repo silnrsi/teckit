@@ -8,6 +8,8 @@ include /usr/share/cdbs/1/rules/tarball.mk
 
 #include /usr/share/cdbs/1/rules/patchsys-quilt.mk
 
+DEB_CONFIGURE_EXTRA_FLAGS += --libdir=\$${prefix}/lib/$(DEB_HOST_MULTIARCH)
+
 common-install-arch:: $(patsubst %.in,%,$(wildcard debian/*.install.in))
 	# Remove this when Perl versions <5.20 are gone (Ubuntu vivid onwards)
 	if [ ! -d /usr/lib/$(DEB_HOST_MULTIARCH)/perl5 ]; then \

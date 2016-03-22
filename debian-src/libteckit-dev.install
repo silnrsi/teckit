@@ -1,4 +1,4 @@
 usr/include
-usr/lib/libTECkit.*a
-usr/lib/libTECkit_Compiler.*a
-usr/lib/pkgconfig
+usr/lib/*/libTECkit.*a
+usr/lib/*/libTECkit_Compiler.*a
+usr/lib/*/pkgconfig
