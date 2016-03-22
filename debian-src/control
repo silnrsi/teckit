@@ -3,7 +3,7 @@ Build-Depends: autotools-dev, cdbs (>= 0.4.27-1), perl (>= 5.8.0), debhelper (>=
 Section: devel
 Priority: optional
 Maintainer: Daniel Glassey <wdg@debian.org>
-Standards-Version: 3.7.2
+Standards-Version: 3.9.7
 
 Package: teckit
 Architecture: any
