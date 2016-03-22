@@ -19,5 +19,5 @@ build/libteckit-perl ::
 	cd $(DEB_SRCDIR)/source/Perl ; $(MAKE) OPTIMIZE="-O2 -g -Wall"
 
 install/libteckit-perl ::
-	cd $(DEB_SRCDIR)/source/Perl ; $(MAKE) install PREFIX=$(CURDIR)/debian/tmp/usr
+	cd $(DEB_SRCDIR)/source/Perl ; $(MAKE) install DESTDIR=$(CURDIR)/debian/tmp
 
