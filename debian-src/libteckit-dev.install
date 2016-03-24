@@ -1,6 +1,6 @@
 usr/include
-usr/lib/*/libTECkit.*a
+usr/lib/*/libTECkit.a
 usr/lib/*/libTECkit.so
-usr/lib/*/libTECkit_Compiler.*a
+usr/lib/*/libTECkit_Compiler.a
 usr/lib/*/libTECkit_Compiler.so
 usr/lib/*/pkgconfig
