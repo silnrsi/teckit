@@ -1,5 +1,7 @@
 Source: teckit
-Build-Depends: autotools-dev, cdbs (>= 0.4.93~), debhelper (>= 8.1.3), perl (>= 5.8.0), pkg-config, zlib1g-dev, libexpat1-dev
+Build-Depends:
+ debhelper (>= 8.1.3), cdbs (>= 0.4.93~), autotools-dev, pkg-config,
+ perl (>= 5.8.0), zlib1g-dev, libexpat1-dev
 Section: devel
 Priority: optional
 Maintainer: Daniel Glassey <wdg@debian.org>
@@ -11,12 +13,12 @@ Multi-Arch: foreign
 Section: devel
 Depends: ${misc:Depends}, ${shlibs:Depends}, libteckit (= ${binary:Version})
 Description: Encoding conversion library - command-line utilities
- Provides a generic library for converting data too and from Unicode
- And also from Unicode <> Unicode.
+ TECkit provides a generic library for converting data to and from Unicode
+ and also Unicode <> Unicode.
  .
  It also includes a compiler for a description language that allows
  for bidirectional conversion description (the same description is
- used for conversion too and from Unicode, for example).
+ used for conversion to and from Unicode, for example).
 
 Package: libteckit
 Architecture: any
@@ -24,26 +26,40 @@ Multi-Arch: same
 Section: devel
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: Encoding conversion library - shared libraries
- Provides a generic library for converting data too and from Unicode
- And also from Unicode <> Unicode.
+ TECkit provides a generic library for converting data to and from Unicode
+ and also Unicode <> Unicode.
  .
  It also includes a compiler for a description language that allows
  for bidirectional conversion description (the same description is
- used for conversion too and from Unicode, for example).
+ used for conversion to and from Unicode, for example).
 
 Package: libteckit-dev
 Architecture: any
 Multi-Arch: same
 Section: libdevel
 Depends: ${misc:Depends}, ${shlibs:Depends}, libteckit (= ${binary:Version})
-Description: Development files for TECkit
- Development files to allow linking to libteckit for data conversion
+Description: Encoding conversion library - development files
+ TECkit provides a generic library for converting data to and from Unicode
+ and also Unicode <> Unicode.
+ .
+ It also includes a compiler for a description language that allows
+ for bidirectional conversion description (the same description is
+ used for conversion to and from Unicode, for example).
+ .
+ Development files to allow linking to libteckit for data conversion.
 
 Package: libteckit-perl
 Architecture: any
 Multi-Arch: same
 Section: perl
 Depends: ${misc:Depends}, ${shlibs:Depends}, perl (>= 5.8.0)
-Description: Perl module to access TECkit converter
- This Perl module is a statically linked teckit engine
-
+Description: Encoding conversion library - Perl module
+ TECkit provides a generic library for converting data to and from Unicode
+ and also Unicode <> Unicode.
+ .
+ It also includes a compiler for a description language that allows
+ for bidirectional conversion description (the same description is
+ used for conversion to and from Unicode, for example).
+ .
+ Perl module to access libteckit for data conversion, using a statically
+ linked copy of libteckit.
