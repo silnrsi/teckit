@@ -1,4 +1,5 @@
 2016-03-29
+    Version 2.5.5
     Split shared libraries into a separate Linux package
     Made Linux packages multiarch-compatible
 
