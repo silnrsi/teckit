@@ -1,12 +1,8 @@
 #!/usr/bin/make -f
 
-#DEB_AUTO_UPDATE_DEBIAN_CONTROL:=yes
-
 DEB_TAR_SRCDIR := teckit-2.5.4
 
 include /usr/share/cdbs/1/rules/tarball.mk
-
-#include /usr/share/cdbs/1/rules/patchsys-quilt.mk
 
 DEB_CONFIGURE_EXTRA_FLAGS += --libdir=\$${prefix}/lib/$(DEB_HOST_MULTIARCH)
 
