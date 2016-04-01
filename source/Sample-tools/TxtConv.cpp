@@ -53,7 +53,7 @@ doConversion(TECkit_Converter cnv, FILE* inFile, FILE* outFile, UInt32 opts)
 	char			outBuffer[kOutBufLen];
 	UInt32			savedLen = 0;
 	UInt32			offset = 0;
-	TECkit_Status	status;
+	TECkit_Status	status = kStatus_NeedMoreInput;
 
 	inBase = ftell(inFile);
 	fseek(inFile, 0, SEEK_END);
@@ -61,7 +61,7 @@ doConversion(TECkit_Converter cnv, FILE* inFile, FILE* outFile, UInt32 opts)
 	fseek(inFile, inBase, SEEK_SET);
 
 	while (1) {
-		UInt32	inUsed, outUsed, lookahead;
+		UInt32	inUsed = 0, outUsed = 0, lookahead = 0;
 		UInt32	amountToRead = kInBufLen - savedLen;
 		char*	inPtr = inBuffer;
 		UInt32	inAvail;
@@ -107,6 +107,7 @@ doConversion(TECkit_Converter cnv, FILE* inFile, FILE* outFile, UInt32 opts)
 				fwrite(outBuffer, 1, outUsed, outFile);
 				savedLen -= inUsed;
 				inPtr += inUsed;
+				inUsed = 0;
 			} while ((status & kStatusMask_Basic) == kStatus_OutputBufferFull);
 
 			if ((status & kStatusMask_Basic) == kStatus_UnmappedChar)
