@@ -64,16 +64,18 @@ doConversion(TECkit_Converter cnv, FILE* inFile, FILE* outFile, UInt32 opts)
 		UInt32	inUsed = 0, outUsed = 0, lookahead = 0;
 		UInt32	amountToRead = kInBufLen - savedLen;
 		char*	inPtr = inBuffer;
-		UInt32	inAvail;
+		UInt32	inAvail = savedLen;
 		
 		if (offset + amountToRead > inLength)
 			amountToRead = inLength - offset;
 		
-		inAvail = savedLen + amountToRead;
-		if (inAvail > 0) {
-			fread(inBuffer + savedLen, 1, amountToRead, inFile);
+		if (amountToRead > 0) {
+			amountToRead = fread(inBuffer + savedLen, 1, amountToRead, inFile);
 			offset += amountToRead;
+			inAvail += amountToRead;
+		}
 
+		if (inAvail > 0) {
 			status = TECkit_ConvertBufferOpt(cnv, (Byte*)inPtr, inAvail, &inUsed,
 											(Byte*)outBuffer, kOutBufLen, &outUsed, opts, &lookahead);
 			fwrite(outBuffer, 1, outUsed, outFile);
@@ -345,7 +347,7 @@ Usage: %s -i inFile -o outFile [-t tecFile] [-r] [-if inForm] [-of outForm] [-no
 			return 1;
 		}
 
-		fread(table, 1, len, tecFile);
+		len = fread(table, 1, len, tecFile);
 		fclose(tecFile);
 
 		status = forward
@@ -371,6 +373,7 @@ Usage: %s -i inFile -o outFile [-t tecFile] [-r] [-if inForm] [-of outForm] [-no
 		// if the input is supposed to be Unicode, and the inForm is unspecified, try to guess it
 		// or skip over the BOM if one is found that matches the specified inForm
 		unsigned char	sig[4];
+		size_t sigLen;
 		if (inForm == kForm_Bytes) {
 			fprintf(stderr, "improper input encoding form for this mapping");
 			return 1;
@@ -378,24 +381,24 @@ Usage: %s -i inFile -o outFile [-t tecFile] [-r] [-if inForm] [-of outForm] [-no
 		
 		switch (inForm) {
 			case kForm_Unspecified:
-				fread(sig, 1, 4, inFile);
-				if (sig[0] == 0xef && sig[1] == 0xbb && sig[2] == 0xbf) {
+				sigLen = fread(sig, 1, 4, inFile);
+				if (sigLen >= 3 && sig[0] == 0xef && sig[1] == 0xbb && sig[2] == 0xbf) {
 					inForm = kForm_UTF8;
 					fseek(inFile, 3, SEEK_SET);
 				}
-				else if (sig[0] == 0xfe && sig[1] == 0xff) {
+				else if (sigLen >= 2 && sig[0] == 0xfe && sig[1] == 0xff) {
 					inForm = kForm_UTF16BE;
 					fseek(inFile, 2, SEEK_SET);
 				}
-				else if (sig[0] == 0xff && sig[1] == 0xfe && sig[2] == 0x00 && sig[3] == 0x00) {
+				else if (sigLen >= 4 && sig[0] == 0xff && sig[1] == 0xfe && sig[2] == 0x00 && sig[3] == 0x00) {
 					inForm = kForm_UTF32LE;
 				/*	fseek(inFile, 4, SEEK_SET);	*/
 				}
-				else if (sig[0] == 0xff && sig[1] == 0xfe) {
+				else if (sigLen >= 2 && sig[0] == 0xff && sig[1] == 0xfe) {
 					inForm = kForm_UTF16LE;
 					fseek(inFile, 2, SEEK_SET);
 				}
-				else if (sig[0] == 0x00 && sig[1] == 0x00 && sig[2] == 0xfe && sig[3] == 0xff) {
+				else if (sigLen >= 4 && sig[0] == 0x00 && sig[1] == 0x00 && sig[2] == 0xfe && sig[3] == 0xff) {
 					inForm = kForm_UTF32BE;
 				/*	fseek(inFile, 4, SEEK_SET);	*/
 				}
@@ -406,32 +409,32 @@ Usage: %s -i inFile -o outFile [-t tecFile] [-r] [-if inForm] [-of outForm] [-no
 				break;
 		
 			case kForm_UTF8:
-				fread(sig, 1, 3, inFile);
-				if (!(sig[0] == 0xef && sig[1] == 0xbb && sig[2] == 0xbf))
+				sigLen = fread(sig, 1, 3, inFile);
+				if (sigLen >= 3 && !(sig[0] == 0xef && sig[1] == 0xbb && sig[2] == 0xbf))
 					fseek(inFile, 0, SEEK_SET);
 				break;
 
 			case kForm_UTF16BE:
-				fread(sig, 1, 2, inFile);
-				if (!(sig[0] == 0xfe && sig[1] == 0xff))
+				sigLen = fread(sig, 1, 2, inFile);
+				if (sigLen >= 2 && !(sig[0] == 0xfe && sig[1] == 0xff))
 					fseek(inFile, 0, SEEK_SET);
 				break;
 
 			case kForm_UTF16LE:
-				fread(sig, 1, 2, inFile);
-				if (!(sig[0] == 0xff && sig[1] == 0xfe))
+				sigLen = fread(sig, 1, 2, inFile);
+				if (sigLen >= 2 && !(sig[0] == 0xff && sig[1] == 0xfe))
 					fseek(inFile, 0, SEEK_SET);
 				break;
 
 			case kForm_UTF32BE:
-				fread(sig, 1, 4, inFile);
-				if (!(sig[0] == 0x00 && sig[1] == 0x00 && sig[2] == 0xfe && sig[3] == 0xff))
+				sigLen = fread(sig, 1, 4, inFile);
+				if (sigLen >= 4 && !(sig[0] == 0x00 && sig[1] == 0x00 && sig[2] == 0xfe && sig[3] == 0xff))
 					fseek(inFile, 0, SEEK_SET);
 				break;
 
 			case kForm_UTF32LE:
-				fread(sig, 1, 4, inFile);
-				if (!(sig[0] == 0xff && sig[1] == 0xfe && sig[2] == 0x00 && sig[3] == 0x00))
+				sigLen = fread(sig, 1, 4, inFile);
+				if (sigLen >= 4 && !(sig[0] == 0xff && sig[1] == 0xfe && sig[2] == 0x00 && sig[3] == 0x00))
 					fseek(inFile, 0, SEEK_SET);
 				break;
 		}
