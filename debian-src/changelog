@@ -1,4 +1,4 @@
-teckit (2.5.5+next) stable; urgency=medium
+teckit (2.5.6) stable; urgency=medium
 
   * Add a diversion of /usr/bin/teckit_compile to avoid a conflict
     with texlive-binaries

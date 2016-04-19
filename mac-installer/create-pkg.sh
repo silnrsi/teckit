@@ -17,13 +17,13 @@ sudo chown -R root:admin ./Archive/Documents
 
 /Developer/usr/bin/packagemaker	\
 	-build						\
-	-p "TECkit 2.5.5.pkg"		\
+	-p "TECkit 2.5.6.pkg"		\
 	-f ./Archive/				\
 	-ds							\
 	-r ./Resources/				\
 	-i ./Info.plist				\
 	-d ./Description.plist
 
-rm -f TECkit-2.5.5.dmg
-hdiutil create -srcfolder "TECkit 2.5.5.pkg" TECkit-2.5.5.dmg
-hdiutil internet-enable TECkit-2.5.5.dmg
+rm -f TECkit-2.5.6.dmg
+hdiutil create -srcfolder "TECkit 2.5.6.pkg" TECkit-2.5.6.dmg
+hdiutil internet-enable TECkit-2.5.6.dmg
