@@ -1,0 +1,7 @@
+#!/bin/sh -e
+if [ "$1" = remove -o "$1" = abort-install -o "$1" = disappear ] \
+  || ([ "$1" = abort-upgrade ] && dpkg --compare-versions "$2" le 2.5.5); then
+	dpkg-divert --package teckit --remove --rename /usr/bin/teckit_compile
+fi
+
+#DEBHELPER#

@@ -1,0 +1,6 @@
+#!/bin/sh -e
+if [ "$1" != upgrade ] || dpkg --compare-versions "$2" le 2.5.5; then
+	dpkg-divert --package teckit --add --rename /usr/bin/teckit_compile
+fi
+
+#DEBHELPER#
