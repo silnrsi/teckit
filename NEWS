@@ -1,5 +1,9 @@
-2014-06-30
+2014-07-09
     Version 2.5.4
+    Improved building and testing scripts
+    Enabled tests to be run on Windows without bash
+
+2014-06-30
     Updated Unicode character names and normalization data to 7.0.0
     Fixed data normalization bug
     Updated tests

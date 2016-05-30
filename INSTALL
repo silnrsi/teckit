@@ -1,6 +1,6 @@
 INSTALL
 
-Note: If you checked out teckit from svn, or for any other reason don't have
+Note: If you checked out teckit from a VCS, or for any other reason don't have
 a file called "configure", you will need to initialize the directory using
 GNU autotools. Instructions for this are given further down.
 
@@ -92,4 +92,4 @@ Then, on all platforms, run:
 	./autogen.sh
 
 in the teckit source directory. This normally needs to be done only once, but
-if you update the directory from svn you may need to run it again.
+if you update your directory from the VCS you may need to run it again.
