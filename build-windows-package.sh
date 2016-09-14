@@ -32,11 +32,11 @@ cp -p "$archive/TECkit Mapping Editor.exe" .
 # documentation
 unix2dos -n ../README README.txt
 mkdir Documentation
-cp -p ../docs/TECkit_Language_2.1.doc.pdf Documentation
-cp -p ../docs/TECkit_version_2.1.doc.pdf Documentation
+cp -p ../docs/TECkit_Language.pdf Documentation
+cp -p ../docs/TECkit_Tools.pdf Documentation
 mkdir Developers
 cp -p ../docs/Calling_TECkit_from_VB.doc "Developers/Calling TECkit from VB.doc"
-cp -p ../docs/TECkit_Binary_Format.doc.pdf Developers
+cp -p ../docs/TECkit_Binary_Format.pdf Developers
 
 # code
 mkdir Developers/Public-headers
