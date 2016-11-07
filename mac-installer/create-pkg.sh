@@ -1,29 +1,31 @@
-#!/bin/sh
+#!/bin/bash
 
-sudo rm -rf ./Archive
+# adjust this to newer version numbers
+VERSION="2.5.6"
+echo current version is: $VERSION
 
-mkdir -p ./Archive/usr/local
-cp -pRf ../teckit-mac/* ./Archive/usr/local
+sudo rm -rf ./Pkg
 
-mkdir -p ./Archive/usr/local/include
-cp -pRf ../source/Public-headers/*.h ./Archive/usr/local/include
+mkdir -p ./Pkg/usr/local
+cp -p -R ../teckit-mac/* ./Pkg/usr/local
 
-mkdir -p ./Archive/Documents/TECkit
-cp -pRf ../docs/*.pdf ./Archive/Documents/TECkit
-cp -pRf ../license ./Archive/Documents/TECkit
+mkdir -p ./Pkg/usr/local/include
+cp -p -R ../source/Public-headers/*.h ./Pkg/usr/local/include
 
-sudo chown -R root:wheel ./Archive/usr
-sudo chown -R root:admin ./Archive/Documents
+mkdir -p ./Img
+cp -p -R ../docs/*.pdf ./Img
+cp -p -R ../docs/*.odt ./Img
+cp -p -R ../docs/*.doc ./Img
 
-/Developer/usr/bin/packagemaker	\
-	-build						\
-	-p "TECkit 2.5.6.pkg"		\
-	-f ./Archive/				\
-	-ds							\
-	-r ./Resources/				\
-	-i ./Info.plist				\
-	-d ./Description.plist
+cp -p -R ../license ./Img
 
-rm -f TECkit-2.5.6.dmg
-hdiutil create -srcfolder "TECkit 2.5.6.pkg" TECkit-2.5.6.dmg
-hdiutil internet-enable TECkit-2.5.6.dmg
+sudo chown -R root:wheel ./Pkg/usr
+sudo chown -R $USER:staff ./Img
+sudo chmod -R a+rw ./Img
+
+/usr/bin/pkgbuild  --identifier "org.sil.scripts.teckit" --analyze --root Pkg/ components.plist
+
+/usr/bin/pkgbuild --identifier "org.sil.scripts.teckit" --root Pkg/ --component-plist components.plist --version $VERSION Img/TECkit-$VERSION.pkg
+
+/usr/bin/hdiutil create -verbose -volname "TECkit" -srcdir Img/ -ov TECkit-$VERSION.dmg
+/usr/bin/hdiutil internet-enable TECkit-$VERSION.dmg

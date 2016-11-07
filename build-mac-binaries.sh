@@ -1,6 +1,6 @@
 # This is how the Mac binaries for release are built, so I don't forget!
-
 # Any existing mac-build and teckit-mac/{bin,lib} directories will be deleted.
+# then go to mac-installer/ and run ./create-pkg.sh to generate the pkg and dmg.
 
 rm -rf mac-build teckit-mac
 
