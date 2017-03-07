@@ -30,6 +30,7 @@ txtconv_SOURCES = @top_builddir@/source/Sample-tools/TxtConv.cpp
 sfconv_SOURCES  = @top_builddir@/SFconv/SFconv.cpp
 sfconv_SOURCES += @top_builddir@/SFconv/UtfCodec.cpp
 sfconv_CPPFLAGS = $(AM_CPPFLAGS) $(EXPAT_CFLAGS)
+sfconv_CXXFLAGS = -std=c++11
 sfconv_CFLAGS   = $(AM_CPPFLAGS) $(EXPAT_CFLAGS)
 sfconv_SOURCES += @top_builddir@/SFconv/sfReader.h
 sfconv_SOURCES += @top_builddir@/SFconv/ConvertUTF.h
