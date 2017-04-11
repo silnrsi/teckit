@@ -11,7 +11,7 @@ Package: teckit
 Architecture: any
 Multi-Arch: foreign
 Section: devel
-Depends: ${misc:Depends}, ${shlibs:Depends}, libteckit (= ${binary:Version})
+Depends: ${misc:Depends}, ${shlibs:Depends}, libteckit0 (= ${binary:Version})
 Description: Encoding conversion library - command-line utilities
  TECkit provides a generic library for converting data to and from Unicode
  and also Unicode <> Unicode.
@@ -20,7 +20,9 @@ Description: Encoding conversion library - command-line utilities
  for bidirectional conversion description (the same description is
  used for conversion to and from Unicode, for example).
 
-Package: libteckit
+Package: libteckit0
+Replaces: libteckit (<< 2.5.7)
+Breaks: libteckit (<< 2.5.7)
 Architecture: any
 Multi-Arch: same
 Section: devel
@@ -37,7 +39,7 @@ Package: libteckit-dev
 Architecture: any
 Multi-Arch: same
 Section: libdevel
-Depends: ${misc:Depends}, ${shlibs:Depends}, libteckit (= ${binary:Version})
+Depends: ${misc:Depends}, ${shlibs:Depends}, libteckit0 (= ${binary:Version})
 Description: Encoding conversion library - development files
  TECkit provides a generic library for converting data to and from Unicode
  and also Unicode <> Unicode.
