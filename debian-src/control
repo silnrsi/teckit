@@ -65,3 +65,11 @@ Description: Encoding conversion library - Perl module
  .
  Perl module to access libteckit for data conversion, using a statically
  linked copy of libteckit.
+
+#Package: libteckit
+#Depends: libteckit0, ${misc:Depends}
+#Architecture: all
+#Priority: extra
+#Section: oldlibs
+#Description: transitional package
+# This is a transitional package. It can safely be removed.
