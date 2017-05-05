@@ -1,9 +1,11 @@
+WINDOWS=teckit-windows-bin
+
 find_compiler()
 {
     HOST=
 
     # Check the various names used for mingw
-    for PREFIX in mingw32 i586-mingw32msvc i386-mingw32 i686-w64-mingw32
+    for PREFIX in "$@"
     do
         if which $PREFIX-gcc >/dev/null
         then
@@ -14,7 +16,21 @@ find_compiler()
 
     if [ -z "$HOST" ]
     then
-        echo "Could not find mingw. Please install it!" >&2
+        echo "Could not find mingw in "$@". Please install it!" >&2
         exit 1
     fi
+}
+
+set_compiler()
+{
+    case $1 in
+        32)
+            find_compiler mingw32 i586-mingw32msvc i386-mingw32 i686-w64-mingw32
+            RUNTIME=libgcc_s_sjlj-1.dll
+            ;;
+        64)
+            find_compiler x86_64-w64-mingw32
+            RUNTIME=libgcc_s_seh-1.dll
+            ;;
+    esac
 }

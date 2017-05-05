@@ -2,38 +2,46 @@
 
 # This is how the Windows binaries for release are built, so I don't forget!
 
-# Any existing windows-build and teckit-windows-bin directories will be deleted.
+# Any existing windows-build{32,64} and teckit-windows-bin directories will be deleted.
 
 PATH=/usr/local/mingw/bin:$PATH
+. ./build-windows-common
 
-rm -rf windows-build teckit-windows-bin
+rm -rf $WINDOWS
 
-mkdir windows-build
-cd windows-build
+for bit in 32 64
+do
+    WINDOWS_BUILD=windows-build${bit}
+    WINDOWS_BIN=$WINDOWS/${bit}-bit
+    rm -rf $WINDOWS_BUILD
+    mkdir $WINDOWS_BUILD
+    cd $WINDOWS_BUILD
+    BUILD=$(../config.guess)
+    set_compiler $bit
 
-BUILD=$(../config.guess)
+    ../configure --build=$BUILD --host=$HOST --with-old-lib-names --without-system-zlib --enable-final --disable-dependency-tracking
+    make
+    make install-strip DESTDIR=`pwd`/inst
 
-# set $HOST
-. ../build-windows-common
-find_compiler
+    if which $HOST-strip >/dev/null
+    then
+        $HOST-strip --strip-unneeded inst/usr/local/lib/*.dll
+    fi
+    cd ..
 
-../configure --build=$BUILD --host=$HOST --with-old-lib-names --without-system-zlib --enable-final --disable-dependency-tracking
-make
-make install-strip DESTDIR=`pwd`/inst
+    mkdir -p $WINDOWS_BIN
+    cp $WINDOWS_BUILD/inst/usr/local/bin/*.exe $WINDOWS_BIN
+    cp $WINDOWS_BUILD/inst/usr/local/lib/*.dll $WINDOWS_BIN
+done
 
-if which $HOST-strip >/dev/null
-then
-	$HOST-strip --strip-unneeded inst/usr/local/lib/*.dll
-fi
-
+cd docs
+for manpage in *.1
+do
+    groff -k -mandoc -Tpdf $manpage > ../${WINDOWS}/${manpage}.pdf
+done
 cd ..
-mkdir teckit-windows-bin
-cp windows-build/inst/usr/local/bin/*.exe teckit-windows-bin
-cp windows-build/inst/usr/local/lib/*.dll teckit-windows-bin
-
-# groff -k -mandoc -Tpdf docs/sfconv.1 > sfconv.pdf
 
 echo '###'
 echo '### Built products:'
 echo '###'
-ls -l teckit-windows-bin
+ls -l -R $WINDOWS
