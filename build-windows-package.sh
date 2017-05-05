@@ -2,11 +2,11 @@
 
 # This is how the Windows package for release are built.
 
-# Any existing TECkit-<version> folder TECkit-<version>.zip will be deleted.
+# Any existing TECkit-<version> folder and TECkit-<version>.zip will be deleted.
 
 # metadata
-version=$(git describe)
-foldername=TECkit-$version
+VERSION="2.5.6"
+foldername=TECkit-${VERSION}
 filename=${foldername}.zip
 
 # remove old folder and zip file
@@ -19,15 +19,25 @@ cd $foldername
 # add files to folder
 
 # runtime
-cp -p /usr/lib/gcc/i686-w64-mingw32/5.3-posix/libgcc_s_sjlj-1.dll .
-cp -p /usr/lib/gcc/i686-w64-mingw32/5.3-posix/libstdc++-6.dll .
-cp -p /usr/i686-w64-mingw32/lib/libwinpthread-1.dll .
 
-# old files
-archive=../../teckit-archive/2.5.1/TECkit_2008-04-04
-cp -p $archive/Samples.zip .
-cp -p $archive/DropTEC.exe .
-cp -p "$archive/TECkit Mapping Editor.exe" .
+# set $HOST
+. ../build-windows-common
+find_compiler
+
+# The cross-compiler defaults to the Windows threading model
+# which does not require the libwinpthread-1.dll runtime file.
+# This file is needed if the POSIX threading model is specified.
+# On an Ubuntu system see
+# /usr/share/doc/g++-mingw-w64-i686/README.Debian
+# or
+# /usr/share/doc/gcc-mingw-w64-i686/README.Debian
+# (might be the same contents) for more details.
+# TECkit 2.5.4 and 2.5.6 on Windows did need this file,
+# so presumably used the POSIX threading model.
+for FILE in libgcc_s_sjlj-1.dll libstdc++-6.dll # libwinpthread-1.dll
+do
+    cp -p $($HOST-gcc -print-file-name=$FILE) .
+done
 
 # documentation
 unix2dos -n ../README README.txt

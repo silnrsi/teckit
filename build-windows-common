@@ -1,0 +1,20 @@
+find_compiler()
+{
+    HOST=
+
+    # Check the various names used for mingw
+    for PREFIX in mingw32 i586-mingw32msvc i386-mingw32 i686-w64-mingw32
+    do
+        if which $PREFIX-gcc >/dev/null
+        then
+            HOST=$PREFIX
+            break
+        fi
+    done
+
+    if [ -z "$HOST" ]
+    then
+        echo "Could not find mingw. Please install it!" >&2
+        exit 1
+    fi
+}

@@ -12,23 +12,10 @@ mkdir windows-build
 cd windows-build
 
 BUILD=$(../config.guess)
-HOST=
 
-# Check the various names used for mingw
-for PREFIX in mingw32 i586-mingw32msvc i386-mingw32 i686-w64-mingw32
-do
-	if which $PREFIX-gcc >/dev/null
-	then
-		HOST=$PREFIX
-		break
-	fi
-done
-
-if [ -z "$HOST" ]
-then
-	echo "Could not find mingw. Please install it!" >&2
-	exit 1
-fi
+# set $HOST
+. ../build-windows-common
+find_compiler
 
 ../configure --build=$BUILD --host=$HOST --with-old-lib-names --without-system-zlib --enable-final --disable-dependency-tracking
 make
@@ -43,6 +30,8 @@ cd ..
 mkdir teckit-windows-bin
 cp windows-build/inst/usr/local/bin/*.exe teckit-windows-bin
 cp windows-build/inst/usr/local/lib/*.dll teckit-windows-bin
+
+# groff -k -mandoc -Tpdf docs/sfconv.1 > sfconv.pdf
 
 echo '###'
 echo '### Built products:'
