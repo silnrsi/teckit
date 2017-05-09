@@ -2,9 +2,9 @@
 
 A few parts, noted here, have a different license than most of TECkit.
 
-The files SFconv/ConvertUTF.* are
-Copyright 2001-2004 Unicode, Inc.
-with a license from The Unicode Consortium
+The files SFconv/UtfCodec.* are
+Copyright 2010-2011 SIL International
+with a license of LGPL-2+ or GPL-2+ or Mozilla Public License (http://mozilla.org/MPL)
 
 The files deb-source/copyright and docs/*.1 are
 Copyright 2015 Daniel Glassey <wdg@debian.org>
@@ -12,7 +12,7 @@ with a license of LGPL-2+
 
 Rest of the project:
 
-		   Copyright 2002-2016, SIL International
+		   Copyright 2002-2017, SIL International
 			    All rights reserved.
 
     This library is free software; you can redistribute it and/or modify

@@ -5,12 +5,12 @@ Upstream-Contact: SIL International http://scripts.sil.org/Support
 Source: http://scripts.sil.org/TECkit
 
 Files: *
-Copyright: Copyright 2002-2014, SIL International
+Copyright: Copyright 2002-2017, SIL International
 License: LGPL-2+ or CPL-0.5+
 
-Files: SFconv/ConvertUTF.*
-Copyright: Copyright 2001-2004 Unicode, Inc.
-License: Unicode
+Files: SFconv/UtfCodec.*
+Copyright: 2010-2011 SIL International
+License: LGPL-2+ or GPL-2+ or MPL
 
 Files: debian*/copyright docs/*.1
 Copyright: 2015 Daniel Glassey <wdg@debian.org>
@@ -32,23 +32,6 @@ License: LGPL-2+
     downloaded the source you will find it in the file LICENSE; if not,
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
-
-License: Unicode
- This source code is provided as is by Unicode, Inc. No claims are
- made as to fitness for any particular purpose. No warranties of any
- kind are expressed or implied. The recipient agrees to determine
- applicability of information provided. If this file has been
- purchased on magnetic or optical media from Unicode, Inc., the
- sole remedy for any claim will be exchange of defective media
- within 90 days of receipt.
- .
- Limitations on Rights to Redistribute This Code
- .
- Unicode, Inc. hereby grants the right to freely use the information
- supplied in this file in the creation of products supporting the
- Unicode Standard, and to make copies of this file in any form
- for internal or external distribution as long as this notice
- remains attached.
 
 License: CPL-0.5+
  THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS COMMON PUBLIC LICENSE
