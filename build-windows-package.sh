@@ -30,8 +30,8 @@ do
     # This file is needed if the POSIX threading model is specified.
     # On an Ubuntu system see one (or more) of
     # /usr/share/doc/gcc-mingw-w64-i686/README.Debian
-    # /usr/share/doc/gcc-mingw-w64-x86-64/README.Debian
     # /usr/share/doc/g++-mingw-w64-i686/README.Debian
+    # /usr/share/doc/gcc-mingw-w64-x86-64/README.Debian
     # /usr/share/doc/g++-mingw-w64-x86-64/README.Debian
     # (might be the same contents) for more details.
     # TECkit 2.5.4 and 2.5.6 on Windows did need this file,
@@ -43,7 +43,7 @@ do
 done
 
 # documentation
-unix2dos -n ../README README.txt
+unix2dos -n ../README.txt README.txt
 mkdir Documentation
 mv *.1.pdf Documentation
 cp -p ../docs/TECkit_Language.pdf Documentation
