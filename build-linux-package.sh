@@ -9,12 +9,19 @@ rm -rf teckit-linux
 
 mkdir -p teckit-linux/teckit
 
+# make tarball
 cd teckit-linux
 ../configure
 make dist
 
+# provide download verification
+sha256sum teckit-*.tar.gz > SHA256SUMS
+# gpg2 --armor --detach-sign teckit-*.tar.gz
+# gpg2 --armor --detach-sign SHA256SUMS
+
+# build Debian package
 cd teckit
-mv ../teckit-*.tar.gz .
+cp -p ../teckit-*.tar.gz .
 cp -a ../../debian-src debian
 
 debuild "$@"
