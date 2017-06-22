@@ -50,6 +50,7 @@ cp -p ../docs/TECkit_Language.pdf Documentation
 cp -p ../docs/TECkit_Tools.pdf Documentation
 mkdir Developers
 cp -p ../docs/Calling_TECkit_from_VB.doc "Developers/Calling TECkit from VB.doc"
+cp -p ../docs/Calling_TECkit_from_VB.pdf "Developers/Calling TECkit from VB.pdf"
 cp -p ../docs/TECkit_Binary_Format.pdf Developers
 
 # code
