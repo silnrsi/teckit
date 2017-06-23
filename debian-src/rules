@@ -15,9 +15,9 @@ common-install-arch:: $(patsubst %.in,%,$(wildcard debian/*.install.in))
 include /usr/share/cdbs/1/rules/debhelper.mk
 include /usr/share/cdbs/1/class/autotools.mk
 
-DEB_INSTALL_DOCS_teckit += ../../docs/TECkit_Binary_Format.pdf
-DEB_INSTALL_DOCS_teckit += ../../docs/TECkit_Language.pdf
-DEB_INSTALL_DOCS_teckit += ../../docs/TECkit_Tools.pdf
+# DEB_INSTALL_DOCS_teckit += ../../docs/TECkit_Binary_Format.pdf
+# DEB_INSTALL_DOCS_teckit += ../../docs/TECkit_Language.pdf
+# DEB_INSTALL_DOCS_teckit += ../../docs/TECkit_Tools.pdf
 DEB_INSTALL_MANPAGES_teckit += debian/tmp/usr/share/man/man1/teckit_compile.1
 DEB_INSTALL_MANPAGES_teckit += debian/tmp/usr/share/man/man1/txtconv.1
 DEB_INSTALL_MANPAGES_teckit += debian/tmp/usr/share/man/man1/sfconv.1
