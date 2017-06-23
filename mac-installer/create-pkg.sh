@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # adjust this to newer version numbers
-VERSION="2.5.6"
+VERSION="2.5.7"
 echo current version is: $VERSION
 
 sudo rm -rf ./Pkg

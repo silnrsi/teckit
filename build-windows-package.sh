@@ -7,7 +7,7 @@
 . ./build-windows-common
 
 # metadata
-VERSION="2.5.6"
+VERSION="2.5.7"
 foldername=TECkit-${VERSION}
 filename=${foldername}.zip
 

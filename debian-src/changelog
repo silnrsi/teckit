@@ -1,3 +1,9 @@
+teckit (2.5.7) stable; urgency=medium
+
+  * Updated Unicode character names and normalization data to 10.0.0
+
+ -- Bobby de Vos <bobby_devos@sil.org>  Thu, 22 Jun 2017 18:17:45 -0600
+
 teckit (2.5.6) stable; urgency=medium
 
   * Add a diversion of /usr/bin/teckit_compile to avoid a conflict
