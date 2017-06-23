@@ -43,7 +43,7 @@ do
 done
 
 # documentation
-unix2dos -n ../README.txt README.txt
+unix2dos -n ../README README.txt
 mkdir Documentation
 mv *.1.pdf Documentation
 cp -p ../docs/TECkit_Language.pdf Documentation
