@@ -9,7 +9,7 @@ fi
 
 VERSION=$1
 
-BASE=http://www.unicode.org/Public/$VERSION/ucd
+BASE=https://www.unicode.org/Public/$VERSION/ucd
 
 wget -N $BASE/{CompositionExclusions,UnicodeData}.txt
 
