@@ -1,3 +1,9 @@
+teckit (2.5.8) stable; urgency=medium
+
+  * Updated Unicode character names and normalization data to 11.0.0
+
+ -- Bobby de Vos <bobby_devos@sil.org>  Mon, 18 Jun 2018 13:26:21 -0600
+
 teckit (2.5.7) stable; urgency=medium
 
   * Updated Unicode character names and normalization data to 10.0.0
