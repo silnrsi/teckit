@@ -9,10 +9,32 @@ ltmain.sh
 install-sh
 missing
 mkinstalldirs
+test-driver
+
+.deps
+.libs
+.dirstamp
+
+*.la
+*.o
+*.lo
+*.pc
 
 configure
-Makefile.in
 config.h.in
+config.h
+config.log
+config.status
+
+Makefile.in
+Makefile
+
+bin/sfconv
+bin/teckit_compile
+bin/txtconv
+
+libtool
+stamp-h1
 
 /linux-build/
 /mac-build/
