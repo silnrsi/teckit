@@ -29,13 +29,10 @@ config.status
 Makefile.in
 Makefile
 
-bin/sfconv
-bin/teckit_compile
-bin/txtconv
-
 libtool
 stamp-h1
 
+/bin
 /linux-build/
 /mac-build/
 /windows-build/
