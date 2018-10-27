@@ -23,8 +23,8 @@ History:
 	xx-xxx-2002		jk	version 2.0 initial release
 */
 
-#ifndef __TECkit_Common_H__
-#define __TECkit_Common_H__
+#ifndef TECkit_Common_H
+#define TECkit_Common_H
 
 #define	kCurrentTECkitVersion	0x00020004	/* 16.16 version number */
 
@@ -92,4 +92,4 @@ typedef long					TECkit_Status;
 #define kForm_UTF32BE				5
 #define kForm_UTF32LE				6
 
-#endif
+#endif /* TECkit_Common_H */

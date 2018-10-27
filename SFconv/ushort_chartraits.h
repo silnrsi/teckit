@@ -1,5 +1,5 @@
-#ifndef __ushort_chartraits_h__
-#define __ushort_chartraits_h__
+#ifndef ushort_chartraits_h
+#define ushort_chartraits_h
 
 #include <iostream>
 #include <string>
@@ -99,4 +99,4 @@ namespace std
     };
 }
 
-#endif
+#endif /* ushort_chartraits_h */

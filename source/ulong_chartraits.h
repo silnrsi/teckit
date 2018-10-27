@@ -1,5 +1,5 @@
-#ifndef __ulong_chartraits_h__
-#define __ulong_chartraits_h__
+#ifndef ulong_chartraits_h
+#define ulong_chartraits_h
 
 #include <iostream>
 #include <string>
@@ -106,4 +106,4 @@ namespace std
     };
 }
 
-#endif
+#endif /* ulong_chartraits_h */
