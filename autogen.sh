@@ -1,6 +1,7 @@
-#!/bin/bash
+#!/bin/sh
+
 echo "*** Recreating libtool files"
-if [ "$LIBTOOLIZE" = "" ] && [ "`uname`" == "Darwin" ]; then
+if [ "$LIBTOOLIZE" = "" ] && [ "`uname`" = "Darwin" ]; then
         if command -v "glibtoolize" > /dev/null; then
             LIBTOOLIZE=glibtoolize
             $LIBTOOLIZE -f -c;
@@ -13,8 +14,7 @@ if [ "$LIBTOOLIZE" = "" ] && [ "`uname`" == "Darwin" ]; then
         fi
 fi
 
-
-if [ "$LIBTOOLIZE" = "" ] && [ "`uname`" == "Linux" ]; then
+if [ "$LIBTOOLIZE" = "" ] && [ "`uname`" = "Linux" ]; then
         if command -v "libtoolize" > /dev/null; then
             LIBTOOLIZE=libtoolize
             $LIBTOOLIZE -f -c;
