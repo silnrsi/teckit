@@ -9,6 +9,7 @@ ltmain.sh
 install-sh
 missing
 mkinstalldirs
+test-driver
 
 configure
 Makefile.in
