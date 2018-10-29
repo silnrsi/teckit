@@ -313,7 +313,7 @@ makeConverter(const string& mappingName, int direction)
 	long	fileSize = ftell(mapFile);
 	fseek(mapFile, 0, SEEK_SET);
 	
-	unsigned char*	buf = (unsigned char*)malloc(fileSize);
+	unsigned char*	buf = static_cast<unsigned char*>(malloc(fileSize));
 	if (buf == 0) {
 		fprintf(stderr, "unable to read mapping file for %s (file %s)\n", mappingName.c_str(), mapFileName.c_str());
 		exit(1);
@@ -357,7 +357,7 @@ read_control_file(const char* controlFile)
 		size_t	len = fread(buf, 1, sizeof(buf), ctlFile);
 		done = len < sizeof(buf);
 		if (!XML_Parse(parser, buf, len, done)) {
-			fprintf(stderr, "XML parse error: %s at line %lu\n", XML_ErrorString(XML_GetErrorCode(parser)), (unsigned long)XML_GetCurrentLineNumber(parser));
+			fprintf(stderr, "XML parse error: %s at line %lu\n", XML_ErrorString(XML_GetErrorCode(parser)), static_cast<unsigned long>(XML_GetCurrentLineNumber(parser)));
 			status = 1;
 		}
 	} while (!status && !done);
@@ -454,10 +454,10 @@ convertMarker(const ustring& marker, TECkit_Converter converter, string& cnvMark
 	while (1) {
 		UInt32	sourceUsed, destUsed, destUsed2;
 		status = TECkit_ConvertBuffer(converter,
-					(Byte*)marker.data(),
+					reinterpret_cast<const Byte*>(marker.data()),
 					marker.size() * 2,
 					&sourceUsed,
-					(Byte*)cnvMarker.data(),
+					const_cast<Byte*>(reinterpret_cast<const Byte*>(cnvMarker.data())),
 					cnvMarker.size(),
 					&destUsed,
 					true);
@@ -466,7 +466,7 @@ convertMarker(const ustring& marker, TECkit_Converter converter, string& cnvMark
 			continue;
 		}
 		status = TECkit_Flush(converter,
-					(Byte*)cnvMarker.data() + destUsed,
+					const_cast<Byte*>(reinterpret_cast<const Byte*>(cnvMarker.data()) + destUsed),
 					cnvMarker.size() - destUsed,
 					&destUsed2);
 		if (status == kStatus_OutputBufferFull) {
@@ -491,7 +491,7 @@ convertSingleChar(UniChar inChar, TECkit_Converter converter)
 	UInt32	sourceUsed, destUsed, destUsed2;
 	
 	status = TECkit_ConvertBuffer(converter,
-				(Byte*)&inChar,
+				reinterpret_cast<const Byte*>(&inChar),
 				2,
 				&sourceUsed,
 				&buf[0],
@@ -588,7 +588,7 @@ process(const char* inputFile, const char* outputFile)
 			map<string,string>::const_iterator	i;
 			switch (dataType) {
 				case BODY_TEXT:
-					write_converted((Byte*)reader.text.data(), reader.text.length(), converterStack.back(), outFile);
+					write_converted(reinterpret_cast<const Byte*>(reader.text.data()), reader.text.length(), converterStack.back(), outFile);
 					break;
 
 				case SFM:
@@ -598,7 +598,7 @@ process(const char* inputFile, const char* outputFile)
 					else
 						converterStack.assign(1, converters[i->second]);
 					reader.text.insert(reader.text.begin(), reader.escapeChar);
-					write_converted((Byte*)reader.text.data(), reader.text.length(), sfmConverter, outFile);
+					write_converted(reinterpret_cast<const Byte*>(reader.text.data()), reader.text.length(), sfmConverter, outFile);
 					break;
 
 				case INLINE_MARKER:
@@ -608,7 +608,7 @@ process(const char* inputFile, const char* outputFile)
 					else
 						converterStack.assign(1, converters[i->second]);
 					reader.text.insert(reader.text.begin(), reader.escapeChar);
-					write_converted((Byte*)reader.text.data(), reader.text.length(), inlineConverter, outFile);
+					write_converted(reinterpret_cast<const Byte*>(reader.text.data()), reader.text.length(), inlineConverter, outFile);
 					break;
 
 				case INLINE_START:
@@ -619,12 +619,12 @@ process(const char* inputFile, const char* outputFile)
 						converterStack.push_back(converters[i->second]);
 					reader.text.insert(reader.text.begin(), reader.inlineEscapeChar);
 					reader.text.insert(reader.text.end(), reader.startInline);
-					write_converted((Byte*)reader.text.data(), reader.text.length(), inlineConverter, outFile);
+					write_converted(reinterpret_cast<const Byte*>(reader.text.data()), reader.text.length(), inlineConverter, outFile);
 					break;
 
 				case INLINE_END:
 					reader.text.insert(reader.text.end(), reader.endInline);
-					write_converted((Byte*)reader.text.data(), reader.text.length(), inlineConverter, outFile);
+					write_converted(reinterpret_cast<const Byte*>(reader.text.data()), reader.text.length(), inlineConverter, outFile);
 					converterStack.pop_back();
 					break;
 			}
@@ -681,7 +681,7 @@ process(const char* inputFile, const char* outputFile)
 			static string	cnvMarker;
 			switch (dataType) {
 				case BODY_TEXT:
-					write_converted((Byte*)reader.text.data(), reader.text.length() * 2, converterStack.back(), outFile);
+					write_converted(reinterpret_cast<const Byte*>(reader.text.data()), reader.text.length() * 2, converterStack.back(), outFile);
 					break;
 
 				case SFM:
@@ -692,7 +692,7 @@ process(const char* inputFile, const char* outputFile)
 					else
 						converterStack.assign(1, converters[i->second]);
 					reader.text.insert(reader.text.begin(), reader.escapeChar);
-					write_converted((Byte*)reader.text.data(), reader.text.length() * 2, sfmConverter, outFile);
+					write_converted(reinterpret_cast<const Byte*>(reader.text.data()), reader.text.length() * 2, sfmConverter, outFile);
 					break;
 
 				case INLINE_MARKER:
@@ -703,7 +703,7 @@ process(const char* inputFile, const char* outputFile)
 					else
 						converterStack.assign(1, converters[i->second]);
 					reader.text.insert(reader.text.begin(), reader.inlineEscapeChar);
-					write_converted((Byte*)reader.text.data(), reader.text.length() * 2, inlineConverter, outFile);
+					write_converted(reinterpret_cast<const Byte*>(reader.text.data()), reader.text.length() * 2, inlineConverter, outFile);
 					break;
 
 				case INLINE_START:
@@ -715,12 +715,12 @@ process(const char* inputFile, const char* outputFile)
 						converterStack.push_back(converters[i->second]);
 					reader.text.insert(reader.text.begin(), reader.inlineEscapeChar);
 					reader.text.insert(reader.text.end(), reader.startInline);
-					write_converted((Byte*)reader.text.data(), reader.text.length() * 2, inlineConverter, outFile);
+					write_converted(reinterpret_cast<const Byte*>(reader.text.data()), reader.text.length() * 2, inlineConverter, outFile);
 					break;
 
 				case INLINE_END:
 					reader.text.insert(reader.text.end(), reader.endInline);
-					write_converted((Byte*)reader.text.data(), reader.text.length() * 2, inlineConverter, outFile);
+					write_converted(reinterpret_cast<const Byte*>(reader.text.data()), reader.text.length() * 2, inlineConverter, outFile);
 					converterStack.pop_back();
 					break;
 			}

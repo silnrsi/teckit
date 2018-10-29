@@ -65,11 +65,11 @@ namespace std
 
       static char_type* 
       move(char_type* __s1, const char_type* __s2, size_t __n)
-      { return (char_type*) memmove(__s1, __s2, __n * sizeof(char_type)); }
+      { return static_cast<char_type*>(memmove(__s1, __s2, __n * sizeof(char_type))); }
 
       static char_type* 
       copy(char_type* __s1, const char_type* __s2, size_t __n)
-      { return (char_type*) memcpy(__s1, __s2, __n * sizeof(char_type)); }
+      { return static_cast<char_type*>(memcpy(__s1, __s2, __n * sizeof(char_type))); }
 
       static char_type* 
       assign(char_type* __s, size_t __n, char_type __a)
