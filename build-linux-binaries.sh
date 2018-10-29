@@ -1,8 +1,8 @@
 #!/bin/sh
 
-rm -rf build
-mkdir build
-cd build
+rm -rf linux-build
+mkdir linux-build
+cd linux-build
 ../configure
 make
 sudo make install
