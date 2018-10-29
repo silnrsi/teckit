@@ -1,0 +1,13 @@
+language: cpp
+
+matrix:
+  include:
+    - os: linux
+    - os: osx
+
+script:
+  - ./autogen.sh
+  - ./configure
+  - make
+  - sudo make install
+  - cd test; ./dotests.pl
