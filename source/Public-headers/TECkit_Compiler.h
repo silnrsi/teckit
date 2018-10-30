@@ -18,8 +18,7 @@
 	Copyright (c) 2002-2016 SIL International.
 */
 
-#ifndef TECkit_Compiler_H
-#define TECkit_Compiler_H
+#pragma once
 
 #include "TECkit_Common.h"
 
@@ -95,5 +94,3 @@ TECkit_GetUnicodeValue(char* name);
 #ifdef __cplusplus
 }
 #endif
-
-#endif /* TECkit_Compiler_H */

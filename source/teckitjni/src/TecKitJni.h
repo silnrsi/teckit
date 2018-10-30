@@ -13,10 +13,9 @@ Description:
     Implements a JNI interface to the TECkit conversion engine.
 -------------------------------------------------------------------------*/
 
-#ifndef TecKitJni_h
-#define TecKitJni_h
-#include "TECkit_Engine.h"
+#pragma once
 
+#include "TECkit_Engine.h"
 
 class TecKitJni
 {
@@ -40,5 +39,3 @@ private:
     char * inputBuffer;
     UInt32 maxInputLength;
 };
-
-#endif

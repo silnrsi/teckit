@@ -14,8 +14,7 @@ Description:
 	2006-06-02	jk	added support for extended string rules (>255 per initial char)
 -------------------------------------------------------------------------*/
 
-#ifndef TECkit_Format_H
-#define TECkit_Format_H
+#pragma once
 
 #include "TECkit_Common.h"
 
@@ -217,5 +216,3 @@ typedef union RepElem			RepElem;
 #define kRepElem_Class				kMatchElem_Type_Class
 #define kRepElem_Copy				kMatchElem_Type_Copy
 #define kRepElem_Unmapped			0x0f	/* used in default terminator rules */
-
-#endif	/* TECkit_Format_H */

@@ -1,5 +1,4 @@
-#ifndef ulong_chartraits_h
-#define ulong_chartraits_h
+#pragma once
 
 #include <iostream>
 #include <string>
@@ -105,5 +104,3 @@ namespace std
       { return eq_int_type(__c, eof()) ? int_type(0) : __c; }
     };
 }
-
-#endif /* ulong_chartraits_h */

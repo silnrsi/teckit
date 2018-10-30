@@ -26,8 +26,7 @@ Description:
 	22-Dec-2001		jk	initial version
 */
 
-#ifndef TECkit_Engine_H
-#define TECkit_Engine_H
+#pragma once
 
 #include "TECkit_Common.h"
 
@@ -264,5 +263,3 @@ TECkit_FlushOpt(
 #if defined(__cplusplus)
 }	/* extern "C" */
 #endif
-
-#endif /* TECkit_Engine_H */

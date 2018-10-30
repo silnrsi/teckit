@@ -1,5 +1,4 @@
-#ifndef ushort_chartraits_h
-#define ushort_chartraits_h
+#pragma once
 
 #include <iostream>
 #include <string>
@@ -98,5 +97,3 @@ namespace std
       { return eq_int_type(__c, eof()) ? int_type(0) : __c; }
     };
 }
-
-#endif /* ushort_chartraits_h */
