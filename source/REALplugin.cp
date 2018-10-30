@@ -19,8 +19,6 @@
 #include <string.h>
 #include <stdlib.h>
 
-#pragma mark === Compiler ===
-
 #include "TECkit_Compiler.h"
 
 extern REALclassDefinition TECkit_Compiler_Class;
@@ -153,8 +151,6 @@ TECkit_Compiler_Class = {
 	sizeof(TECkit_Compiler_Class_Events) / sizeof(REALevent)
 };
 
-#pragma mark === Engine ===
-
 #include "TECkit_Engine.h"
 
 extern REALclassDefinition TECkit_Engine_Class;
@@ -278,8 +274,6 @@ TECkit_Engine_Class = {
 	TECkit_Engine_Class_Events,		sizeof(TECkit_Engine_Class_Events) / sizeof(REALevent)
 };
 
-#pragma mark === WinNewDoc ===
-
 #if TARGET_WIN32
 #include <winable.h>	// GetWindowModuleFileName is in one or other of these, depending on WINVER
 #include <winuser.h>
@@ -388,8 +382,6 @@ WinNewDoc_Method = {
 	(REALproc)WinNewDoc, REALnoImplementation,
 		"WinNewDoc(appWindowHWND as Integer, docPathName as String) as Integer"
 };
-
-#pragma mark === Plugin setup ===
 
 #ifdef WIN32
 	extern "C" far void _RunInit(void);
