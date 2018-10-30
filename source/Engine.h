@@ -17,8 +17,7 @@ Description:
 	2003-09-23	jk	updated for version 2.1 with new Opt APIs
 */
 
-#ifndef __Engine_H__
-#define __Engine_H__
+#pragma once
 
 #include "TECkit_Engine.h"
 #include "TECkit_Format.h"
@@ -220,5 +219,3 @@ protected:
 	
 	UInt32				warningStatus;
 };
-
-#endif /* __Engine_H__ */

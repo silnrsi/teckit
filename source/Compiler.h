@@ -20,8 +20,7 @@ Changes:
 
 -------------------------------------------------------------------------*/
 
-#ifndef __Compiler_H__
-#define __Compiler_H__
+#pragma once
 
 #ifdef HAVE_CONFIG_H
 #	include "config.h"	/* a Unix-ish setup where we have config.h available */
@@ -345,5 +344,3 @@ extern "C" {
 	};
 	extern CharName	gUnicodeNames[];
 }
-
-#endif	/* __Compiler_H__ */
