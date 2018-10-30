@@ -7,7 +7,10 @@ matrix:
 
 script:
   - ./autogen.sh
-  - ./configure
-  - make
-  - sudo make install
-  - cd test; ./dotests.pl
+  - |
+    mkdir build &&
+    cd build &&
+    ../configure &&
+    make &&
+    (make check || cat build/test/dotests.pl.log) &&
+    sudo make install
