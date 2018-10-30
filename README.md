@@ -12,14 +12,17 @@ The primary component of TECkit is a library: the TECkit engine. The engine
 relies on mapping tables in a specific, documented binary format. The TECkit
 compiler creates these tables from plain-text, human-readable descriptions.
 
+The TECkit libraries supports the Unicode 11.0.0 character repertoire.
+
 To facilitate the development and testing of mapping tables for TECkit, a few
-sample applications are included:
+applications are included:
 
   - `teckit_compile`: a command-line version of the TECkit compiler
   - `txtconv`: a simple text conversion tool
   - `sfconv`: a converter between 8-bit and Unicode
 
-Note that these tools are not intended to be the primary use of TECkit. They
+Note:
+That these tools are not intended to be the primary use of TECkit. They
 have not been designed, tested, and debugged to the extent that general-purpose
 applications should be.
 
@@ -98,3 +101,10 @@ on Ubuntu Xenial by cross-compiling for MinGW with the following packages:
   - `g++-mingw-w64-i686`
   - `gcc-mingw-w64-x86-64`
   - `g++-mingw-w64-x86-64`
+
+Starting with TECkit version 2.5.7 there are several changes with the Windows
+builds. First, a 64-bit build has been added to the already existing 32-bit
+build. Second, the runtime files have changed. The file libwinpthread-1.dll
+is no longer needed. The file libstdc++-6.dll needs to match the build
+(32 or 64 bit) of the rest of the code. The 32-bit build needs
+libgcc_s_sjlj-1.dll, while the 64-bit build needs libgcc_s_seh-1.dll.
