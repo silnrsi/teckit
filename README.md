@@ -28,6 +28,8 @@ References:
   - General information can be found at <https://scripts.sil.org/TECkit>.
   - Documentation is in the [`docs` directory].
   - Changes are found in the [`NEWS` file].
+  - There are python2 bindings and codecs integration in the [palaso-python](https://github.com/silnrsi/palaso-python) 
+    project.
 
 [`docs` directory]: ./docs
 [`NEWS` file]: ./NEWS
