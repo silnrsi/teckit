@@ -14,28 +14,29 @@ compiler creates these tables from plain-text, human-readable descriptions.
 
 The TECkit libraries supports the Unicode 11.0.0 character repertoire.
 
-To facilitate the development and testing of mapping tables for TECkit, a few
-applications are included:
+To facilitate the development and testing of TECkit, a few applications are
+included:
 
   - `teckit_compile`: a command-line version of the TECkit compiler
   - `txtconv`: a simple text conversion tool
   - `sfconv`: a converter between 8-bit and Unicode
 
-Note:
-That these tools are not intended to be the primary use of TECkit. They
-have not been designed, tested, and debugged to the extent that general-purpose
-applications should be.
+**Note:**
 
-References:
+These tools are not intended to be the primary use of TECkit. They have not been
+designed, tested, and debugged to the extent that general-purpose applications
+should be.
+
+**References:**
 
   - General information can be found at <https://scripts.sil.org/TECkit>.
   - Documentation is in the [`docs` directory].
   - Changes are found in the [`NEWS` file].
-  - There are python2 bindings and codecs integration in the [palaso-python](https://github.com/silnrsi/palaso-python) 
-    project.
+  - Python 2 bindings and codecs integration are in the [palaso-python] project.
 
 [`docs` directory]: ./docs
 [`NEWS` file]: ./NEWS
+[palaso-python]: https://github.com/silnrsi/palaso-python
 
 Getting TECkit
 --------------
@@ -104,7 +105,7 @@ on Ubuntu Xenial by cross-compiling for MinGW with the following packages:
 
 Starting with TECkit version 2.5.7 there are several changes with the Windows
 builds. First, a 64-bit build has been added to the already existing 32-bit
-build. Second, the runtime files have changed. The file libwinpthread-1.dll
-is no longer needed. The file libstdc++-6.dll needs to match the build
-(32 or 64 bit) of the rest of the code. The 32-bit build needs
-libgcc_s_sjlj-1.dll, while the 64-bit build needs libgcc_s_seh-1.dll.
+build. Second, the runtime files have changed. The file `libwinpthread-1.dll` is
+no longer needed. The file `libstdc++-6.dll` needs to match the build (32- or
+64-bit) of the rest of the code. The 32-bit build needs `libgcc_s_sjlj-1.dll`,
+while the 64-bit build needs `libgcc_s_seh-1.dll`.
