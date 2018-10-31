@@ -274,7 +274,7 @@ protected:
 	bool			GetNextToken();
 	bool			ExpectToken(tokenType type, const char* errMsg);
 	bool			ExpectToken(char c, const char* errMsg)
-						{ return ExpectToken(static_cast<tokenType>(c), errMsg); }
+						{ return ExpectToken(tokenType(c), errMsg); }
 	void			Error(const char* errMsg, const char* s = 0, UInt32 line = 0xffffffff);
 	void			StartDefaultPass();
 	void			AppendLiteral(UInt32 val, bool negate = false);

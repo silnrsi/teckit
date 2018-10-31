@@ -91,7 +91,7 @@ namespace std
       { return __c1 == __c2; }
 
       static int_type 
-      eof() { return static_cast<int_type>(-1); }
+      eof() { return int_type(-1); }
 
       static int_type 
       not_eof(const int_type& __c)

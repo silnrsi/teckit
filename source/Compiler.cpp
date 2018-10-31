@@ -75,7 +75,7 @@ const UInt32 kSurrogateLowStart		= 0xDC00UL;
 const UInt32 byteMask				= 0x000000BFUL;
 const UInt32 byteMark				= 0x00000080UL;
 
-#define FOUR_CHAR_CODE(a,b,c,d)	static_cast<UInt32>((a << 24) + (b << 16) + (c << 8) + d)
+#define FOUR_CHAR_CODE(a,b,c,d)	UInt32((a << 24) + (b << 16) + (c << 8) + d)
 
 const UInt32 kCode_Byte	= FOUR_CHAR_CODE('B','y','t','e');
 const UInt32 kCode_BU	= FOUR_CHAR_CODE('B','-','>','U');
@@ -142,7 +142,7 @@ TECkit_Compile(char* txt, UInt32 len, Byte doCompression, TECkit_ErrorFn errFunc
 {
 	TECkit_Status	result = kStatus_CompilationFailed;
 	try {
-		Compiler*	cmp = new Compiler(txt, len, kForm_Unspecified, static_cast<bool>(doCompression), false, errFunc, userData);
+		Compiler*	cmp = new Compiler(txt, len, kForm_Unspecified, bool(doCompression), false, errFunc, userData);
 		cmp->GetCompiledTable(*outTable, *outLen);
 		if (*outTable == 0)
 			result = kStatus_CompilationFailed;
@@ -628,7 +628,7 @@ Compiler::Compiler(const char* txt, UInt32 len, char inForm, bool cmp, bool genX
 		errorState = false;
 
 		string32::const_iterator i;
-		switch (static_cast<int>(tok.type)) {
+		switch (int(tok.type)) {
 			default:
 				Error("this can't happen!");
 				break;
@@ -771,7 +771,7 @@ Compiler::Compiler(const char* txt, UInt32 len, char inForm, bool cmp, bool genX
 			case '^':
 				// negation can only apply to a few things:
 				GetNextToken();
-				switch (static_cast<int>(tok.type)) {
+				switch (int(tok.type)) {
 					case tok_Number:
 						AppendLiteral(tok.val, true);
 						break;
@@ -1129,7 +1129,7 @@ Compiler::Compiler(const char* txt, UInt32 len, char inForm, bool cmp, bool genX
 					bool	ellipsisOK = false;
 					while (tok.type != ')' && tok.type != tok_Newline) {
 						GetNextToken();
-						switch (static_cast<int>(tok.type)) {
+						switch (int(tok.type)) {
 							case tok_USV:
 								if (classType == 'B') {
 									Error("can't use Unicode value in byte encoding");
@@ -1500,7 +1500,7 @@ Compiler::asUTF8(const string32 s)
 		} else {					bytesToWrite = 2;
 									c = 0x0000fffd;
 		};
-		rval.append(static_cast<size_t>(bytesToWrite), 0);
+		rval.append(size_t(bytesToWrite), 0);
 		int index = rval.length();
 		switch (bytesToWrite) {	/* note: code falls through cases! */
 			case 4:	rval[--index] = (c | byteMark) & byteMask; c >>= 6;
@@ -1946,11 +1946,11 @@ Compiler::GetNextToken()
 			case '/':
 			case '=':
 			case '@':
-				tok.type = static_cast<tokenType>(currCh);
+				tok.type = tokenType(currCh);
 				return true;
 	
 			case '<':
-				tok.type = static_cast<tokenType>('<');
+				tok.type = tokenType('<');
 				if (textPtr < textEnd) {
 					if ((currCh = getChar()) == '>')
 						tok.type = tok_Map;
@@ -1960,7 +1960,7 @@ Compiler::GetNextToken()
 				return true;
 	
 			case '.':
-				tok.type = static_cast<tokenType>('.');
+				tok.type = tokenType('.');
 				if (textPtr < textEnd) {
 					if ((currCh = getChar()) == '.')
 						tok.type = tok_Ellipsis;
@@ -1978,7 +1978,7 @@ Compiler::GetNextToken()
 						goto DEFAULT;
 					}
 				}
-				tok.type = static_cast<tokenType>('_');
+				tok.type = tokenType('_');
 				return true;
 			
 			case '0':
@@ -3067,19 +3067,19 @@ Compiler::addToCharMap(UInt32 ch, UInt16 index)
 	UInt8	page = (ch & 0x00ffff) >> 8;
 	if (buildVars.planeMap.size() <= plane)
 		buildVars.planeMap.resize(plane + 1, 0xff);
-	if (static_cast<UInt8>(buildVars.planeMap[plane]) == 0xff) {
+	if (UInt8(buildVars.planeMap[plane]) == 0xff) {
 		buildVars.planeMap[plane] = buildVars.pageMaps.size();
 		buildVars.pageMaps.resize(buildVars.pageMaps.size() + 1);
 		buildVars.pageMaps.back().resize(256, 0xff);
 	}
 	UInt8	planeIndex = buildVars.planeMap[plane];
 	string&	pageMap = buildVars.pageMaps[planeIndex];
-	if (static_cast<UInt8>(pageMap[page]) == 0xff) {
+	if (UInt8(pageMap[page]) == 0xff) {
 		pageMap[page] = buildVars.charMaps.size();
 		buildVars.charMaps.resize(buildVars.charMaps.size() + 1);
 		buildVars.charMaps.back().resize(256);
 	}
-	vector<UInt16>&	charMap = buildVars.charMaps[static_cast<UInt8>(pageMap[page])];
+	vector<UInt16>&	charMap = buildVars.charMaps[UInt8(pageMap[page])];
 	charMap[ch & 0x0000ff] = index;
 }
 
@@ -3305,7 +3305,7 @@ Compiler::buildTable(vector<Rule>& rules, bool fromUni, bool toUni, string& tabl
 							
 							case kMatchElem_Type_Copy:
 								// should only occur in UU table
-								if (t > static_cast<int>(rule.matchStr.size())) {
+								if (t > int(rule.matchStr.size())) {
 									Error("no corresponding item for copy", 0, rule.lineNumber);
 									goto ERR_FOUND;
 								}
@@ -3336,7 +3336,7 @@ Compiler::buildTable(vector<Rule>& rules, bool fromUni, bool toUni, string& tabl
 									break;
 
 								case kMatchElem_Type_Class:
-									if (t > static_cast<int>(rule.matchStr.size())) {
+									if (t > int(rule.matchStr.size())) {
 										Error("no corresponding item for class replacement", 0, rule.lineNumber);
 										goto ERR_FOUND;
 									}
@@ -3368,7 +3368,7 @@ Compiler::buildTable(vector<Rule>& rules, bool fromUni, bool toUni, string& tabl
 
 								case kMatchElem_Type_Copy:
 									// should only occur in BB table
-									if (t > static_cast<int>(rule.matchStr.size())) {
+									if (t > int(rule.matchStr.size())) {
 										Error("no corresponding item for copy", 0, rule.lineNumber);
 										goto ERR_FOUND;
 									}
@@ -3462,13 +3462,13 @@ Compiler::buildTable(vector<Rule>& rules, bool fromUni, bool toUni, string& tabl
 			buildVars.planeMap.resize(17, 0xff);
 			for (i = 0; i < buildVars.planeMap.size(); ++i)
 				appendToTable(table, buildVars.planeMap[i]);
-			appendToTable(table, static_cast<UInt8>(buildVars.pageMaps.size()));
+			appendToTable(table, UInt8(buildVars.pageMaps.size()));
 			align(table, 4);
 		}
 
 		for (i = 0; i < buildVars.pageMaps.size(); ++i)
 			for (j = 0; j < buildVars.pageMaps[i].size(); ++j)
-				appendToTable(table, static_cast<UInt8>(buildVars.pageMaps[i][j]));
+				appendToTable(table, UInt8(buildVars.pageMaps[i][j]));
 		align(table, 4);
 
 		for (i = 0; i < buildVars.charMaps.size(); ++i)
@@ -3513,17 +3513,17 @@ Compiler::buildTable(vector<Rule>& rules, bool fromUni, bool toUni, string& tabl
 						sortedClass.erase(sortedClass.begin() + j);
 			}
 
-			appendToTable(classes, static_cast<UInt32>(sortedClass.size()));
+			appendToTable(classes, UInt32(sortedClass.size()));
 			if (fromUni)
 				if (currentPass.supplementaryChars)
 					for (Class::iterator x = sortedClass.begin(); x != sortedClass.end(); ++x)
 						appendToTable(classes, *x);
 				else
 					for (Class::iterator x = sortedClass.begin(); x != sortedClass.end(); ++x)
-						appendToTable(classes, static_cast<UInt16>(*x));
+						appendToTable(classes, UInt16(*x));
 			else
 				for (Class::iterator x = sortedClass.begin(); x != sortedClass.end(); ++x)
-					appendToTable(classes, static_cast<UInt8>(*x));
+					appendToTable(classes, UInt8(*x));
 			align(classes, 4);
 		}
 		// copy the real classOffsets into the table
@@ -3561,17 +3561,17 @@ Compiler::buildTable(vector<Rule>& rules, bool fromUni, bool toUni, string& tabl
 						sortedClass.erase(sortedClass.begin() + j);
 			}
 
-			appendToTable(classes, static_cast<UInt32>(sortedClass.size()));
+			appendToTable(classes, UInt32(sortedClass.size()));
 			if (toUni)
 				if (currentPass.supplementaryChars)
 					for (vector<Member>::iterator x = sortedClass.begin(); x != sortedClass.end(); ++x)
 						appendToTable(classes, x->value);
 				else
 					for (vector<Member>::iterator x = sortedClass.begin(); x != sortedClass.end(); ++x)
-						appendToTable(classes, static_cast<UInt16>(x->value));
+						appendToTable(classes, UInt16(x->value));
 			else
 				for (vector<Member>::iterator x = sortedClass.begin(); x != sortedClass.end(); ++x)
-					appendToTable(classes, static_cast<UInt8>(x->value));
+					appendToTable(classes, UInt8(x->value));
 			align(classes, 4);
 		}
 		// copy the real classOffsets into the table

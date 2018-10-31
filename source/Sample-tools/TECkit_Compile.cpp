@@ -194,7 +194,7 @@ Usage: %s [-u] [-x] [-z] mapping_description [-o compiled_table]\n\
 			TECkit_DisposeCompiled(compiledTable);
 		}
 		else {
-			fprintf(stderr, "compilation failed: status = %d\n", static_cast<int>(status));
+			fprintf(stderr, "compilation failed: status = %d\n", int(status));
 			return 1;
 		}
 		
