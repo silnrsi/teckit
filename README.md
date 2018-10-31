@@ -41,10 +41,13 @@ should be.
 Getting TECkit
 --------------
 
-TECkit binary releases can be obtained from
+Our binary releases can be obtained from
 <https://scripts.sil.org/TECkitDownloads>.
 
-The TECkit source code repository and releases are available at
+TECkit is also included in [TeX Live](https://www.tug.org/texlive/) and packaged
+by many Linux distributions.
+
+The source code repository and source releases are available at
 <https://github.com/silnrsi/teckit>.
 
 Building TECkit
