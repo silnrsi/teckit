@@ -1,4 +1,5 @@
 #!/bin/sh
+set -ev
 
 # This is how the Windows binaries for release are built, so I don't forget!
 

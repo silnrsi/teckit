@@ -1,4 +1,5 @@
 #!/bin/sh
+set -ev
 
 # This is how the Windows package for release are built.
 

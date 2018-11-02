@@ -3,14 +3,22 @@ language: cpp
 matrix:
   include:
     - os: linux
+      script:
+        - ./autogen.sh
+        - |
+          mkdir build &&
+          cd build &&
+          ../configure &&
+          make &&
+          (make check || cat build/test/dotests.pl.log) &&
+          sudo make install
     - os: osx
-
-script:
-  - ./autogen.sh
-  - |
-    mkdir build &&
-    cd build &&
-    ../configure &&
-    make &&
-    (make check || cat build/test/dotests.pl.log) &&
-    sudo make install
+      script:
+        - ./autogen.sh
+        - |
+          mkdir build &&
+          cd build &&
+          ../configure &&
+          make &&
+          (make check || cat build/test/dotests.pl.log) &&
+          sudo make install

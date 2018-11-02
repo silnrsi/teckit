@@ -1,4 +1,5 @@
 #!/bin/sh
+set -ev
 
 # This is how a Linux package is built
 
