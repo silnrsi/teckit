@@ -19,3 +19,16 @@ matrix:
       script:
         - ./autogen.sh
         - ./build-mac-binaries.sh
+
+addons:
+  apt:
+    packages:
+      # For Debian packaging
+      - devscripts
+      - build-essential
+      # For cross-compiling Windows executables
+      - mingw-w64
+      - gcc-mingw-w64-i686
+      - g++-mingw-w64-i686
+      - gcc-mingw-w64-x86-64
+      - g++-mingw-w64-x86-64
