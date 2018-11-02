@@ -12,6 +12,7 @@ cd mac-build
 
 ../configure --enable-final --disable-dependency-tracking
 make
+(make check || cat test/dotests.pl.log)
 make install DESTDIR=`pwd`/inst
 
 cd ..

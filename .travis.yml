@@ -5,20 +5,17 @@ matrix:
     - os: linux
       script:
         - ./autogen.sh
-        - |
-          mkdir build &&
-          cd build &&
-          ../configure &&
-          make &&
-          (make check || cat build/test/dotests.pl.log) &&
-          sudo make install
+        - ./build-windows-binaries.sh
+        - ./build-windows-package.sh
+    - os: linux
+      script:
+        - ./autogen.sh
+        - ./build-linux-binaries.sh
+    - os: linux
+      script:
+        - ./autogen.sh
+        - ./build-linux-package.sh -S
     - os: osx
       script:
         - ./autogen.sh
-        - |
-          mkdir build &&
-          cd build &&
-          ../configure &&
-          make &&
-          (make check || cat build/test/dotests.pl.log) &&
-          sudo make install
+        - ./build-mac-binaries.sh
