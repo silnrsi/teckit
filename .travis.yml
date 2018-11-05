@@ -14,7 +14,7 @@ matrix:
     - os: linux
       script:
         - ./autogen.sh
-        - ./build-linux-package.sh -S
+        - ./build-linux-package.sh
     - os: osx
       script:
         - ./autogen.sh
@@ -25,6 +25,7 @@ addons:
     packages:
       # For Debian packaging
       - devscripts
+      - fakeroot
       - build-essential
       # For cross-compiling Windows executables
       - mingw-w64

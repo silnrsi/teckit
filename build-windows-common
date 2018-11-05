@@ -25,7 +25,7 @@ set_compiler()
 {
     case $1 in
         32)
-            find_compiler mingw32 i586-mingw32msvc i386-mingw32 i686-w64-mingw32
+            find_compiler i686-w64-mingw32 mingw32 i586-mingw32msvc i386-mingw32
             RUNTIME=libgcc_s_sjlj-1.dll
             ;;
         64)
