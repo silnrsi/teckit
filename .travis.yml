@@ -3,6 +3,8 @@ language: cpp
 matrix:
   include:
     - os: linux
+      sudo: required
+      dist: xenial
       script:
         - ./autogen.sh
         - ./build-windows-binaries.sh
@@ -27,6 +29,8 @@ addons:
       - devscripts
       - fakeroot
       - build-essential
+      - debhelper
+      - cdbs
       # For cross-compiling Windows executables
       - mingw-w64
       - gcc-mingw-w64-i686
