@@ -16,7 +16,7 @@ matrix:
     - os: linux
       script:
         - ./autogen.sh
-        - ./build-linux-package.sh
+        - ./build-linux-package.sh -us -uc
     - os: osx
       script:
         - ./autogen.sh
