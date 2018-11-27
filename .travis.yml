@@ -10,6 +10,9 @@ matrix:
         - ./build-windows-binaries.sh
         - ./build-windows-package.sh
     - os: linux
+      compiler:
+        - clang
+        - gcc
       script:
         - ./autogen.sh
         - ./build-linux-binaries.sh
@@ -32,7 +35,6 @@ addons:
       - debhelper
       - cdbs
       # For cross-compiling Windows executables
-      - mingw-w64
       - gcc-mingw-w64-i686
       - g++-mingw-w64-i686
       - gcc-mingw-w64-x86-64
