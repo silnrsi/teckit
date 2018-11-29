@@ -9,9 +9,9 @@
 #define INLINE_START	2
 #define INLINE_END		3
 #define INLINE_MARKER	4
-#define UNI_REPLACEMENT_CHAR    (uint32_t)0x0000FFFD
-#define UNI_MAX_BMP             (uint32_t)0x0000FFFF
-#define UNI_MAX_UTF16           (uint32_t)0x0010FFFF
+#define UNI_REPLACEMENT_CHAR    uint32_t(0x0000FFFD)
+#define UNI_MAX_BMP             uint32_t(0x0000FFFF)
+#define UNI_MAX_UTF16           uint32_t(0x0010FFFF)
 
 template<class C>
 class sfReader
