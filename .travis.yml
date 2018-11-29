@@ -10,9 +10,12 @@ matrix:
         - ./build-windows-binaries.sh
         - ./build-windows-package.sh
     - os: linux
-      compiler:
-        - clang
-        - gcc
+      compiler: clang
+      script:
+        - ./autogen.sh
+        - ./build-linux-binaries.sh
+    - os: linux
+      compiler: gcc
       script:
         - ./autogen.sh
         - ./build-linux-binaries.sh
