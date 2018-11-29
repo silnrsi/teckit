@@ -75,7 +75,7 @@ const UInt32 kSurrogateLowStart		= 0xDC00UL;
 const UInt32 byteMask				= 0x000000BFUL;
 const UInt32 byteMark				= 0x00000080UL;
 
-#define FOUR_CHAR_CODE(a,b,c,d)	(UInt32)((a << 24) + (b << 16) + (c << 8) + d)
+#define FOUR_CHAR_CODE(a,b,c,d)	UInt32((a << 24) + (b << 16) + (c << 8) + d)
 
 const UInt32 kCode_Byte	= FOUR_CHAR_CODE('B','y','t','e');
 const UInt32 kCode_BU	= FOUR_CHAR_CODE('B','-','>','U');
@@ -142,7 +142,7 @@ TECkit_Compile(char* txt, UInt32 len, Byte doCompression, TECkit_ErrorFn errFunc
 {
 	TECkit_Status	result = kStatus_CompilationFailed;
 	try {
-		Compiler*	cmp = new Compiler(txt, len, kForm_Unspecified, (bool)doCompression, false, errFunc, userData);
+		Compiler*	cmp = new Compiler(txt, len, kForm_Unspecified, bool(doCompression), false, errFunc, userData);
 		cmp->GetCompiledTable(*outTable, *outLen);
 		if (*outTable == 0)
 			result = kStatus_CompilationFailed;
@@ -196,7 +196,7 @@ TECkit_GetUnicodeName(UInt32 usv)
 	const CharName	*c = &gUnicodeNames[0];
 	while (c->name != 0)
 		if (c->usv == usv)
-			return (char*)c->name;
+			return const_cast<char*>(c->name);
 		else
 			++c;
 	return NULL;
@@ -524,7 +524,7 @@ Compiler::Compiler(const char* txt, UInt32 len, char inForm, bool cmp, bool genX
 	compiledSize = 0;
 	usedExtStringRules = false;
 
-	textPtr = (const unsigned char*)txt;
+	textPtr = reinterpret_cast<const unsigned char*>(txt);
 	textEnd = textPtr + len;
 	
 	ungotten = kInvalidChar;
@@ -628,7 +628,7 @@ Compiler::Compiler(const char* txt, UInt32 len, char inForm, bool cmp, bool genX
 		errorState = false;
 
 		string32::const_iterator i;
-		switch ((int)tok.type) {
+		switch (int(tok.type)) {
 			default:
 				Error("this can't happen!");
 				break;
@@ -771,7 +771,7 @@ Compiler::Compiler(const char* txt, UInt32 len, char inForm, bool cmp, bool genX
 			case '^':
 				// negation can only apply to a few things:
 				GetNextToken();
-				switch ((int)tok.type) {
+				switch (int(tok.type)) {
 					case tok_Number:
 						AppendLiteral(tok.val, true);
 						break;
@@ -1129,7 +1129,7 @@ Compiler::Compiler(const char* txt, UInt32 len, char inForm, bool cmp, bool genX
 					bool	ellipsisOK = false;
 					while (tok.type != ')' && tok.type != tok_Newline) {
 						GetNextToken();
-						switch ((int)tok.type) {
+						switch (int(tok.type)) {
 							case tok_USV:
 								if (classType == 'B') {
 									Error("can't use Unicode value in byte encoding");
@@ -1250,7 +1250,7 @@ Compiler::Compiler(const char* txt, UInt32 len, char inForm, bool cmp, bool genX
 								break;
 
 							default:
-								Error("unexpected token within class", string((const char*)tokStart, (const char*)textPtr - (const char*)tokStart).c_str());
+								Error("unexpected token within class", string(reinterpret_cast<const char *>(tokStart), reinterpret_cast<const char *>(textPtr) - reinterpret_cast<const char *>(tokStart)).c_str());
 								break;
 						}
 					}
@@ -1339,7 +1339,7 @@ Compiler::Compiler(const char* txt, UInt32 len, char inForm, bool cmp, bool genX
 			string	trailer("</teckitMapping>\n");
 			
 			compiledSize = header.length() + xmlRepresentation.length() + trailer.length();
-			compiledTable = (Byte*)malloc(compiledSize + 1);
+			compiledTable = static_cast<Byte*>(malloc(compiledSize + 1));
 			if (compiledTable == NULL)
 				throw bad_alloc();
 			
@@ -1378,30 +1378,30 @@ Compiler::Compiler(const char* txt, UInt32 len, char inForm, bool cmp, bool genX
 			// pack all the name records
 			string	namesData;
 			for (vector<UInt16>::const_iterator i = nameIDs.begin(); i != nameIDs.end(); ++i) {
-				appendToTable(offsets, (const char*)&offset, sizeof(offset));
+				appendToTable(offsets, reinterpret_cast<const char*>(&offset), sizeof(offset));
 				NameRec	r;
 				WRITE(r.nameID, *i);
 				WRITE(r.nameLength, names[*i].length());
-				namesData.append((const char*)&r, sizeof(r));
+				namesData.append(reinterpret_cast<const char*>(&r), sizeof(r));
 				namesData.append(names[*i]);
 				if ((namesData.length() & 1) != 0)
-					namesData.append(1, (char)0);
+					namesData.append(1, '\0');
 				offset += namesData.length() - prevLength;
 				prevLength = namesData.length();
 			}
 			if ((namesData.length() & 2) != 0)
-				namesData.append(2, (char)0);
+				namesData.append(2, '\0');
 			offset += namesData.length() - prevLength;
 			
 			// pack the offsets to the actual mapping tables
 			vector<string>::const_iterator t;
 			for (t = fwdTables.begin(); t != fwdTables.end(); ++t) {
-				appendToTable(offsets, (const char*)&offset, sizeof(offset));
+				appendToTable(offsets, reinterpret_cast<const char*>(&offset), sizeof(offset));
 				offset += t->size();
 			}
 			for (t = revTables.end(); t != revTables.begin(); ) {
 				--t;
-				appendToTable(offsets, (const char*)&offset, sizeof(offset));
+				appendToTable(offsets, reinterpret_cast<const char*>(&offset), sizeof(offset));
 				offset += t->size();
 			}
 			
@@ -1417,9 +1417,9 @@ Compiler::Compiler(const char* txt, UInt32 len, char inForm, bool cmp, bool genX
 				for (t = revTables.begin(); t != revTables.end(); ++t)
 					compiledSize += t->length();
 	
-				compiledTable = (Byte*)malloc(compiledSize);
+				compiledTable = static_cast<Byte*>(malloc(compiledSize));
 				if (compiledTable != 0) {
-					char*	cp = (char*)compiledTable;
+					Byte*	cp = compiledTable;
 					memcpy(cp, &fh, sizeof(fh));
 					cp += sizeof(fh);
 					memcpy(cp, offsets.data(), offsets.length());
@@ -1435,7 +1435,7 @@ Compiler::Compiler(const char* txt, UInt32 len, char inForm, bool cmp, bool genX
 						memcpy(cp, t->data(), t->length());
 						cp += t->length();
 					}
-					if ((char*)compiledTable + compiledSize != cp)
+					if (compiledTable + compiledSize != cp)
 						cerr << "error!" << endl;
 				}
 				else
@@ -1445,14 +1445,14 @@ Compiler::Compiler(const char* txt, UInt32 len, char inForm, bool cmp, bool genX
 			if (errorCount == 0 && cmp) {
 				// do the compression...
 				unsigned long	destLen = compiledSize * 11 / 10 + 20;
-				Byte*	dest = (Byte*)malloc(destLen + 8);
+				Byte*	dest = static_cast<Byte*>(malloc(destLen + 8));
 				if (dest != 0) {
 					int	result = compress2(dest + 8, &destLen, compiledTable, compiledSize, Z_BEST_COMPRESSION);
 					if (result == Z_OK) {
 						destLen += 8;
-						dest = (Byte*)realloc(dest, destLen); // shrink dest to fit
-						WRITE(((FileHeader*)dest)->type, kMagicNumberCmp);
-						WRITE(((FileHeader*)dest)->version, compiledSize);
+						dest = static_cast<Byte*>(realloc(dest, destLen)); // shrink dest to fit
+						WRITE(reinterpret_cast<FileHeader*>(dest)->type, kMagicNumberCmp);
+						WRITE(reinterpret_cast<FileHeader*>(dest)->version, compiledSize);
 						free(compiledTable);
 						compiledTable = dest;
 						compiledSize = destLen;
@@ -1500,7 +1500,7 @@ Compiler::asUTF8(const string32 s)
 		} else {					bytesToWrite = 2;
 									c = 0x0000fffd;
 		};
-		rval.append((size_t)bytesToWrite, 0);
+		rval.append(size_t(bytesToWrite), 0);
 		int index = rval.length();
 		switch (bytesToWrite) {	/* note: code falls through cases! */
 			case 4:	rval[--index] = (c | byteMark) & byteMask; c >>= 6;
@@ -1946,11 +1946,11 @@ Compiler::GetNextToken()
 			case '/':
 			case '=':
 			case '@':
-				tok.type = (tokenType)currCh;
+				tok.type = tokenType(currCh);
 				return true;
 	
 			case '<':
-				tok.type = (tokenType)'<';
+				tok.type = tokenType('<');
 				if (textPtr < textEnd) {
 					if ((currCh = getChar()) == '>')
 						tok.type = tok_Map;
@@ -1960,7 +1960,7 @@ Compiler::GetNextToken()
 				return true;
 	
 			case '.':
-				tok.type = (tokenType)'.';
+				tok.type = tokenType('.');
 				if (textPtr < textEnd) {
 					if ((currCh = getChar()) == '.')
 						tok.type = tok_Ellipsis;
@@ -1978,7 +1978,7 @@ Compiler::GetNextToken()
 						goto DEFAULT;
 					}
 				}
-				tok.type = (tokenType)'_';
+				tok.type = tokenType('_');
 				return true;
 			
 			case '0':
@@ -2133,7 +2133,7 @@ Compiler::Error(const char* msg, const char* s, UInt32 line)
 		cout << " at line " << line << endl;
 	}
 	else
-		(*errorFunction)(errFuncUserData, (char*)msg, (char*)s, line);
+		(*errorFunction)(errFuncUserData, const_cast<char*>(msg), const_cast<char*>(s), line);
 	errorState = true;
 	++errorCount;
 }
@@ -2577,7 +2577,7 @@ Compiler::calcMaxOutLen(Rule& rule)
 				continue;
 			
 			default:
-				cerr << "bad rep elem type: " << (int)i->type << endl;
+				cerr << "bad rep elem type: " << i->type << endl;
 				break;
 		}
 	}
@@ -2997,8 +2997,7 @@ Compiler::appendMatchElem(string& packedRule, Item& item, int index,
 			WRITE(m.flags.type, READ(m.flags.type) | (kMatchElem_NonLit + kMatchElem_Type_EOS));
 			break;
 	}
-	const char*	p = (const char*)&m;
-	packedRule.append(p, sizeof(m));
+	packedRule.append(reinterpret_cast<const char*>(&m), sizeof(m));
 }
 
 void
@@ -3039,8 +3038,7 @@ Compiler::appendReplaceElem(string& packedRule, Item& item, vector<Item>& matchS
 			WRITE(r.flags.type, kRepElem_Unmapped);
 			break;
 	}
-	const char*	p = (const char*)&r;
-	packedRule.append(p, sizeof(r));
+	packedRule.append(reinterpret_cast<const char*>(&r), sizeof(r));
 }
 
 vector<Compiler::Item>
@@ -3069,19 +3067,19 @@ Compiler::addToCharMap(UInt32 ch, UInt16 index)
 	UInt8	page = (ch & 0x00ffff) >> 8;
 	if (buildVars.planeMap.size() <= plane)
 		buildVars.planeMap.resize(plane + 1, 0xff);
-	if ((UInt8)buildVars.planeMap[plane] == (UInt8)0xff) {
+	if (UInt8(buildVars.planeMap[plane]) == 0xff) {
 		buildVars.planeMap[plane] = buildVars.pageMaps.size();
 		buildVars.pageMaps.resize(buildVars.pageMaps.size() + 1);
 		buildVars.pageMaps.back().resize(256, 0xff);
 	}
 	UInt8	planeIndex = buildVars.planeMap[plane];
 	string&	pageMap = buildVars.pageMaps[planeIndex];
-	if ((UInt8)pageMap[page] == (UInt8)0xff) {
+	if (UInt8(pageMap[page]) == 0xff) {
 		pageMap[page] = buildVars.charMaps.size();
 		buildVars.charMaps.resize(buildVars.charMaps.size() + 1);
 		buildVars.charMaps.back().resize(256);
 	}
-	vector<UInt16>&	charMap = buildVars.charMaps[(UInt8)pageMap[page]];
+	vector<UInt16>&	charMap = buildVars.charMaps[UInt8(pageMap[page])];
 	charMap[ch & 0x0000ff] = index;
 }
 
@@ -3307,7 +3305,7 @@ Compiler::buildTable(vector<Rule>& rules, bool fromUni, bool toUni, string& tabl
 							
 							case kMatchElem_Type_Copy:
 								// should only occur in UU table
-								if (t > (int)rule.matchStr.size()) {
+								if (t > int(rule.matchStr.size())) {
 									Error("no corresponding item for copy", 0, rule.lineNumber);
 									goto ERR_FOUND;
 								}
@@ -3338,7 +3336,7 @@ Compiler::buildTable(vector<Rule>& rules, bool fromUni, bool toUni, string& tabl
 									break;
 
 								case kMatchElem_Type_Class:
-									if (t > (int)rule.matchStr.size()) {
+									if (t > int(rule.matchStr.size())) {
 										Error("no corresponding item for class replacement", 0, rule.lineNumber);
 										goto ERR_FOUND;
 									}
@@ -3370,7 +3368,7 @@ Compiler::buildTable(vector<Rule>& rules, bool fromUni, bool toUni, string& tabl
 
 								case kMatchElem_Type_Copy:
 									// should only occur in BB table
-									if (t > (int)rule.matchStr.size()) {
+									if (t > int(rule.matchStr.size())) {
 										Error("no corresponding item for copy", 0, rule.lineNumber);
 										goto ERR_FOUND;
 									}
@@ -3455,7 +3453,7 @@ Compiler::buildTable(vector<Rule>& rules, bool fromUni, bool toUni, string& tabl
 		currentPass.supplementaryChars = true;
 
 	UInt32	headerOffset = table.size();
-	table.append((const char*)&th, sizeof(th));
+	table.append(reinterpret_cast<const char*>(&th), sizeof(th));
 
 	if (fromUni) {
 		WRITE(th.pageBase, table.size());
@@ -3464,13 +3462,13 @@ Compiler::buildTable(vector<Rule>& rules, bool fromUni, bool toUni, string& tabl
 			buildVars.planeMap.resize(17, 0xff);
 			for (i = 0; i < buildVars.planeMap.size(); ++i)
 				appendToTable(table, buildVars.planeMap[i]);
-			appendToTable(table, (UInt8)buildVars.pageMaps.size());
+			appendToTable(table, UInt8(buildVars.pageMaps.size()));
 			align(table, 4);
 		}
 
 		for (i = 0; i < buildVars.pageMaps.size(); ++i)
 			for (j = 0; j < buildVars.pageMaps[i].size(); ++j)
-				appendToTable(table, (UInt8)buildVars.pageMaps[i][j]);
+				appendToTable(table, UInt8(buildVars.pageMaps[i][j]));
 		align(table, 4);
 
 		for (i = 0; i < buildVars.charMaps.size(); ++i)
@@ -3515,17 +3513,17 @@ Compiler::buildTable(vector<Rule>& rules, bool fromUni, bool toUni, string& tabl
 						sortedClass.erase(sortedClass.begin() + j);
 			}
 
-			appendToTable(classes, (UInt32)sortedClass.size());
+			appendToTable(classes, UInt32(sortedClass.size()));
 			if (fromUni)
 				if (currentPass.supplementaryChars)
 					for (Class::iterator x = sortedClass.begin(); x != sortedClass.end(); ++x)
 						appendToTable(classes, *x);
 				else
 					for (Class::iterator x = sortedClass.begin(); x != sortedClass.end(); ++x)
-						appendToTable(classes, (UInt16)*x);
+						appendToTable(classes, UInt16(*x));
 			else
 				for (Class::iterator x = sortedClass.begin(); x != sortedClass.end(); ++x)
-					appendToTable(classes, (UInt8)*x);
+					appendToTable(classes, UInt8(*x));
 			align(classes, 4);
 		}
 		// copy the real classOffsets into the table
@@ -3563,17 +3561,17 @@ Compiler::buildTable(vector<Rule>& rules, bool fromUni, bool toUni, string& tabl
 						sortedClass.erase(sortedClass.begin() + j);
 			}
 
-			appendToTable(classes, (UInt32)sortedClass.size());
+			appendToTable(classes, UInt32(sortedClass.size()));
 			if (toUni)
 				if (currentPass.supplementaryChars)
 					for (vector<Member>::iterator x = sortedClass.begin(); x != sortedClass.end(); ++x)
 						appendToTable(classes, x->value);
 				else
 					for (vector<Member>::iterator x = sortedClass.begin(); x != sortedClass.end(); ++x)
-						appendToTable(classes, (UInt16)x->value);
+						appendToTable(classes, UInt16(x->value));
 			else
 				for (vector<Member>::iterator x = sortedClass.begin(); x != sortedClass.end(); ++x)
-					appendToTable(classes, (UInt8)(x->value));
+					appendToTable(classes, UInt8(x->value));
 			align(classes, 4);
 		}
 		// copy the real classOffsets into the table
@@ -3588,7 +3586,7 @@ Compiler::buildTable(vector<Rule>& rules, bool fromUni, bool toUni, string& tabl
 	if (currentPass.supplementaryChars)
 		WRITE(th.flags, READ(th.flags) | kTableFlags_Supplementary);
 	WRITE(th.length, table.size());
-	table.replace(0, sizeof(th), (const char*)&th, sizeof(th));
+	table.replace(0, sizeof(th), reinterpret_cast<const char*>(&th), sizeof(th));
 }
 
 void

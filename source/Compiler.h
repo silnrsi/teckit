@@ -273,7 +273,7 @@ protected:
 	bool			GetNextToken();
 	bool			ExpectToken(tokenType type, const char* errMsg);
 	bool			ExpectToken(char c, const char* errMsg)
-						{ return ExpectToken((tokenType)c, errMsg); }
+						{ return ExpectToken(tokenType(c), errMsg); }
 	void			Error(const char* errMsg, const char* s = 0, UInt32 line = 0xffffffff);
 	void			StartDefaultPass();
 	void			AppendLiteral(UInt32 val, bool negate = false);
@@ -313,12 +313,11 @@ protected:
 	void			appendToTable(string& s, const char* ptr, UInt32 len);
 	template <class T>
 		void		appendToTable(string& table, T x) {
+			const char*	xp = reinterpret_cast<const char*>(&x);
 #ifdef WORDS_BIGENDIAN
-			const char*	xp = (const char*)&x;
 			table.append(xp, sizeof(x));
 #else
 			/* split into separate statements to work around VC++6 problems */
- 			const char*	xp = (const char*)&x;
  			xp = xp + sizeof(T);
  			for (unsigned int i = 0; i < sizeof(T); ++i) {
 				xp = xp - 1;
