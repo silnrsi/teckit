@@ -79,6 +79,7 @@ Notes:
     the directory doesn't matter (as long as it is empty), but `build` is
     ignored by `git` (see the `.gitignore`), which makes it convenient when
     looking at `git status` for example.
+  - For testing on Windows, set the BINDIR variable `"set BINDIR="C:\Users\<username>\Downloads\teckit\TECkit-<version>\64-bit"`
 
 ### Dependencies
 

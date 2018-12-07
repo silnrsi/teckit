@@ -111,7 +111,7 @@ noexpat_CFLAGS="$CFLAGS"
 noexpat_LIBS="$LIBS"
 AC_CHECK_LIB(expat, XML_ExpatVersion)
 AM_CONDITIONAL(SYSTEM_EXPAT, test x$ac_cv_lib_expat_XML_ExpatVersion = xyes)
-expat_CFLAGS="$CFLAGS"
+expat_CFLAGS=""
 expat_LIBS="$LIBS"
 CFLAGS="$noexpat_CFLAGS"
 LIBS="$noexpat_LIBS"
