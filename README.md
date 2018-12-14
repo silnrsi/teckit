@@ -29,6 +29,11 @@ These tools are not intended to be the primary use of TECkit. They have not been
 designed, tested, and debugged to the extent that general-purpose applications
 should be.
 
+Better tools to handle text encodings using the TECkit library are
+
+- SILConverters <https://scripts.sil.org/EncCnvtrs>
+- LibreOffice Linguistic Tools <https://github.com/silnrsi/libreoffice-linguistic-tools>
+
 **References:**
 
   - General information can be found at <https://scripts.sil.org/TECkit>.
