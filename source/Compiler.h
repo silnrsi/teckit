@@ -283,7 +283,7 @@ protected:
 	void			AppendToRule(const Item& item);
 	bool			tagExists(bool rhs, const string& tag);
 	void			AssignTag(const string& tag);
-	void			SetMinMax(int repeatMin, int repeatMax);
+	void			SetMinMax(UInt32 repeatMin, UInt32 repeatMax);
 	void			FinishPass();
 	string			asUTF8(const string32 s);
 	void			ReadNameString(UInt16 nameID);
@@ -306,7 +306,7 @@ protected:
 	long			uniClassIndex(UInt32 charCode, UInt32 classIndex);
 	long			byteClassIndex(UInt8 charCode, UInt32 classIndex);
 	bool			isSingleCharRule(const Rule& rule);
-	void			appendMatchElem(string& packedRule, Item& item, int index,
+	void			appendMatchElem(string& packedRule, Item& item, unsigned int index,
 									vector<MatClass>& matchClasses);
 	void			appendReplaceElem(string& packedRule, Item& item,
 									vector<Item>& matchStr, vector<RepClass>& repClasses);
@@ -327,7 +327,7 @@ protected:
 	}
 
 	vector<Item>	reverseContext(const vector<Item>& ctx);
-	void			align(string& table, int alignment);
+	void			align(string& table, string::size_type alignment);
 	
 	void			xmlOut(const char* s);
 	void			xmlOut(const string& s);

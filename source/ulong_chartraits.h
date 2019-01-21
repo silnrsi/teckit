@@ -58,7 +58,7 @@ namespace std
       { 
         const char_type* __p = __s; 
         while (*__p) ++__p; 
-        return (__p - __s); 
+        return static_cast<size_t>(__p - __s);
       }
 
       static const char_type* 
