@@ -252,10 +252,10 @@ WINAPI
 TECkit_GetUnicodeValue(char* name)
 {
 	const CharName	*c = &gUnicodeNames[0];
-	int	len = strlen(name);
+	size_t	len = strlen(name);
 	while (c->name != 0)
 		if (unicodeNameCompare(c->name, name, len) == 0)
-			return c->usv;
+			return static_cast<int>(c->usv);
 		else
 			++c;
 	return -1;
@@ -943,8 +943,8 @@ Compiler::Compiler(const char* txt, UInt32 len, char inForm, bool cmp, bool genX
 			
 			case '{':
 				{
-					int	repeatMin = 0;
-					int repeatMax = 15;
+					UInt32 repeatMin = 0;
+					UInt32 repeatMax = 15;
 					GetNextToken();
 					if (tok.type == tok_Number) {
 						repeatMin = repeatMax = tok.val;
@@ -997,7 +997,7 @@ Compiler::Compiler(const char* txt, UInt32 len, char inForm, bool cmp, bool genX
 						break;
 					if (!ExpectToken(tok_Number,  "expected (NUMBER) STRING after Name"))
 						break;
-					int nameID = tok.val;
+					UInt16 nameID = tok.val;
 					if (!ExpectToken(')', "expected (NUMBER) STRING after Name"))
 						break;
 					ReadNameString(nameID);
@@ -1250,7 +1250,7 @@ Compiler::Compiler(const char* txt, UInt32 len, char inForm, bool cmp, bool genX
 								break;
 
 							default:
-								Error("unexpected token within class", string(reinterpret_cast<const char *>(tokStart), reinterpret_cast<const char *>(textPtr) - reinterpret_cast<const char *>(tokStart)).c_str());
+								Error("unexpected token within class", string(reinterpret_cast<const char *>(tokStart), reinterpret_cast<const char *>(textPtr - tokStart)).c_str());
 								break;
 						}
 					}
@@ -1501,11 +1501,11 @@ Compiler::asUTF8(const string32 s)
 									c = 0x0000fffd;
 		};
 		rval.append(size_t(bytesToWrite), 0);
-		int index = rval.length();
+		size_t index = rval.length();
 		switch (bytesToWrite) {	/* note: code falls through cases! */
-			case 4:	rval[--index] = (c | byteMark) & byteMask; c >>= 6;
-			case 3:	rval[--index] = (c | byteMark) & byteMask; c >>= 6;
-			case 2:	rval[--index] = (c | byteMark) & byteMask; c >>= 6;
+			case 4:	rval[--index] = static_cast<char>((c | byteMark) & byteMask); c >>= 6;
+			case 3:	rval[--index] = static_cast<char>((c | byteMark) & byteMask); c >>= 6;
+			case 2:	rval[--index] = static_cast<char>((c | byteMark) & byteMask); c >>= 6;
 			case 1:	rval[--index] =  c | firstByteMark[bytesToWrite];
 		};
 	}
@@ -1746,7 +1746,7 @@ Compiler::IDlookup(const char* str, UInt32 len)
 	tok.strval.erase(tok.strval.begin(), tok.strval.end());
 #endif
 	while (len-- > 0)
-		tok.strval.append(1, *str++);
+		tok.strval.append(1, static_cast<UInt32>(*str++));
 	return tok_Identifier;
 }
 
@@ -1790,12 +1790,12 @@ Compiler::getChar()
 
 		case kForm_UTF16BE:
 			CHECK_AVAIL(2);
-			rval = *textPtr++ << 8;
+			rval = static_cast<UInt32>(*textPtr++) << 8;
 			rval += *textPtr++;
 			if (rval >= kSurrogateHighStart && rval <= kSurrogateHighEnd) {
 				// check that 2 more bytes are available
 				CHECK_AVAIL(2);
-				UInt32	low = *textPtr++ << 8;
+				UInt32	low = static_cast<UInt32>(*textPtr++) << 8;
 				low += *textPtr++;
 				rval = ((rval - kSurrogateHighStart) << halfShift) + (low - kSurrogateLowStart) + halfBase;
 			}
@@ -1804,29 +1804,29 @@ Compiler::getChar()
 		case kForm_UTF16LE:
 			CHECK_AVAIL(2);
 			rval = *textPtr++;
-			rval += *textPtr++ << 8;
+			rval += static_cast<UInt32>(*textPtr++) << 8;
 			if (rval >= kSurrogateHighStart && rval <= kSurrogateHighEnd) {
 				CHECK_AVAIL(2);
 				UInt32	low = *textPtr++;
-				low += *textPtr++ << 8;
+				low += static_cast<UInt32>(*textPtr++) << 8;
 				rval = ((rval - kSurrogateHighStart) << halfShift) + (low - kSurrogateLowStart) + halfBase;
 			}
 			break;
 
 		case kForm_UTF32BE:
 			CHECK_AVAIL(4);
-			rval = *textPtr++ << 24;
-			rval += *textPtr++ << 16;
-			rval += *textPtr++ << 8;
+			rval = static_cast<UInt32>(*textPtr++) << 24;
+			rval += static_cast<UInt32>(*textPtr++) << 16;
+			rval += static_cast<UInt32>(*textPtr++) << 8;
 			rval += *textPtr++;
 			break;
 
 		case kForm_UTF32LE:
 			CHECK_AVAIL(4);
 			rval = *textPtr++;
-			rval += *textPtr++ << 8;
-			rval += *textPtr++ << 16;
-			rval += *textPtr++ << 24;
+			rval += static_cast<UInt32>(*textPtr++) << 8;
+			rval += static_cast<UInt32>(*textPtr++) << 16;
+			rval += static_cast<UInt32>(*textPtr++) << 24;
 			break;
 	}
 
@@ -2356,7 +2356,7 @@ Compiler::AssignTag(const string& tag)
 }
 
 void
-Compiler::SetMinMax(int repeatMin, int repeatMax)
+Compiler::SetMinMax(UInt32 repeatMin, UInt32 repeatMax)
 {
 	Item*	item = 0;
 	switch (ruleState) {
@@ -2944,12 +2944,12 @@ Compiler::isSingleCharRule(const Rule& rule)
 }
 
 void
-Compiler::appendMatchElem(string& packedRule, Item& item, int index,
+Compiler::appendMatchElem(string& packedRule, Item& item, unsigned int index,
 							vector<MatClass>& matchClasses)
 {
 	MatchElem	m;
 	WRITE(m.value.usv.data, 0);
-	WRITE(m.flags.repeat, (item.repeatMin << 4) + item.repeatMax);
+	WRITE(m.flags.repeat, (static_cast<UInt32>(item.repeatMin) << 4) + item.repeatMax);
 	if (item.negate)
 		WRITE(m.flags.type, kMatchElem_Negate);
 	else
@@ -3066,13 +3066,13 @@ Compiler::addToCharMap(UInt32 ch, UInt16 index)
 	UInt8	plane = ch >> 16;
 	UInt8	page = (ch & 0x00ffff) >> 8;
 	if (buildVars.planeMap.size() <= plane)
-		buildVars.planeMap.resize(plane + 1, 0xff);
+		buildVars.planeMap.resize(plane + 1, '\xff');
 	if (UInt8(buildVars.planeMap[plane]) == 0xff) {
 		buildVars.planeMap[plane] = buildVars.pageMaps.size();
 		buildVars.pageMaps.resize(buildVars.pageMaps.size() + 1);
-		buildVars.pageMaps.back().resize(256, 0xff);
+		buildVars.pageMaps.back().resize(256, '\xff');
 	}
-	UInt8	planeIndex = buildVars.planeMap[plane];
+	UInt8	planeIndex = static_cast<UInt8>(buildVars.planeMap[plane]);
 	string&	pageMap = buildVars.pageMaps[planeIndex];
 	if (UInt8(pageMap[page]) == 0xff) {
 		pageMap[page] = buildVars.charMaps.size();
@@ -3084,11 +3084,12 @@ Compiler::addToCharMap(UInt32 ch, UInt16 index)
 }
 
 void
-Compiler::align(string& table, int alignment)
+Compiler::align(string& table, string::size_type alignment)
 {
-	int	remainder = table.size() % alignment;
+	const string::size_type length = table.size();
+	const string::size_type remainder = length % alignment;
 	if (remainder != 0)
-		table.resize(table.size() + alignment - remainder);
+		table.resize(length + alignment - remainder);
 }
 
 class Member {
@@ -3266,7 +3267,17 @@ Compiler::buildTable(vector<Rule>& rules, bool fromUni, bool toUni, string& tabl
 					// mapping to Unicode: direct lookup can only support one Unicode character
 					if (rule.replaceStr.size() == 1) {
 						const Item&	rep = rule.replaceStr.front();
-						int	t = rep.tag.length() > 0 ? findTag(rep.tag, rule.matchStr) : 0;
+						vector<Item>::size_type tag;
+						if (rep.tag.length() > 0) {
+							const int result = findTag(rep.tag, rule.matchStr);
+							if (result < 0) {
+								Error("tag not found", rep.tag.c_str(), rule.lineNumber);
+								continue;
+							}
+							tag = static_cast<vector<Item>::size_type>(result);
+						} else {
+							tag = 0;
+						}
 						switch (rep.type) {
 							case 0:
 								WRITE(lookup[i].usv, rep.val);
@@ -3274,11 +3285,7 @@ Compiler::buildTable(vector<Rule>& rules, bool fromUni, bool toUni, string& tabl
 						
 							case kMatchElem_Type_Class:
 								{
-									if (t == -1) {
-										Error("tag not found", rep.tag.c_str(), rule.lineNumber);
-										continue;
-									}
-									const Item&	mat = rule.matchStr[t];
+									const Item&	mat = rule.matchStr[tag];
 									if (mat.type != kMatchElem_Type_Class) {
 										Error("improper use of class as target of mapping", 0, rule.lineNumber);
 										continue;
@@ -3305,7 +3312,7 @@ Compiler::buildTable(vector<Rule>& rules, bool fromUni, bool toUni, string& tabl
 							
 							case kMatchElem_Type_Copy:
 								// should only occur in UU table
-								if (t > int(rule.matchStr.size())) {
+								if (tag > rule.matchStr.size()) {
 									Error("no corresponding item for copy", 0, rule.lineNumber);
 									goto ERR_FOUND;
 								}
@@ -3322,13 +3329,18 @@ Compiler::buildTable(vector<Rule>& rules, bool fromUni, bool toUni, string& tabl
 					if (rule.replaceStr.size() <= 3) {
 						WRITE(lookup[i].bytes.count, rule.replaceStr.size());
 							// this will get overwritten by lookup[i].rules.type if string rules turn out to be needed
-						UInt32 j;
-						for (j = 0; j < rule.replaceStr.size(); ++j) {
+						for (UInt32 j = 0; j < rule.replaceStr.size(); ++j) {
 							const Item&	rep = rule.replaceStr[j];
-							int	t = rep.tag.length() > 0 ? findTag(rep.tag, rule.matchStr) : j;
-							if (t == -1) {
-								Error("tag not found", rep.tag.c_str(), rule.lineNumber);
-								goto ERR_FOUND;
+							vector<Item>::size_type tag;
+							if (rep.tag.length() > 0) {
+								const int result = findTag(rep.tag, rule.matchStr);
+								if (result < 0) {
+									Error("tag not found", rep.tag.c_str(), rule.lineNumber);
+									goto ERR_FOUND;
+								}
+								tag = static_cast<vector<Item>::size_type>(result);
+							} else {
+								tag = j;
 							}
 							switch (rep.type) {
 								case 0:	// literal
@@ -3336,12 +3348,12 @@ Compiler::buildTable(vector<Rule>& rules, bool fromUni, bool toUni, string& tabl
 									break;
 
 								case kMatchElem_Type_Class:
-									if (t > int(rule.matchStr.size())) {
+									if (tag > rule.matchStr.size()) {
 										Error("no corresponding item for class replacement", 0, rule.lineNumber);
 										goto ERR_FOUND;
 									}
 									else {
-										const Item&	mat = rule.matchStr[t];
+										const Item&	mat = rule.matchStr[tag];
 										if (mat.type != kMatchElem_Type_Class) {
 											Error("improper use of class as target of mapping", 0, rule.lineNumber);
 											goto ERR_FOUND;
@@ -3368,7 +3380,7 @@ Compiler::buildTable(vector<Rule>& rules, bool fromUni, bool toUni, string& tabl
 
 								case kMatchElem_Type_Copy:
 									// should only occur in BB table
-									if (t > int(rule.matchStr.size())) {
+									if (tag > rule.matchStr.size()) {
 										Error("no corresponding item for copy", 0, rule.lineNumber);
 										goto ERR_FOUND;
 									}
@@ -3459,7 +3471,7 @@ Compiler::buildTable(vector<Rule>& rules, bool fromUni, bool toUni, string& tabl
 		WRITE(th.pageBase, table.size());
 		UInt32	i, j;
 		if (currentPass.supplementaryChars) {
-			buildVars.planeMap.resize(17, 0xff);
+			buildVars.planeMap.resize(17, '\xff');
 			for (i = 0; i < buildVars.planeMap.size(); ++i)
 				appendToTable(table, buildVars.planeMap[i]);
 			appendToTable(table, UInt8(buildVars.pageMaps.size()));
