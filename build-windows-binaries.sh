@@ -20,6 +20,7 @@ do
     BUILD=$(../config.guess)
     set_compiler $bit
 
+    echo "build is +${BUILD}+ host is +${HOST}+ in binaries with bit +${bit}+"
     ../configure --build=$BUILD --host=$HOST --with-old-lib-names --without-system-zlib --enable-final --disable-dependency-tracking
     make
     make install-strip DESTDIR=`pwd`/inst
