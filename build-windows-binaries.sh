@@ -10,6 +10,8 @@ PATH=/usr/local/mingw/bin:$PATH
 
 rm -rf $WINDOWS
 
+file /usr/bin/i686-w64-mingw32-ld /usr/bin/x86_64-w64-mingw32-ld
+
 for bit in 32 64
 do
     WINDOWS_BUILD=windows-build${bit}
