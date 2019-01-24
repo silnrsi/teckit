@@ -7,7 +7,9 @@ find_compiler()
     # Check the various names used for mingw
     for PREFIX in "$@"
     do
-        if which $PREFIX-gcc >/dev/null
+        CC=$PREFIX-gcc
+        CXX=$PREFIX-g++
+        if which $CC > /dev/null && which $CXX > /dev/null
         then
             HOST=$PREFIX
             break
