@@ -38,9 +38,6 @@ addons:
       - debhelper
       - cdbs
       # For cross-compiling Windows executables
-      - gcc-mingw-w64-i686
-      - g++-mingw-w64-i686
-      - binutils-mingw-w64-i686
-      - gcc-mingw-w64-x86-64
-      - g++-mingw-w64-x86-64
-      - binutils-mingw-w64-x86-64
+      - mingw-w64
+      - dos2unix
+      - groff
