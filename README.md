@@ -14,7 +14,7 @@ compiler creates these tables from plain-text, human-readable descriptions.
 
 ## Project status [![Build Status](https://travis-ci.org/silnrsi/teckit.svg?branch=master)](https://travis-ci.org/silnrsi/teckit)
 
-The TECkit libraries supports the Unicode 11.0.0 character repertoire.
+The TECkit libraries supports the Unicode 12.0.0 character repertoire.
 
 To facilitate the development and testing of TECkit, a few applications are
 included:
