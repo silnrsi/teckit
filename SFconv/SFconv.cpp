@@ -101,7 +101,7 @@ Utf8ToString(const char* s)
 	utf16::iterator out = buf;
 	utf8::const_iterator in  = s, 
 	                     end = s + len;
-    while (in != end && !(in.error() || out.error()))
+	while (in != end && !(in.error() || out.error()))
         *out++ = *in++;
     
 	if (in.error() || out.error()) {
@@ -109,7 +109,7 @@ Utf8ToString(const char* s)
 		exit(1);
 	}
 
-    ustring ustr(buf, out - buf);
+	ustring ustr(buf, out - buf);
 	delete[] buf;
 	return ustr;
 }
