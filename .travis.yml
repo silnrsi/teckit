@@ -3,23 +3,25 @@ language: cpp
 matrix:
   include:
     - os: linux
-      sudo: required
-      dist: xenial
+      dist: bionic
       script:
         - ./autogen.sh
         - ./build-windows-binaries.sh
         - ./build-windows-package.sh
     - os: linux
+      dist: bionic
       compiler: clang
       script:
         - ./autogen.sh
         - ./build-linux-binaries.sh
     - os: linux
+      dist: bionic
       compiler: gcc
       script:
         - ./autogen.sh
         - ./build-linux-binaries.sh
     - os: linux
+      dist: bionic
       script:
         - ./autogen.sh
         - ./build-linux-package.sh -us -uc
