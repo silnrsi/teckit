@@ -1,3 +1,11 @@
+teckit (2.5.10) stable; urgency=medium
+
+  * Updated Unicode character names and normalization data to 13.0.0
+  * Updated zlib to version 1.2.11
+  * Various improvements for compiling and documentation
+
+ -- Bobby de Vos <bobby_devos@sil.org>  Tue, 05 May 2020 07:44:40 -0600
+
 teckit (2.5.9) stable; urgency=medium
 
   * Updated Unicode character names and normalization data to 12.0.0
