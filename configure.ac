@@ -43,9 +43,9 @@ if test x$enable_tetex_build = xyes; then
   ZLIBDIR=../zlib
 else
   AC_MSG_NOTICE([Not doing a teTeX/TeXLive-style build])
-  sinclude(zlib-1.2.3/withenable.ac)
-  sinclude(zlib-1.2.3/zlib.ac)
-  ZLIBDIR=zlib-1.2.3
+  sinclude(zlib-1.2.11/withenable.ac)
+  sinclude(zlib-1.2.11/zlib.ac)
+  ZLIBDIR=zlib-1.2.11
 fi
 AC_SUBST(ZLIBDIR)
 
