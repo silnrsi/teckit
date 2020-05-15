@@ -17,8 +17,8 @@ make dist
 
 # provide download verification
 sha256sum teckit-*.tar.gz > SHA256SUMS
-# gpg2 --armor --detach-sign teckit-*.tar.gz
-# gpg2 --armor --detach-sign SHA256SUMS
+# gpg --armor --detach-sign teckit-*.tar.gz
+# gpg --armor --detach-sign SHA256SUMS
 
 # build Debian package
 cd teckit
