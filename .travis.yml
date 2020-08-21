@@ -29,7 +29,8 @@ matrix:
       script:
         - ./autogen.sh
         - ./build-mac-binaries.sh
-
+arch:
+  - ppc64le
 addons:
   apt:
     packages:
