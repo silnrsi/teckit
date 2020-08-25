@@ -19,7 +19,7 @@ matrix:
       compiler: gcc
       script:
         - ./autogen.sh
-        - ./build-linux-binaries.sh
+        - ./build-linux-binaries.sh 
     - os: linux
       dist: bionic
       script:
@@ -29,6 +29,22 @@ matrix:
       script:
         - ./autogen.sh
         - ./build-mac-binaries.sh
+    - os: linux 
+      dist: bionic
+      compiler: gcc
+      script:
+        - ./autogen.sh
+        - ./build-linux-binaries.sh
+      arch: 
+        - ppc64le
+   - os: linux
+      dist: bionic
+      compiler: clang
+      script:
+        - ./autogen.sh
+        - ./build-linux-binaries.sh
+      arch:
+        - ppc64le
 
 addons:
   apt:
