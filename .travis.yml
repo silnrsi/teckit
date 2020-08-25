@@ -35,9 +35,17 @@ matrix:
       script:
         - ./autogen.sh
         - ./build-linux-binaries.sh
-
       arch: 
         - ppc64le
+   - os: linux
+      dist: bionic
+      compiler: clang
+      script:
+        - ./autogen.sh
+        - ./build-linux-binaries.sh
+      arch:
+        - ppc64le
+
 addons:
   apt:
     packages:
