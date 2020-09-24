@@ -19,14 +19,14 @@ jobs:
     - name: Ubuntu packages 
       if: runner.os == 'Linux'
       run: |
-        build-linux-binaries.sh
-        build-linux-package.sh -us -uc
+        ./build-linux-binaries.sh
+        ./build-linux-package.sh -us -uc
     - name: Windows packages 
       if: runner.os == 'Windows'
       run: |
-        build-windows-binaries.sh
-        build-windows-package.sh
+        ./build-windows-binaries.sh
+        ./build-windows-package.sh
     - name: MacOS packages 
       if: runner.os == 'Windows'
       run: |
-        build-mac-binaries.sh
+        ./build-mac-binaries.sh
