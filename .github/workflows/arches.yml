@@ -9,19 +9,19 @@ on:
 jobs:
   arches:
     runs-on: ubuntu-latest
-    strategy:
-      matrix: 
-        arch: [aarch64, ppc64le, s390x]
+#    strategy:
+#      matrix: 
+#        arch: [aarch64, ppc64le, s390x]
     steps:
     - uses: actions/checkout@v2
     - uses: uraimo/run-on-arch-action@v2.0.5
       id: build
       with:
-        arch: ${{ matrix.arch }}
+        arch: aarch64
         distro: ubuntu18.04
         install: |
           apt update -q -y
-          apt install devscripts debhelper cdbs
+          apt install -q -y devscripts debhelper cdbs
 
         run: |
           ./autogen.sh
