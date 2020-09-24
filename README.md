@@ -12,7 +12,9 @@ The primary component of TECkit is a library: the TECkit engine. The engine
 relies on mapping tables in a specific, documented binary format. The TECkit
 compiler creates these tables from plain-text, human-readable descriptions.
 
-## Project status ![TECKit](https://github.com/silnrsi/teckit/workflows/TECKit/badge.svg) ![TECKit non-x86](https://github.com/silnrsi/teckit/workflows/TECKit%20non-x86/badge.svg)
+## Project status
+[![TECKit](https://github.com/silnrsi/teckit/workflows/TECKit/badge.svg)](https://github.com/silnrsi/teckit/actions?query=workflow%3ATECKit)
+[![TECKit non-x86](https://github.com/silnrsi/teckit/workflows/TECKit%20non-x86/badge.svg)](https://github.com/silnrsi/teckit/actions?query=workflow%3A%22TECKit+non-x86%22)
 
 The TECkit libraries supports the Unicode 13.0.0 character repertoire.
 
