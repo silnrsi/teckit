@@ -1,0 +1,33 @@
+name: TECKit
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}-${{matrix.version}}
+    strategy:
+      matrix: 
+        os: [ubuntu, windows, macos]
+        version: [latest, 18.04]
+        include:
+          - os: ubuntu
+            build: build-linux-binaries.sh
+            package: build-linux-package.sh -us -uc
+          - os: windows
+            build: build-windows-binaries.sh
+            package: build-windows-package.sh
+          - os: macos
+            build: build-mac-binaries.sh
+            package: true
+    steps:
+    - uses: actions/checkout@v2
+    - name: setup
+      run: ./autogen.sh
+    - name: build
+      run: ${{ matrix.build }}
+    - name: package
+      run: ${{ matrix.package }}
