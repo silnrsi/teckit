@@ -11,25 +11,22 @@ jobs:
     runs-on: ${{ matrix.os }}-${{matrix.version}}
     strategy:
       matrix: 
-        os: [ubuntu, windows, macos]
-        include:
-          - os: ubuntu
-            build: build-linux-binaries.sh
-            package: build-linux-package.sh -us -uc
-            version: [latest, 18.04]
-          - os: windows
-            build: build-windows-binaries.sh
-            package: build-windows-package.sh
-            version: latest
-          - os: macos
-            build: build-mac-binaries.sh
-            package: true
-            version: latest
+        os: [ubuntu-18.04, ubuntu-latest, windows-latest, macos-latest]
     steps:
     - uses: actions/checkout@v2
     - name: setup
       run: ./autogen.sh
-    - name: build
-      run: ${{ matrix.build }}
-    - name: package
-      run: ${{ matrix.package }}
+    - name: Ubuntu packages 
+      if: runner.os == 'Linux'
+      run: |
+        build-linux-binaries.sh
+        build-linux-package.sh -us -uc
+    - name: Windows packages 
+      if: runner.os == 'Windows'
+      run: |
+        build-windows-binaries.sh
+        build-windows-package.sh
+    - name: MacOS packages 
+      if: runner.os == 'Windows'
+      run: |
+        build-mac-binaries.sh
