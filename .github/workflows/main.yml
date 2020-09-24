@@ -10,9 +10,7 @@ jobs:
   windows:
     runs-on: ubuntu-latest
     steps:
-    - uses: ryankurte/action-apt@v0.1.0
-      with:
-        packages: "mingw-w64 dos2unix groff"
+    - run: sudo apt install mingw-w64 dos2unix groff
     - uses: actions/checkout@v2
     - name: setup
       run: ./autogen.sh
@@ -27,9 +25,7 @@ jobs:
       matrix: 
         os: [ubuntu-18.04, ubuntu-latest]
     steps:
-    - uses: ryankurte/action-apt@v0.1.0
-      with:
-        packages: "devscripts fakeroot build-essential debhelper cdbs"
+    - run: sudo apt install devscripts fakeroot build-essential debhelper cdbs
     - uses: actions/checkout@v2
     - name: setup
       run: ./autogen.sh
