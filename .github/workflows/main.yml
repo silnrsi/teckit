@@ -10,7 +10,9 @@ jobs:
   windows:
     runs-on: ubuntu-latest
     steps:
-    - run: sudo apt install mingw-w64 dos2unix groff
+    - uses: mstksg/get-package@v1
+        with:
+          apt-get: mingw-w64 dos2unix groff
     - uses: actions/checkout@v2
     - name: setup
       run: ./autogen.sh
@@ -25,7 +27,9 @@ jobs:
       matrix: 
         os: [ubuntu-18.04, ubuntu-latest]
     steps:
-    - run: sudo apt install devscripts fakeroot build-essential debhelper cdbs
+    - uses: mstksg/get-package@v1
+        with:
+          apt-get: devscripts debhelper cdbs
     - uses: actions/checkout@v2
     - name: setup
       run: ./autogen.sh
@@ -37,6 +41,9 @@ jobs:
   macos:
     runs-on: macos-latest
     steps:
+    - uses: mstksg/get-package@v1
+      with:
+        brew: automake
     - uses: actions/checkout@v2
     - name: setup
       run: ./autogen.sh
