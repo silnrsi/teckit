@@ -3,8 +3,26 @@ name: TECKit non-x86
 on:
   push:
     branches: [ master ]
+    paths-ignore:
+    - '.github/workflow/**'
+    - '.gitignore'
+    - 'AUTHORS'
+    - 'COPYING'
+    - 'ChangeLog'
+    - 'INSTALL'
+    - 'NEWS'
+    - 'README*'
   pull_request:
     branches: [ master ]
+    paths-ignore:
+    - '.github/workflow/**'
+    - '.gitignore'
+    - 'AUTHORS'
+    - 'COPYING'
+    - 'ChangeLog'
+    - 'INSTALL'
+    - 'NEWS'
+    - 'README*'
 
 jobs:
   arches:
