@@ -20,6 +20,10 @@ jobs:
       run: ./build-windows-binaries.sh
     - name: package
       run: ./build-windows-package.sh
+    - uses: actions/upload-artifact@v2
+      with:
+        name: artifacts
+        path: TECkit-*
 
   linux:
     runs-on: ${{ matrix.os }}

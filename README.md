@@ -16,7 +16,7 @@ compiler creates these tables from plain-text, human-readable descriptions.
 [![TECKit](https://github.com/silnrsi/teckit/workflows/TECKit/badge.svg)](https://github.com/silnrsi/teckit/actions?query=workflow%3ATECKit)
 [![TECKit non-x86](https://github.com/silnrsi/teckit/workflows/TECKit%20non-x86/badge.svg)](https://github.com/silnrsi/teckit/actions?query=workflow%3A%22TECKit+non-x86%22)
 
-The TECkit libraries supports the Unicode 13.0.0 character repertoire.
+The TECkit libraries supports the Unicode 14.0.0 character repertoire.
 
 TECkit also includes some command line applications:
 
