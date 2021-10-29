@@ -18,30 +18,25 @@ compiler creates these tables from plain-text, human-readable descriptions.
 
 The TECkit libraries supports the Unicode 13.0.0 character repertoire.
 
-To facilitate the development and testing of TECkit, a few applications are
-included:
+TECkit also includes some command line applications:
 
-  - `teckit_compile`: a command-line version of the TECkit compiler
-  - `txtconv`: a simple text conversion tool
-  - `sfconv`: a converter between 8-bit and Unicode
+  - `teckit_compile`: TECkit compiler
+  - `txtconv`: a simple text encoding conversion tool
+  - `sfconv`: convert legacy encoded SFM files to Unicode
 
 **Note:**
 
-These tools are not intended to be the primary use of TECkit. They have not been
-designed, tested, and debugged to the extent that general-purpose applications
-should be.
+More powerful tools to handle text encodings using the TECkit library are
 
-Better tools to handle text encodings using the TECkit library are
-
-- SILConverters <https://scripts.sil.org/EncCnvtrs>
-- LibreOffice Linguistic Tools <https://github.com/silnrsi/libreoffice-linguistic-tools>
+- SILConverters <https://software.sil.org/silconverters>
+- LibreOffice Linguistic Tools <https://software.sil.org/oolt>
 
 **References:**
 
-  - General information can be found at <https://scripts.sil.org/TECkit>.
+  - General information can be found at <https://software.sil.org/teckit>.
   - Documentation is in the [`docs` directory].
   - Changes are found in the [`NEWS` file].
-  - Python 2 bindings and codecs integration are in the [palaso-python] project.
+  - Python 3 bindings and codecs integration are in the [palaso-python] project.
 
 [`docs` directory]: ./docs
 [`NEWS` file]: ./NEWS
@@ -51,7 +46,7 @@ Getting TECkit
 --------------
 
 Our binary releases can be obtained from
-<https://scripts.sil.org/TECkitDownloads>.
+<https://software.sil.org/teckit/#downloads>.
 
 TECkit is also included in [TeX Live](https://www.tug.org/texlive/) and packaged
 by many Linux distributions.
@@ -109,7 +104,7 @@ The `build-*.sh` show how releases are made for the different platforms.
 #### Microsoft Windows
 
 We do not typically test building on Windows itself. Instead, we build releases
-on Ubuntu Xenial by cross-compiling for MinGW with the following packages:
+on Ubuntu Bionic by cross-compiling for MinGW with the following packages:
 
   - `gcc-mingw-w64-i686`
   - `g++-mingw-w64-i686`

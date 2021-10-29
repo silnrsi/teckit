@@ -8,7 +8,7 @@ on:
 
 jobs:
   windows:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     steps:
     - uses: mstksg/get-package@v1
       with:
@@ -16,7 +16,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: setup
       run: ./autogen.sh
-    - name: build 
+    - name: build
       run: ./build-windows-binaries.sh
     - name: package
       run: ./build-windows-package.sh
@@ -24,7 +24,7 @@ jobs:
   linux:
     runs-on: ${{ matrix.os }}
     strategy:
-      matrix: 
+      matrix:
         os: [ubuntu-18.04, ubuntu-latest]
     steps:
     - uses: mstksg/get-package@v1
@@ -47,5 +47,5 @@ jobs:
     - uses: actions/checkout@v2
     - name: setup
       run: ./autogen.sh
-    - name: build 
+    - name: build
       run: ./build-mac-binaries.sh
