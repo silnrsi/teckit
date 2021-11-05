@@ -22,8 +22,8 @@ jobs:
       run: ./build-windows-package.sh
     - uses: actions/upload-artifact@v2
       with:
-        name: artifacts
-        path: TECkit-*
+        name: download.zip
+        path: TECkit-*.zip
 
   linux:
     runs-on: ${{ matrix.os }}
