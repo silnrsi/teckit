@@ -1,6 +1,6 @@
 #!/usr/bin/make -f
 
-DEB_TAR_SRCDIR := teckit-2.5.10
+DEB_TAR_SRCDIR := teckit-2.5.11
 
 include /usr/share/cdbs/1/rules/tarball.mk
 

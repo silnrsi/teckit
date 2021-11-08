@@ -28,7 +28,7 @@ jobs:
   arches:
     runs-on: ubuntu-latest
     strategy:
-      matrix: 
+      matrix:
         arch: [aarch64, ppc64le, s390x]
     steps:
     - uses: actions/checkout@v2
@@ -38,11 +38,10 @@ jobs:
         arch: ${{ matrix.arch }}
         distro: ubuntu18.04
         install: |
-          apt update -q -y
-          apt install -q -y sudo devscripts debhelper cdbs
+          apt-get update -q -y
+          apt-get install -q -y sudo devscripts debhelper cdbs
 
         run: |
           ./autogen.sh
           ./build-linux-binaries.sh
 #          ./build-linux-package.sh -uc -us
-

@@ -22,7 +22,7 @@ jobs:
       run: ./build-windows-package.sh
     - uses: actions/upload-artifact@v2
       with:
-        name: download.zip
+        name: download
         path: TECkit-*.zip
 
   linux:
