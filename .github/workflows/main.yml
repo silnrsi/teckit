@@ -22,7 +22,7 @@ jobs:
       run: ./build-windows-package.sh
     - uses: actions/upload-artifact@v2
       with:
-        name: TECkit-${{github.event.release.tag_name}}-${{runner.os}}-${{runner.arch}}-${{github.sha}}-build${{github.run_number}}.zip
+        name: TECkit-${{runner.os}}-${{runner.arch}}-${{github.sha}}-build${{github.run_number}}.zip
         path: TECkit-*.zip
 
   linux:
@@ -52,12 +52,11 @@ jobs:
     - name: setup
       run: ./autogen.sh
     - name: build
-      run: ./build-mac-binaries.sh
-    - name: cd into package folder
-      run: cd mac-installer
-    - name: create package (DMG)
-      run: ./create-pkg.sh
+      run: |
+        ./build-mac-binaries.sh
+        cd mac-installer
+        ./create-pkg.sh
     - uses: actions/upload-artifact@v2
       with:
-        name: TECkit-${{github.event.release.tag_name}}-${{runner.os}}-${{runner.arch}}-${{github.sha}}-build${{github.run_number}}.dmg
+        name: TECkit-${{runner.os}}-${{runner.arch}}-${{github.sha}}-build${{github.run_number}}.dmg
         path: mac-installer/*.dmg
