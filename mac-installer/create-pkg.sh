@@ -28,4 +28,3 @@ sudo chmod -R a+rw ./Img
 /usr/bin/pkgbuild --identifier "org.sil.scripts.teckit" --root Pkg/ --component-plist components.plist --version $VERSION Img/TECkit-$VERSION.pkg
 
 /usr/bin/hdiutil create -verbose -volname "TECkit" -srcdir Img/ -ov TECkit-$VERSION.dmg
-/usr/bin/hdiutil internet-enable TECkit-$VERSION.dmg
