@@ -53,14 +53,11 @@ jobs:
       run: ./autogen.sh
     - name: build
       run: ./build-mac-binaries.sh
+    - name: cd into package folder
       run: cd mac-installer
+    - name: create package (DMG)
       run: ./create-pkg.sh
     - uses: actions/upload-artifact@v2
       with:
         name: TECkit-${{github.event.release.tag_name}}-${{runner.os}}-${{runner.arch}}-${{github.sha}}-build${{github.run_number}}.dmg
         path: mac-installer/*.dmg
-
-
-
-
-        path: TECkit-*.dmg
