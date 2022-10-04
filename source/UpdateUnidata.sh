@@ -11,11 +11,12 @@ VERSION=$1
 
 BASE=https://www.unicode.org/Public/$VERSION/ucd
 
-wget -N $BASE/{CompositionExclusions,UnicodeData}.txt
+curl -O $BASE/CompositionExclusions.txt
+curl -O $BASE/UnicodeData.txt
 
 perl MakeNormData.pl >NormalizationData.c
 perl MakeUnicodeNames.pl >UnicodeNames.cpp
 
 cd ../test
 
-wget -N $BASE/NormalizationTest.txt
+curl -O $BASE/NormalizationTest.txt
