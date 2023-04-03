@@ -18,7 +18,7 @@ GNU Lesser General Public License, as specified in the LICENSING.txt file.
 
 // constants used in all the binaries, shouldn't need changing (until next year)
 #define VER_COMPANY_NAME_STR        "SIL International\0"
-#define VER_COPYRIGHT_STR           "Copyright (c) 2002-2022\0"
+#define VER_COPYRIGHT_STR           "Copyright (c) 2002-2023\0"
 #define VER_PRODUCT_NAME_STR        "TECkit core\0"
 
 #ifndef DEBUG
