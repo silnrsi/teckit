@@ -31,12 +31,12 @@ jobs:
       matrix:
         arch: [aarch64, ppc64le, s390x]
     steps:
-    - uses: actions/checkout@v2
-    - uses: uraimo/run-on-arch-action@v2.0.5
+    - uses: actions/checkout@v3
+    - uses: uraimo/run-on-arch-action@v2
       id: build
       with:
         arch: ${{ matrix.arch }}
-        distro: ubuntu18.04
+        distro: ubuntu20.04
         install: |
           apt-get update -q -y
           apt-get install -q -y sudo devscripts debhelper cdbs

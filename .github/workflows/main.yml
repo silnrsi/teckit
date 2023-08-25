@@ -13,7 +13,7 @@ jobs:
     - uses: mstksg/get-package@v1
       with:
         apt-get: mingw-w64 dos2unix groff
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: setup
       run: ./autogen.sh
     - name: build
@@ -34,7 +34,7 @@ jobs:
     - uses: mstksg/get-package@v1
       with:
         apt-get: devscripts debhelper cdbs
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: setup
       run: ./autogen.sh
     - name: build
@@ -48,7 +48,7 @@ jobs:
     - uses: mstksg/get-package@v1
       with:
         brew: automake
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: setup
       run: ./autogen.sh
     - name: build
