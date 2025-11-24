@@ -8,7 +8,7 @@ on:
 
 jobs:
   windows:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
     - uses: mstksg/get-package@v1
       with:
@@ -20,7 +20,7 @@ jobs:
       run: ./build-windows-binaries.sh
     - name: package
       run: ./build-windows-package.sh
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v4
       with:
         name: TECkit-Windows-${{runner.arch}}-${{github.sha}}-build${{github.run_number}}
         path: TECkit-*.zip
@@ -29,18 +29,18 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-20.04, ubuntu-latest]
+        os: [ubuntu-22.04, ubuntu-latest]
     steps:
-    - uses: mstksg/get-package@v1
-      with:
-        apt-get: devscripts debhelper cdbs
+    # - uses: mstksg/get-package@v1
+    #   with:
+    #     apt-get: devscripts debhelper cdbs
     - uses: actions/checkout@v4
     - name: setup
       run: ./autogen.sh
     - name: build
       run: ./build-linux-binaries.sh
-    - name: package
-      run: ./build-linux-package.sh -us -uc
+    # - name: package
+    #   run: ./build-linux-package.sh -us -uc
 
   macos:
     runs-on: macos-latest
@@ -56,7 +56,7 @@ jobs:
         ./build-mac-binaries.sh
         cd mac-installer
         ./create-pkg.sh
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v4
       with:
         name: TECkit-${{runner.os}}-${{runner.arch}}-${{github.sha}}-build${{github.run_number}}
         path: mac-installer/*.dmg

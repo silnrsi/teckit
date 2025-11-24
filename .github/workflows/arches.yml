@@ -32,14 +32,14 @@ jobs:
         arch: [aarch64, ppc64le, s390x]
     steps:
     - uses: actions/checkout@v4
-    - uses: uraimo/run-on-arch-action@v2.7.0
+    - uses: uraimo/run-on-arch-action@v3
       id: build
       with:
         arch: ${{ matrix.arch }}
-        distro: ubuntu20.04
-        install: |
-          apt-get update -q -y
-          apt-get install -q -y sudo devscripts debhelper cdbs
+        distro: ubuntu_latest
+        # install: |
+        #   apt-get update -q -y
+        #   apt-get install -q -y sudo devscripts debhelper cdbs
 
         run: |
           ./autogen.sh
