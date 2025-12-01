@@ -31,23 +31,18 @@ jobs:
       matrix:
         os: [ubuntu-22.04, ubuntu-latest]
     steps:
-    # - uses: mstksg/get-package@v1
-    #   with:
-    #     apt-get: devscripts debhelper cdbs
     - uses: actions/checkout@v4
     - name: setup
       run: ./autogen.sh
     - name: build
       run: ./build-linux-binaries.sh
-    # - name: package
-    #   run: ./build-linux-package.sh -us -uc
 
   macos:
     runs-on: macos-latest
     steps:
     - uses: mstksg/get-package@v1
       with:
-        brew: automake
+        brew: automake libtool
     - uses: actions/checkout@v4
     - name: setup
       run: ./autogen.sh

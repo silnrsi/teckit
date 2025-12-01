@@ -28,6 +28,7 @@ jobs:
   arches:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         arch: [aarch64, ppc64le, s390x]
     steps:
@@ -36,12 +37,8 @@ jobs:
       id: build
       with:
         arch: ${{ matrix.arch }}
-        distro: ubuntu_latest
-        # install: |
-        #   apt-get update -q -y
-        #   apt-get install -q -y sudo devscripts debhelper cdbs
-
+        distro: alpine_latest
         run: |
+          uname -a
           ./autogen.sh
           ./build-linux-binaries.sh
-#          ./build-linux-package.sh -uc -us
