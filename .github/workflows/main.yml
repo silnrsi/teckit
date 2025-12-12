@@ -49,6 +49,11 @@ jobs:
     - name: build
       run: |
         ./build-mac-binaries.sh
+        # The otool commands below show what shared libraries the binaries are linked against,
+        # they do not affect the build of the binaries.
+        otool -L teckit-mac/bin/sfconv
+        otool -L teckit-mac/bin/teckit_compile
+        otool -L teckit-mac/bin/txtconv
         cd mac-installer
         ./create-pkg.sh
     - uses: actions/upload-artifact@v4

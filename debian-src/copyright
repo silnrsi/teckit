@@ -1,15 +1,15 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Debianized-By: Neil Mayhew <neil_mayhew@sil.org>
 Upstream-Name: TECkit
-Upstream-Contact: SIL International https://software.sil.org/teckit/#support
+Upstream-Contact: SIL Global https://software.sil.org/teckit/#support
 Source: https://software.sil.org/teckit
 
 Files: *
-Copyright: Copyright 2002-2025, SIL International
+Copyright: Copyright 2002-2025, SIL Global
 License: LGPL-2+ or CPL-0.5+
 
 Files: SFconv/UtfCodec.*
-Copyright: 2010-2011 SIL International
+Copyright: 2010-2011 SIL Global
 License: LGPL-2+ or GPL-2+ or MPL
 
 Files: debian*/copyright docs/*.1
