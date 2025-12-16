@@ -1,5 +1,5 @@
 AC_PREREQ([2.69])
-AC_INIT([teckit],[2.5.12],[wstech@sil.org])
+AC_INIT([teckit],[2.5.13],[wstech@sil.org])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_SRCDIR([source/UnicodeNames.cpp])
 AC_CONFIG_MACRO_DIR([m4])

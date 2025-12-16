@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleGetInfoString</key>
-	<string>2.5.12, copyright © 2002-2025 SIL Global</string>
+	<string>2.5.13, copyright © 2002-2025 SIL Global</string>
 	<key>CFBundleIdentifier</key>
 	<string>org.sil.nrsi.teckit</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.5.12</string>
+	<string>2.5.13</string>
 	<key>IFMajorVersion</key>
 	<integer>2</integer>
 	<key>IFMinorVersion</key>

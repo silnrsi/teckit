@@ -8,7 +8,7 @@ set -ev
 . ./build-windows-common
 
 # metadata
-VERSION="2.5.12"
+VERSION="2.5.13"
 foldername=TECkit-${VERSION}
 filename=${foldername}.zip
 
