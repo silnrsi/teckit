@@ -5,7 +5,7 @@ Upstream-Contact: SIL Global https://software.sil.org/teckit/#support
 Source: https://software.sil.org/teckit
 
 Files: *
-Copyright: Copyright 2002-2025, SIL Global
+Copyright: Copyright 2002-2026, SIL Global
 License: LGPL-2+ or CPL-0.5+
 
 Files: SFconv/UtfCodec.*
