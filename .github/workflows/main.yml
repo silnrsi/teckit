@@ -1,4 +1,4 @@
-name: TECkit
+name: Main
 
 on:
   push:

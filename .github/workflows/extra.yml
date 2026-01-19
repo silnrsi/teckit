@@ -1,4 +1,4 @@
-name: TECKit non-x86
+name: Extra
 
 on:
   push:
