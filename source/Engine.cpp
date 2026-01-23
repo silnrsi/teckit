@@ -871,7 +871,7 @@ printMatchElem(const MatchElem& m)
 	if (m.flags.type & kMatchElem_NonLit) {
 		switch (m.flags.type & kMatchElem_TypeMask) {
 			case kMatchElem_Type_Class:
-				sprintf(buf, "[%d]", m.value.cls.index);
+				snprintf(buf, sizeof(buf), "[%d]", m.value.cls.index);
 				rval += buf;
 				break;
 			case kMatchElem_Type_BGroup:
@@ -897,11 +897,11 @@ printMatchElem(const MatchElem& m)
 	else {
 		UInt32	v = m.value.usv.data & kUSVMask;
 		if (v >= ' ' && v < 0x7e) {
-			sprintf(buf, "'%c'", (char)v);
+			snprintf(buf, sizeof(buf), "'%c'", (char)v);
 			rval += buf;
 		}
 		else {
-			sprintf(buf, "0x%04X", (UInt32)v);
+			snprintf(buf, sizeof(buf), "0x%04X", (UInt32)v);
 			rval += buf;
 		}
 	}
@@ -919,7 +919,7 @@ printMatchElem(const MatchElem& m)
 				rval += "+";
 				break;
 			default:
-				sprintf(buf, "{%d,%d}", m.flags.repeat >> 4, m.flags.repeat & 0x0F);
+				snprintf(buf, sizeof(buf), "{%d,%d}", m.flags.repeat >> 4, m.flags.repeat & 0x0F);
 				rval += buf;
 				break;
 		}
@@ -961,11 +961,11 @@ printRep(const StringRule* rule)
 					char	buf[20];
 					v = READ(r->value);
 					if (v >= ' ' && v <= 0x7e) {
-						sprintf(buf, "'%c'", v);
+						snprintf(buf, sizeof(buf), "'%c'", v);
 						cerr << buf;
 					}
 					else {
-						sprintf(buf, "0x%04X", v);
+						snprintf(buf, sizeof(buf), "0x%04X", v);
 						cerr << buf;
 					}
 				}

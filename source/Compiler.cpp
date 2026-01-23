@@ -209,7 +209,7 @@ TECkit_GetTECkitName(UInt32 usv)
 	static char	buffer[256];
 	const char*	name = TECkit_GetUnicodeName(usv);
 	if (name == NULL)
-		sprintf(buffer, "U+%04X", usv);
+		snprintf(buffer, sizeof(buffer), "U+%04X", usv);
 	else {
 		char* cp = &buffer[0];
 		while (*name && (cp - buffer < 255)) {
@@ -346,7 +346,7 @@ static const char*
 asHex(UInt32 val, short digits)
 {
 	static char	str[16];
-	sprintf(str, "%0*X", digits, val);
+	snprintf(str, sizeof(str), "%0*X", digits, val);
 	return str;
 }
 
@@ -354,7 +354,7 @@ static const char*
 asDec(UInt32 val)
 {
 	static char	str[16];
-	sprintf(str, "%d", val);
+	snprintf(str, sizeof(str), "%d", val);
 	return str;
 }
 
