@@ -1,0 +1,33 @@
+# Set the default behavior, in case people don't have core.autocrlf set.
+* text=auto
+
+# Declare files that will always have CRLF line endings on checkout.
+# The setting below apply repo wide, the folders mentioned are where
+# those particular extensions can be found.
+
+# source/teckitjni/MSDev
+*.dsp text eol=crlf
+*.dsw text eol=crlf
+
+# tests
+*.sf text eol=crlf
+
+# Declare all files that are truly binary and should not be modified.
+
+# docs (and zlib-*)
+*.doc binary
+*.odt binary
+*.pdf binary
+
+# perl_binaries
+*.gz binary
+*.par binary
+
+# source/teckitjni/MSDev
+*.ncb binary
+*.opt binary
+
+# test
+*.orig binary
+*.tec binary
+*.text binary

@@ -46,12 +46,12 @@ dotest("compiling Greek mapping (compressed)",
 # should be sufficient to verify that it can be decompressed/used properly
 
 dotest("converting plain-text file to unicode",
-	"${bindir}txtconv -t SILGreek.tec -i ${srcdir}mrk.txt -o mrk.utf8.txt -nfc");
+	"${bindir}txtconv -t SILGreek.tec -i ${srcdir}mrk.text -o mrk.utf8.txt -nfc");
 
 dotest("converting back to legacy encoding",
 	"${bindir}txtconv -t SILGreek.tec -r -i mrk.utf8.txt -o mrk.bytes.txt");
 
-compare("${srcdir}mrk.txt", "mrk.bytes.txt");
+compare("${srcdir}mrk.text", "mrk.bytes.txt");
 
 dotest("converting unicode to utf16 and nfd",
 	"${bindir}txtconv -i mrk.utf8.txt -o mrk.utf16be.txt -of utf16be -nfd");
