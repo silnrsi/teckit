@@ -1,0 +1,439 @@
+<?xml version="1.0"?>
+<teckitMapping
+ lhsName="Unicode Latin for Wolof"
+ rhsName="Unicode Arabic for Wolof"
+ contact="mailto:wstech@sil.org"
+ lhsExpects="NFC"
+>
+<pass lhs="unicode" rhs="unicode" line="22">
+<assignments>
+<a line="25">
+<l><ch n="0041"/></l>
+<r><ch n="0061"/></r>
+</a>
+<a line="26">
+<l><ch n="0042"/></l>
+<r><ch n="0062"/></r>
+</a>
+<a line="27">
+<l><ch n="0043"/></l>
+<r><ch n="0063"/></r>
+</a>
+<a line="28">
+<l><ch n="0044"/></l>
+<r><ch n="0064"/></r>
+</a>
+<a line="29">
+<l><ch n="0045"/></l>
+<r><ch n="0065"/></r>
+</a>
+<a line="30">
+<l><ch n="0046"/></l>
+<r><ch n="0066"/></r>
+</a>
+<a line="31">
+<l><ch n="0047"/></l>
+<r><ch n="0067"/></r>
+</a>
+<a line="32">
+<l><ch n="0048"/></l>
+<r><ch n="0068"/></r>
+</a>
+<a line="33">
+<l><ch n="0049"/></l>
+<r><ch n="0069"/></r>
+</a>
+<a line="34">
+<l><ch n="004A"/></l>
+<r><ch n="006A"/></r>
+</a>
+<a line="35">
+<l><ch n="004B"/></l>
+<r><ch n="006B"/></r>
+</a>
+<a line="36">
+<l><ch n="004C"/></l>
+<r><ch n="006C"/></r>
+</a>
+<a line="37">
+<l><ch n="004D"/></l>
+<r><ch n="006D"/></r>
+</a>
+<a line="38">
+<l><ch n="004E"/></l>
+<r><ch n="006E"/></r>
+</a>
+<a line="39">
+<l><ch n="004F"/></l>
+<r><ch n="006F"/></r>
+</a>
+<a line="40">
+<l><ch n="0050"/></l>
+<r><ch n="0070"/></r>
+</a>
+<a line="41">
+<l><ch n="0051"/></l>
+<r><ch n="0071"/></r>
+</a>
+<a line="42">
+<l><ch n="0052"/></l>
+<r><ch n="0072"/></r>
+</a>
+<a line="43">
+<l><ch n="0053"/></l>
+<r><ch n="0073"/></r>
+</a>
+<a line="44">
+<l><ch n="0054"/></l>
+<r><ch n="0074"/></r>
+</a>
+<a line="45">
+<l><ch n="0055"/></l>
+<r><ch n="0075"/></r>
+</a>
+<a line="46">
+<l><ch n="0056"/></l>
+<r><ch n="0076"/></r>
+</a>
+<a line="47">
+<l><ch n="0057"/></l>
+<r><ch n="0077"/></r>
+</a>
+<a line="48">
+<l><ch n="0058"/></l>
+<r><ch n="0078"/></r>
+</a>
+<a line="49">
+<l><ch n="0059"/></l>
+<r><ch n="0079"/></r>
+</a>
+<a line="50">
+<l><ch n="005A"/></l>
+<r><ch n="007A"/></r>
+</a>
+<a line="51">
+<l><ch n="00D1"/></l>
+<r><ch n="00F1"/></r>
+</a>
+<a line="52">
+<l><ch n="014A"/></l>
+<r><ch n="014B"/></r>
+</a>
+<a line="53">
+<l><ch n="00C0"/></l>
+<r><ch n="00E0"/></r>
+</a>
+<a line="54">
+<l><ch n="00C3"/></l>
+<r><ch n="00E3"/></r>
+</a>
+<a line="55">
+<l><ch n="00CB"/></l>
+<r><ch n="00EB"/></r>
+</a>
+<a line="56">
+<l><ch n="00C9"/></l>
+<r><ch n="00E9"/></r>
+</a>
+<a line="57">
+<l><ch n="1EBC"/></l>
+<r><ch n="1EBD"/></r>
+</a>
+<a line="58">
+<l><ch n="00D3"/></l>
+<r><ch n="00F3"/></r>
+</a>
+</assignments>
+</pass>
+<pass lhs="unicode" rhs="unicode" line="60">
+<classes>
+<class size="unicode" name="u_LTR" line="120">
+0430 0431 0432 0433 0434 0435 0436 0437 0438 0439 043A 043B 043C 043D 043E 043F 0440 0441 0442 0443 0444 0445 0446 0447 0448 0449 044A 044B 044C 044D 044E 044F 0493 04D9 049B 04A3 04E9 04B1 04AF 04BB 0448 044B 0456
+</class>
+<class size="unicode" name="u_NOTSOFT_SG" line="123">
+0430 0431 0432 0434 0493 0436 0437 0439 049B 043B 043C 043D 04A3 043E 043F 0440 0441 0442 0443 04B1 0444 0445 04BB 0447 0448 044B
+</class>
+<class size="unicode" name="u_NOTSOFT_DI" line="124">
+0446 044E 044F 0451
+</class>
+<class size="unicode" name="u_NOTSOFT_ALL" line="125">
+0430 0431 0432 0434 0493 0436 0437 0439 049B 043B 043C 043D 04A3 043E 043F 0440 0441 0442 0443 04B1 0444 0445 04BB 0447 0448 044B 0446 044E 044F 0451
+</class>
+<class size="unicode" name="u_NOTSOFT_ARB" line="127">
+0627 0628 06CB 062F 0639 062C 0632 064A 0642 0644 0645 0646 06AD 0648 067E 0631 0633 062A 06CB 06C7 0641 062D 0647 0686 0634 0649
+</class>
+<class size="unicode" name="u_SOFTVOWEL" line="133">
+04D9 04E9 04AF 0456
+</class>
+<class size="unicode" name="u_SOFTVOWEL_ARB" line="134">
+0675 0676 0677 0678
+</class>
+<class size="unicode" name="u_NOTSOFTVOWEL" line="155">
+0430 043E 04B1 044B
+</class>
+<class size="unicode" name="u_NOTSOFTVOWEL_ARB" line="156">
+0627 0648 06C7 0649
+</class>
+<class size="unicode" name="u_SOFTCONS" line="157">
+043A 0433 0435
+</class>
+<class size="unicode" name="u_SOFTCONS_ARB" line="158">
+0643 06AF 06D5
+</class>
+<class size="unicode" name="u_digit" line="175">
+0030 0031 0032 0033 0034 0035 0036 0037 0038 0039
+</class>
+<class size="unicode" name="u_ascii" line="182">
+0000 0001 0002 0003 0004 0005 0006 0007 0008 0009 000A 000B 000C 000D 000E 000F 0010 0011 0012 0013 0014 0015 0016 0017 0018 0019 001A 001B 001C 001D 001E 001F 0020 0021 0022 0023 0024 0025 0026 0027 0028 0029 002A 002B 002C 002D 002E 002F 0030 0031 0032 0033 0034 0035 0036 0037 0038 0039 003A 003B 003C 003D 003E 003F 0040 0041 0042 0043 0044 0045 0046 0047 0048 0049 004A 004B 004C 004D 004E 004F 0050 0051 0052 0053 0054 0055 0056 0057 0058 0059 005A 005B 005C 005D 005E 005F 0060 0061 0062 0063 0064 0065 0066 0067 0068 0069 006A 006B 006C 006D 006E 006F 0070 0071 0072 0073 0074 0075 0076 0077 0078 0079 007A 007B 007C 007D 007E 007F
+</class>
+<class size="unicode" name="u_latin1" line="183">
+00A0 00A1 00A2 00A3 00A4 00A5 00A6 00A7 00A8 00A9 00AA 00AB 00AC 00AD 00AE 00AF 00B0 00B1 00B2 00B3 00B4 00B5 00B6 00B7 00B8 00B9 00BA 00BB 00BC 00BD 00BE 00BF 00C0 00C1 00C2 00C3 00C4 00C5 00C6 00C7 00C8 00C9 00CA 00CB 00CC 00CD 00CE 00CF 00D0 00D1 00D2 00D3 00D4 00D5 00D6 00D7 00D8 00D9 00DA 00DB 00DC 00DD 00DE 00DF 00E0 00E1 00E2 00E3 00E4 00E5 00E6 00E7 00E8 00E9 00EA 00EB 00EC 00ED 00EE 00EF 00F0 00F1 00F2 00F3 00F4 00F5 00F6 00F7 00F8 00F9 00FA 00FB 00FC 00FD 00FE 00FF
+</class>
+</classes>
+<contexts>
+<context id="uctx_1"><class-ref name="u_LTR" neg="1"/></context>
+<context id="uctx_4"><class-ref name="u_LTR" neg="1"/><ch n="0674"/><group min="0" max="15">
+<class-ref name="u_NOTSOFT_ARB"/></group>
+</context>
+<context id="uctx_2"><class-ref name="u_NOTSOFT_ALL" min="0" max="15"/><class-ref name="u_SOFTVOWEL"/><group alt="1" min="0" max="15">
+<class-ref name="u_NOTSOFT_ALL"/><class-ref name="u_SOFTVOWEL"/></group>
+<class-ref name="u_LTR" neg="1"/></context>
+<context id="uctx_5"><class-ref name="u_SOFTCONS_ARB"/><group min="0" max="15">
+<class-ref name="u_NOTSOFT_ARB"/></group>
+</context>
+<context id="uctx_7"><class-ref name="u_digit"/></context>
+<context id="uctx_3"><group alt="1" min="0" max="15">
+<class-ref name="u_NOTSOFT_ALL"/><class-ref name="u_SOFTVOWEL"/></group>
+<class-ref name="u_LTR" neg="1"/></context>
+<context id="uctx_6"><group min="0" max="15">
+<class-ref name="u_NOTSOFT_ARB"/></group>
+<class-ref name="u_SOFTCONS_ARB"/></context>
+</contexts>
+<assignments>
+<a line="64">
+<l><ch n="002C"/></l>
+<r><ch n="060C"/></r>
+</a>
+<a line="65">
+<l><ch n="003B"/></l>
+<r><ch n="061B"/></r>
+</a>
+<a line="66">
+<l><ch n="003F"/></l>
+<r><ch n="061F"/></r>
+</a>
+<a line="68">
+<l><ch n="0062"/></l>
+<r><ch n="0628"/></r>
+</a>
+<a line="69">
+<l><ch n="0063"/></l>
+<r><ch n="0756"/></r>
+</a>
+<a line="70">
+<l><ch n="0064"/></l>
+<r><ch n="062F"/></r>
+</a>
+<a line="71">
+<l><ch n="0066"/></l>
+<r><ch n="0641"/></r>
+</a>
+<a line="72">
+<l><ch n="0067"/></l>
+<r><ch n="06AF"/></r>
+</a>
+<a line="73">
+<l><ch n="0068"/></l>
+<r><ch n="062D"/></r>
+</a>
+<a line="74">
+<l><ch n="006A"/></l>
+<r><ch n="062C"/></r>
+</a>
+<a line="75">
+<l><ch n="006B"/></l>
+<r><ch n="06A9"/></r>
+</a>
+<a line="76">
+<l><ch n="006C"/></l>
+<r><ch n="0644"/></r>
+</a>
+<a line="77">
+<l><ch n="006D"/></l>
+<r><ch n="0645"/></r>
+</a>
+<a line="78">
+<l><ch n="006E"/></l>
+<r><ch n="0646"/></r>
+</a>
+<a line="79">
+<l><ch n="00F1"/></l>
+<r><ch n="0767"/></r>
+</a>
+<a line="80">
+<l><ch n="014B"/></l>
+<r><ch n="075D"/></r>
+</a>
+<a line="81">
+<l><ch n="0070"/></l>
+<r><ch n="0752"/></r>
+</a>
+<a line="82">
+<l><ch n="0071"/></l>
+<r><ch n="0642"/></r>
+</a>
+<a line="83">
+<l><ch n="0072"/></l>
+<r><ch n="0631"/></r>
+</a>
+<a line="84">
+<l><ch n="0073"/></l>
+<r><ch n="0633"/></r>
+</a>
+<a line="85">
+<l><ch n="0074"/></l>
+<r><ch n="062A"/></r>
+</a>
+<a line="86">
+<l><ch n="0077"/></l>
+<r><ch n="0648"/></r>
+</a>
+<a line="87">
+<l><ch n="0078"/></l>
+<r><ch n="062C"/></r>
+</a>
+<a line="88">
+<l><ch n="0079"/></l>
+<r><ch n="064A"/></r>
+</a>
+<a line="90">
+<l><ch n="0061"/></l>
+<r><ch n="0627"/><ch n="064E"/></r>
+</a>
+<a line="91">
+<l><ch n="0061"/><ch n="0061"/></l>
+<r><ch n="0627"/><ch n="0653"/></r>
+</a>
+<a line="92">
+<l><ch n="0061"/><ch n="0061"/></l>
+<r><ch n="0628"/><ch n="064E"/><ch n="0627"/></r>
+</a>
+<a line="93">
+<l><ch n="00E0"/></l>
+<r><ch n="0627"/><ch n="065A"/></r>
+</a>
+<a line="94">
+<l><ch n="00E3"/></l>
+<r><ch n="0627"/><ch n="064E"/><ch n="075D"/></r>
+</a>
+<a line="95">
+<l><ch n="00E3"/><ch n="0061"/></l>
+<r><ch n="0627"/><ch n="064E"/><ch n="0627"/><ch n="075D"/></r>
+</a>
+<a line="96">
+<l><ch n="00EB"/></l>
+<r><ch n="0627"/><ch n="065E"/></r>
+</a>
+<a line="97">
+<l><ch n="00EB"/><ch n="00EB"/></l>
+<r><ch n="0627"/><ch n="065E"/><ch n="0020"/><ch n="0627"/></r>
+</a>
+<a line="98">
+<l><ch n="0065"/></l>
+<r><ch n="0627"/><ch n="0655"/></r>
+</a>
+<a line="99">
+<l><ch n="0065"/><ch n="0065"/></l>
+<r><ch n="0627"/><ch n="0655"/><ch n="064A"/></r>
+</a>
+<a line="100">
+<l><ch n="00E9"/></l>
+<r><ch n="0627"/><ch n="0656"/></r>
+</a>
+<a line="101">
+<l><ch n="00E9"/><ch n="0065"/></l>
+<r><ch n="0627"/><ch n="0656"/><ch n="064A"/></r>
+</a>
+<a line="102">
+<l><ch n="1EBD"/></l>
+<r><ch n="0627"/><ch n="0655"/><ch n="075D"/></r>
+</a>
+<a line="103">
+<l><ch n="0069"/></l>
+<r><ch n="0627"/><ch n="0650"/></r>
+</a>
+<a line="104">
+<l><ch n="0069"/><ch n="0069"/></l>
+<r><ch n="0627"/><ch n="0650"/><ch n="064A"/></r>
+</a>
+<a line="105">
+<l><ch n="006F"/></l>
+<r><ch n="0627"/><ch n="065D"/></r>
+</a>
+<a line="106">
+<l><ch n="006F"/><ch n="006F"/></l>
+<r><ch n="0627"/><ch n="065D"/><ch n="0648"/></r>
+</a>
+<a line="107">
+<l><ch n="00F3"/></l>
+<r><ch n="0627"/><ch n="0657"/></r>
+</a>
+<a line="108">
+<l><ch n="00F3"/><ch n="006F"/></l>
+<r><ch n="0627"/><ch n="0657"/><ch n="0648"/></r>
+</a>
+<a line="109">
+<l><ch n="0075"/></l>
+<r><ch n="0627"/><ch n="064F"/></r>
+</a>
+<a line="110">
+<l><ch n="0075"/><ch n="0075"/></l>
+<r><ch n="0627"/><ch n="064F"/><ch n="0648"/></r>
+</a>
+<a line="141" dir="fwd">
+<l preCtx="uctx_1" postCtx="uctx_2"><class-ref name="u_NOTSOFT_SG" id="CONS"/></l>
+<r><ch n="0674"/><class-ref name="u_NOTSOFT_ARB" id="CONS"/></r>
+</a>
+<a line="150">
+<l preCtx="uctx_1" postCtx="uctx_3"><class-ref name="u_SOFTVOWEL" id="VWL"/></l>
+<r><class-ref name="u_SOFTVOWEL_ARB" id="VWL"/></r>
+</a>
+<a line="164" dir="rev">
+<l><class-ref name="u_SOFTVOWEL" id="VWL"/></l>
+<r preCtx="uctx_4"><class-ref name="u_NOTSOFTVOWEL_ARB" id="VWL"/></r>
+</a>
+<a line="167" dir="rev">
+<l><class-ref name="u_SOFTVOWEL" id="VWL"/></l>
+<r preCtx="uctx_5"><class-ref name="u_NOTSOFTVOWEL_ARB" id="VWL"/></r>
+</a>
+<a line="168" dir="rev">
+<l><class-ref name="u_SOFTVOWEL" id="VWL"/></l>
+<r postCtx="uctx_6"><class-ref name="u_NOTSOFTVOWEL_ARB" id="VWL"/></r>
+</a>
+<a line="177">
+<l preCtx="uctx_7" postCtx="uctx_7"><ch n="002D"/></l>
+<r><ch n="002D"/><ch n="200F"/></r>
+</a>
+<a line="178">
+<l preCtx="uctx_7" postCtx="uctx_7"><ch n="003A"/></l>
+<r><ch n="003A"/><ch n="200F"/></r>
+</a>
+<a line="185">
+<l><class-ref name="u_ascii"/></l>
+<r><class-ref name="u_ascii"/></r>
+</a>
+<a line="186">
+<l><class-ref name="u_latin1"/></l>
+<r><class-ref name="u_latin1"/></r>
+</a>
+</assignments>
+</pass>
+<pass lhs="unicode" rhs="unicode" line="189">
+<assignments>
+<a line="191" dir="fwd">
+<l><ch n="064A"/><ch n="064A"/></l>
+<r><ch n="064A"/></r>
+</a>
+</assignments>
+</pass>
+</teckitMapping>

@@ -40,7 +40,6 @@ compare("${srcdir}SILGreek2004-04-27.uncompressed.tec.orig", "SILGreek.uncompres
 
 dotest("compiling Greek mapping (compressed)",
 	"${bindir}teckit_compile ${srcdir}SILGreek2004-04-27.map -o SILGreek.tec");
-
 # Don't bother to check the compressed file as changes to the compression library can
 # slightly change the resulting image. The tests below which use the compressed file
 # should be sufficient to verify that it can be decompressed/used properly
@@ -72,6 +71,20 @@ dotest("converting back to legacy encodings",
 
 compare("${srcdir}mrk.sf.legacy.txt.orig", "mrk.sf.legacy.txt");
 
+dotest("exporting Greek mapping",
+	"${bindir}teckit_compile -x ${srcdir}SILGreek2004-04-27.map -o SILGreek2004-04-27.xml");
+
+compare("${srcdir}SILGreek2004-04-27.xml.orig", "SILGreek2004-04-27.xml");
+ 
+dotest("exporting ISO-8859-1 mapping",
+	"${bindir}teckit_compile -x ${srcdir}ISO-8859-1.map -o ISO-8859-1.xml");
+
+compare("${srcdir}ISO-8859-1.xml.orig", "ISO-8859-1.xml");
+
+dotest("exporting Sen2Ajami mapping",
+	"${bindir}teckit_compile -x ${srcdir}Sen2Ajami.map -o Sen2Ajami.xml");
+
+compare("${srcdir}Sen2Ajami.xml.orig", "Sen2Ajami.xml");
 
 print "preparing normalization tests...\n";
 my @col;
@@ -111,6 +124,9 @@ if (1) {
 	unlink("mrk.bytes.txt");
 	unlink("mrk.sf.utf8.txt");
 	unlink("mrk.sf.legacy.txt");
+	unlink("SILGreek2004-04-27.xml");
+	unlink("ISO-8859-1.xml");
+	unlink("Sen2Ajami.xml");
 	while (<NormCol*.txt>) {
 		unlink($_);
 	}

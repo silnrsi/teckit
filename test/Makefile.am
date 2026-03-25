@@ -2,12 +2,16 @@ check_SCRIPTS = dotests.pl
 
 check_DATA  = GNT-map.xml
 check_DATA += ISO-8859-1.map
+check_DATA += ISO-8859-1.xml.orig
 check_DATA += Mrk-GNT.sf
 check_DATA += mrk.sf.legacy.txt.orig
 check_DATA += mrk.text
 check_DATA += NormalizationTest.txt
 check_DATA += SILGreek2004-04-27.map
+check_DATA += SILGreek2004-04-27.xml.orig
 check_DATA += SILGreek2004-04-27.uncompressed.tec.orig
+check_DATA += Sen2Ajami.map
+check_DATA += Sen2Ajami.xml.orig
 check_DATA += academy.tec
 check_DATA += silipa93.tec
 

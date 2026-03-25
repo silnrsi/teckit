@@ -1,0 +1,2313 @@
+<?xml version="1.0"?>
+<teckitMapping
+ lhsName="SIL-GREEK_GALATIA-2001"
+ rhsName="UNICODE"
+ lhsDescription="SIL Greek Encoding (Galatia)"
+ version="1.0b5"
+ contact="mailto:nrsi@sil.org"
+ registrationAuthority="SIL International"
+ registrationName="Greek (Galatia)"
+ rhsExpects="NFD"
+>
+<pass lhs="bytes" rhs="bytes" line="22">
+<classes>
+<class size="bytes" name="b_LTR" line="28">
+61 62 63 64 65 66 67 68 69 6A 6B 6C 6D 6E 6F 70 71 72 73 74 75 77 78 79 7A 41 42 43 44 45 46 47 48 49 4A 4B 4C 4D 4E 4F 50 51 52 53 54 55 57 58 59 5A 60 5E 5F 40 22 27 80 81 82 83 84 85 86 87 88 89 8A 8B 8C 8D 8E 8F 90 91 92 93 94 95 98 99 9A 9B 9C 9D 9E 9F A1 A2 A3 A5 A6 A7 A8 A9 AA AB AD AE AF B0 B1 B2 B3 B4 B5 B8 B9 BA BB BC BD BE BF C0 C1 C2 C3 C4 C5 C6 C7 C8 C9 CA CB CC CD CE CF D0 D1 D2 D3 D4 D5 D6 D7 D8 D9 DA DB DC DD DE DF E0 E1 E2 E3 E4 E5 E6 E7 E8 E9 EA EB EC ED EE EF F0 F1 F2 F3 F4 F5 F6 F7 F8 F9 FA FB FC FD FE FF
+</class>
+</classes>
+<contexts>
+<context id="bctx_1"><class-ref name="b_LTR" neg="1"/></context>
+</contexts>
+<assignments>
+<a line="32" dir="fwd">
+<l postCtx="bctx_1"><ch n="73"/></l>
+<r><ch n="76"/></r>
+</a>
+<a line="38">
+<l><ch n="CF"/></l>
+<r><ch n="48"/><ch n="72"/></r>
+</a>
+<a line="39">
+<l><ch n="BF"/></l>
+<r><ch n="68"/><ch n="72"/></r>
+</a>
+<a line="41">
+<l><ch n="AD"/><ch n="41"/></l>
+<r><ch n="48"/><ch n="41"/><ch n="27"/></r>
+</a>
+<a line="42">
+<l><ch n="AE"/><ch n="41"/></l>
+<r><ch n="48"/><ch n="41"/><ch n="60"/></r>
+</a>
+<a line="43">
+<l><ch n="AF"/><ch n="41"/></l>
+<r><ch n="48"/><ch n="41"/><ch n="5E"/></r>
+</a>
+<a line="44">
+<l><ch n="A9"/><ch n="41"/></l>
+<r><ch n="68"/><ch n="41"/><ch n="27"/></r>
+</a>
+<a line="45">
+<l><ch n="AA"/><ch n="41"/></l>
+<r><ch n="68"/><ch n="41"/><ch n="60"/></r>
+</a>
+<a line="46">
+<l><ch n="AB"/><ch n="41"/></l>
+<r><ch n="68"/><ch n="41"/><ch n="5E"/></r>
+</a>
+<a line="48">
+<l><ch n="AD"/><ch n="45"/></l>
+<r><ch n="48"/><ch n="45"/><ch n="27"/></r>
+</a>
+<a line="49">
+<l><ch n="A9"/><ch n="45"/></l>
+<r><ch n="68"/><ch n="45"/><ch n="27"/></r>
+</a>
+<a line="50">
+<l><ch n="AA"/><ch n="45"/></l>
+<r><ch n="68"/><ch n="45"/><ch n="60"/></r>
+</a>
+<a line="52">
+<l><ch n="AD"/><ch n="4A"/></l>
+<r><ch n="48"/><ch n="4A"/><ch n="27"/></r>
+</a>
+<a line="53">
+<l><ch n="AE"/><ch n="4A"/></l>
+<r><ch n="48"/><ch n="4A"/><ch n="60"/></r>
+</a>
+<a line="54">
+<l><ch n="AF"/><ch n="4A"/></l>
+<r><ch n="48"/><ch n="4A"/><ch n="5E"/></r>
+</a>
+<a line="55">
+<l><ch n="A9"/><ch n="4A"/></l>
+<r><ch n="68"/><ch n="4A"/><ch n="27"/></r>
+</a>
+<a line="56">
+<l><ch n="AA"/><ch n="4A"/></l>
+<r><ch n="68"/><ch n="4A"/><ch n="60"/></r>
+</a>
+<a line="57">
+<l><ch n="AB"/><ch n="4A"/></l>
+<r><ch n="68"/><ch n="4A"/><ch n="5E"/></r>
+</a>
+<a line="59">
+<l><ch n="AD"/><ch n="49"/></l>
+<r><ch n="48"/><ch n="49"/><ch n="27"/></r>
+</a>
+<a line="60">
+<l><ch n="AF"/><ch n="49"/></l>
+<r><ch n="48"/><ch n="49"/><ch n="5E"/></r>
+</a>
+<a line="61">
+<l><ch n="A9"/><ch n="49"/></l>
+<r><ch n="68"/><ch n="49"/><ch n="27"/></r>
+</a>
+<a line="62">
+<l><ch n="AA"/><ch n="49"/></l>
+<r><ch n="68"/><ch n="49"/><ch n="60"/></r>
+</a>
+<a line="63">
+<l><ch n="AB"/><ch n="49"/></l>
+<r><ch n="68"/><ch n="49"/><ch n="5E"/></r>
+</a>
+<a line="65">
+<l><ch n="AD"/><ch n="4F"/></l>
+<r><ch n="48"/><ch n="4F"/><ch n="27"/></r>
+</a>
+<a line="66">
+<l><ch n="AE"/><ch n="4F"/></l>
+<r><ch n="48"/><ch n="4F"/><ch n="60"/></r>
+</a>
+<a line="67">
+<l><ch n="A9"/><ch n="4F"/></l>
+<r><ch n="68"/><ch n="4F"/><ch n="27"/></r>
+</a>
+<a line="68">
+<l><ch n="AA"/><ch n="4F"/></l>
+<r><ch n="68"/><ch n="4F"/><ch n="60"/></r>
+</a>
+<a line="70">
+<l><ch n="AD"/><ch n="55"/></l>
+<r><ch n="48"/><ch n="55"/><ch n="27"/></r>
+</a>
+<a line="71">
+<l><ch n="AE"/><ch n="55"/></l>
+<r><ch n="48"/><ch n="55"/><ch n="60"/></r>
+</a>
+<a line="72">
+<l><ch n="AF"/><ch n="55"/></l>
+<r><ch n="48"/><ch n="55"/><ch n="5E"/></r>
+</a>
+<a line="73">
+<l><ch n="A9"/><ch n="55"/></l>
+<r><ch n="68"/><ch n="55"/><ch n="27"/></r>
+</a>
+<a line="74">
+<l><ch n="AA"/><ch n="55"/></l>
+<r><ch n="68"/><ch n="55"/><ch n="60"/></r>
+</a>
+<a line="75">
+<l><ch n="AB"/><ch n="55"/></l>
+<r><ch n="68"/><ch n="55"/><ch n="5E"/></r>
+</a>
+<a line="77">
+<l><ch n="AD"/><ch n="57"/></l>
+<r><ch n="48"/><ch n="57"/><ch n="27"/></r>
+</a>
+<a line="78">
+<l><ch n="AE"/><ch n="57"/></l>
+<r><ch n="48"/><ch n="57"/><ch n="60"/></r>
+</a>
+<a line="79">
+<l><ch n="AF"/><ch n="57"/></l>
+<r><ch n="48"/><ch n="57"/><ch n="5E"/></r>
+</a>
+<a line="80">
+<l><ch n="A9"/><ch n="57"/></l>
+<r><ch n="68"/><ch n="57"/><ch n="27"/></r>
+</a>
+<a line="81">
+<l><ch n="AA"/><ch n="57"/></l>
+<r><ch n="68"/><ch n="57"/><ch n="60"/></r>
+</a>
+<a line="82">
+<l><ch n="AB"/><ch n="57"/></l>
+<r><ch n="68"/><ch n="57"/><ch n="5E"/></r>
+</a>
+<a line="84">
+<l><ch n="87"/></l>
+<r><ch n="48"/><ch n="61"/></r>
+</a>
+<a line="85">
+<l><ch n="80"/></l>
+<r><ch n="61"/><ch n="27"/></r>
+</a>
+<a line="86">
+<l><ch n="88"/></l>
+<r><ch n="48"/><ch n="61"/><ch n="27"/></r>
+</a>
+<a line="87">
+<l><ch n="81"/></l>
+<r><ch n="61"/><ch n="60"/></r>
+</a>
+<a line="88">
+<l><ch n="89"/></l>
+<r><ch n="48"/><ch n="61"/><ch n="60"/></r>
+</a>
+<a line="89">
+<l><ch n="82"/></l>
+<r><ch n="61"/><ch n="5E"/></r>
+</a>
+<a line="90">
+<l><ch n="8A"/></l>
+<r><ch n="48"/><ch n="61"/><ch n="5E"/></r>
+</a>
+<a line="91">
+<l><ch n="83"/></l>
+<r><ch n="68"/><ch n="61"/></r>
+</a>
+<a line="92">
+<l><ch n="84"/></l>
+<r><ch n="68"/><ch n="61"/><ch n="27"/></r>
+</a>
+<a line="93">
+<l><ch n="85"/></l>
+<r><ch n="68"/><ch n="61"/><ch n="60"/></r>
+</a>
+<a line="94">
+<l><ch n="86"/></l>
+<r><ch n="68"/><ch n="61"/><ch n="5E"/></r>
+</a>
+<a line="96">
+<l><ch n="9D"/></l>
+<r><ch n="48"/><ch n="65"/></r>
+</a>
+<a line="97">
+<l><ch n="99"/></l>
+<r><ch n="65"/><ch n="27"/></r>
+</a>
+<a line="98">
+<l><ch n="9E"/></l>
+<r><ch n="48"/><ch n="65"/><ch n="27"/></r>
+</a>
+<a line="99">
+<l><ch n="9A"/></l>
+<r><ch n="65"/><ch n="60"/></r>
+</a>
+<a line="100">
+<l><ch n="9B"/></l>
+<r><ch n="68"/><ch n="65"/></r>
+</a>
+<a line="101">
+<l><ch n="9C"/></l>
+<r><ch n="68"/><ch n="65"/><ch n="27"/></r>
+</a>
+<a line="102">
+<l><ch n="9F"/></l>
+<r><ch n="68"/><ch n="65"/><ch n="60"/></r>
+</a>
+<a line="104">
+<l><ch n="D7"/></l>
+<r><ch n="48"/><ch n="6A"/></r>
+</a>
+<a line="105">
+<l><ch n="D0"/></l>
+<r><ch n="6A"/><ch n="27"/></r>
+</a>
+<a line="106">
+<l><ch n="D8"/></l>
+<r><ch n="48"/><ch n="6A"/><ch n="27"/></r>
+</a>
+<a line="107">
+<l><ch n="D1"/></l>
+<r><ch n="6A"/><ch n="60"/></r>
+</a>
+<a line="108">
+<l><ch n="D9"/></l>
+<r><ch n="48"/><ch n="6A"/><ch n="60"/></r>
+</a>
+<a line="109">
+<l><ch n="D2"/></l>
+<r><ch n="6A"/><ch n="5E"/></r>
+</a>
+<a line="110">
+<l><ch n="DA"/></l>
+<r><ch n="48"/><ch n="6A"/><ch n="5E"/></r>
+</a>
+<a line="111">
+<l><ch n="D3"/></l>
+<r><ch n="68"/><ch n="6A"/></r>
+</a>
+<a line="112">
+<l><ch n="D4"/></l>
+<r><ch n="68"/><ch n="6A"/><ch n="27"/></r>
+</a>
+<a line="113">
+<l><ch n="D5"/></l>
+<r><ch n="68"/><ch n="6A"/><ch n="60"/></r>
+</a>
+<a line="114">
+<l><ch n="D6"/></l>
+<r><ch n="68"/><ch n="6A"/><ch n="5E"/></r>
+</a>
+<a line="116">
+<l><ch n="B8"/></l>
+<r><ch n="48"/><ch n="69"/></r>
+</a>
+<a line="117">
+<l><ch n="B0"/></l>
+<r><ch n="69"/><ch n="27"/></r>
+</a>
+<a line="118">
+<l><ch n="B9"/></l>
+<r><ch n="48"/><ch n="69"/><ch n="27"/></r>
+</a>
+<a line="119">
+<l><ch n="B1"/></l>
+<r><ch n="69"/><ch n="60"/></r>
+</a>
+<a line="120">
+<l><ch n="B2"/></l>
+<r><ch n="69"/><ch n="5E"/></r>
+</a>
+<a line="121">
+<l><ch n="BA"/></l>
+<r><ch n="48"/><ch n="69"/><ch n="5E"/></r>
+</a>
+<a line="122">
+<l><ch n="B3"/></l>
+<r><ch n="68"/><ch n="69"/></r>
+</a>
+<a line="123">
+<l><ch n="B4"/></l>
+<r><ch n="68"/><ch n="69"/><ch n="27"/></r>
+</a>
+<a line="124">
+<l><ch n="BE"/></l>
+<r><ch n="68"/><ch n="69"/><ch n="60"/></r>
+</a>
+<a line="125">
+<l><ch n="B5"/></l>
+<r><ch n="68"/><ch n="69"/><ch n="5E"/></r>
+</a>
+<a line="127">
+<l><ch n="EC"/></l>
+<r><ch n="48"/><ch n="6F"/></r>
+</a>
+<a line="128">
+<l><ch n="E7"/></l>
+<r><ch n="6F"/><ch n="27"/></r>
+</a>
+<a line="129">
+<l><ch n="ED"/></l>
+<r><ch n="48"/><ch n="6F"/><ch n="27"/></r>
+</a>
+<a line="130">
+<l><ch n="E8"/></l>
+<r><ch n="6F"/><ch n="60"/></r>
+</a>
+<a line="131">
+<l><ch n="CE"/></l>
+<r><ch n="48"/><ch n="6F"/><ch n="60"/></r>
+</a>
+<a line="132">
+<l><ch n="E9"/></l>
+<r><ch n="68"/><ch n="6F"/></r>
+</a>
+<a line="133">
+<l><ch n="EA"/></l>
+<r><ch n="68"/><ch n="6F"/><ch n="27"/></r>
+</a>
+<a line="134">
+<l><ch n="EB"/></l>
+<r><ch n="68"/><ch n="6F"/><ch n="60"/></r>
+</a>
+<a line="136">
+<l><ch n="C7"/></l>
+<r><ch n="48"/><ch n="75"/></r>
+</a>
+<a line="137">
+<l><ch n="C0"/></l>
+<r><ch n="75"/><ch n="27"/></r>
+</a>
+<a line="138">
+<l><ch n="C8"/></l>
+<r><ch n="48"/><ch n="75"/><ch n="27"/></r>
+</a>
+<a line="139">
+<l><ch n="C1"/></l>
+<r><ch n="75"/><ch n="60"/></r>
+</a>
+<a line="140">
+<l><ch n="C9"/></l>
+<r><ch n="48"/><ch n="75"/><ch n="60"/></r>
+</a>
+<a line="141">
+<l><ch n="C2"/></l>
+<r><ch n="75"/><ch n="5E"/></r>
+</a>
+<a line="142">
+<l><ch n="CA"/></l>
+<r><ch n="48"/><ch n="75"/><ch n="5E"/></r>
+</a>
+<a line="143">
+<l><ch n="C3"/></l>
+<r><ch n="68"/><ch n="75"/></r>
+</a>
+<a line="144">
+<l><ch n="C4"/></l>
+<r><ch n="68"/><ch n="75"/><ch n="27"/></r>
+</a>
+<a line="145">
+<l><ch n="C5"/></l>
+<r><ch n="68"/><ch n="75"/><ch n="60"/></r>
+</a>
+<a line="146">
+<l><ch n="C6"/></l>
+<r><ch n="68"/><ch n="75"/><ch n="5E"/></r>
+</a>
+<a line="148">
+<l><ch n="F7"/></l>
+<r><ch n="48"/><ch n="77"/></r>
+</a>
+<a line="149">
+<l><ch n="F0"/></l>
+<r><ch n="77"/><ch n="27"/></r>
+</a>
+<a line="150">
+<l><ch n="F8"/></l>
+<r><ch n="48"/><ch n="77"/><ch n="27"/></r>
+</a>
+<a line="151">
+<l><ch n="F1"/></l>
+<r><ch n="77"/><ch n="60"/></r>
+</a>
+<a line="152">
+<l><ch n="F9"/></l>
+<r><ch n="48"/><ch n="77"/><ch n="60"/></r>
+</a>
+<a line="153">
+<l><ch n="F2"/></l>
+<r><ch n="77"/><ch n="5E"/></r>
+</a>
+<a line="154">
+<l><ch n="FA"/></l>
+<r><ch n="48"/><ch n="77"/><ch n="5E"/></r>
+</a>
+<a line="155">
+<l><ch n="F3"/></l>
+<r><ch n="68"/><ch n="77"/></r>
+</a>
+<a line="156">
+<l><ch n="F4"/></l>
+<r><ch n="68"/><ch n="77"/><ch n="27"/></r>
+</a>
+<a line="157">
+<l><ch n="F5"/></l>
+<r><ch n="68"/><ch n="77"/><ch n="60"/></r>
+</a>
+<a line="158">
+<l><ch n="F6"/></l>
+<r><ch n="68"/><ch n="77"/><ch n="5E"/></r>
+</a>
+<a line="160">
+<l><ch n="8B"/></l>
+<r><ch n="61"/><ch n="5F"/></r>
+</a>
+<a line="161">
+<l><ch n="93"/></l>
+<r><ch n="48"/><ch n="61"/><ch n="5F"/></r>
+</a>
+<a line="162">
+<l><ch n="8C"/></l>
+<r><ch n="61"/><ch n="5F"/><ch n="27"/></r>
+</a>
+<a line="163">
+<l><ch n="94"/></l>
+<r><ch n="48"/><ch n="61"/><ch n="5F"/><ch n="27"/></r>
+</a>
+<a line="164">
+<l><ch n="8D"/></l>
+<r><ch n="61"/><ch n="5F"/><ch n="60"/></r>
+</a>
+<a line="165">
+<l><ch n="95"/></l>
+<r><ch n="48"/><ch n="61"/><ch n="5F"/><ch n="60"/></r>
+</a>
+<a line="166">
+<l><ch n="8E"/></l>
+<r><ch n="61"/><ch n="5F"/><ch n="5E"/></r>
+</a>
+<a line="167">
+<l><ch n="98"/></l>
+<r><ch n="48"/><ch n="61"/><ch n="5F"/><ch n="5E"/></r>
+</a>
+<a line="168">
+<l><ch n="8F"/></l>
+<r><ch n="68"/><ch n="61"/><ch n="5F"/></r>
+</a>
+<a line="169">
+<l><ch n="90"/></l>
+<r><ch n="68"/><ch n="61"/><ch n="5F"/><ch n="27"/></r>
+</a>
+<a line="170">
+<l><ch n="91"/></l>
+<r><ch n="68"/><ch n="61"/><ch n="5F"/><ch n="60"/></r>
+</a>
+<a line="171">
+<l><ch n="92"/></l>
+<r><ch n="68"/><ch n="61"/><ch n="5F"/><ch n="5E"/></r>
+</a>
+<a line="173">
+<l><ch n="DB"/></l>
+<r><ch n="6A"/><ch n="5F"/></r>
+</a>
+<a line="174">
+<l><ch n="E3"/></l>
+<r><ch n="48"/><ch n="6A"/><ch n="5F"/></r>
+</a>
+<a line="175">
+<l><ch n="DC"/></l>
+<r><ch n="6A"/><ch n="5F"/><ch n="27"/></r>
+</a>
+<a line="176">
+<l><ch n="E4"/></l>
+<r><ch n="48"/><ch n="6A"/><ch n="5F"/><ch n="27"/></r>
+</a>
+<a line="177">
+<l><ch n="DD"/></l>
+<r><ch n="6A"/><ch n="5F"/><ch n="60"/></r>
+</a>
+<a line="178">
+<l><ch n="E5"/></l>
+<r><ch n="48"/><ch n="6A"/><ch n="5F"/><ch n="60"/></r>
+</a>
+<a line="179">
+<l><ch n="DE"/></l>
+<r><ch n="6A"/><ch n="5F"/><ch n="5E"/></r>
+</a>
+<a line="180">
+<l><ch n="E6"/></l>
+<r><ch n="48"/><ch n="6A"/><ch n="5F"/><ch n="5E"/></r>
+</a>
+<a line="181">
+<l><ch n="DF"/></l>
+<r><ch n="68"/><ch n="6A"/><ch n="5F"/></r>
+</a>
+<a line="182">
+<l><ch n="E0"/></l>
+<r><ch n="68"/><ch n="6A"/><ch n="5F"/><ch n="27"/></r>
+</a>
+<a line="183">
+<l><ch n="E1"/></l>
+<r><ch n="68"/><ch n="6A"/><ch n="5F"/><ch n="60"/></r>
+</a>
+<a line="184">
+<l><ch n="E2"/></l>
+<r><ch n="68"/><ch n="6A"/><ch n="5F"/><ch n="5E"/></r>
+</a>
+<a line="186">
+<l><ch n="FB"/></l>
+<r><ch n="77"/><ch n="5F"/></r>
+</a>
+<a line="187">
+<l><ch n="A5"/></l>
+<r><ch n="48"/><ch n="77"/><ch n="5F"/></r>
+</a>
+<a line="188">
+<l><ch n="FC"/></l>
+<r><ch n="77"/><ch n="5F"/><ch n="27"/></r>
+</a>
+<a line="189">
+<l><ch n="A6"/></l>
+<r><ch n="48"/><ch n="77"/><ch n="5F"/><ch n="27"/></r>
+</a>
+<a line="190">
+<l><ch n="FD"/></l>
+<r><ch n="77"/><ch n="5F"/><ch n="60"/></r>
+</a>
+<a line="191">
+<l><ch n="A7"/></l>
+<r><ch n="48"/><ch n="77"/><ch n="5F"/><ch n="60"/></r>
+</a>
+<a line="192">
+<l><ch n="FE"/></l>
+<r><ch n="77"/><ch n="5F"/><ch n="5E"/></r>
+</a>
+<a line="193">
+<l><ch n="A8"/></l>
+<r><ch n="48"/><ch n="77"/><ch n="5F"/><ch n="5E"/></r>
+</a>
+<a line="194">
+<l><ch n="FF"/></l>
+<r><ch n="68"/><ch n="77"/><ch n="5F"/></r>
+</a>
+<a line="195">
+<l><ch n="A1"/></l>
+<r><ch n="68"/><ch n="77"/><ch n="5F"/><ch n="27"/></r>
+</a>
+<a line="196">
+<l><ch n="A2"/></l>
+<r><ch n="68"/><ch n="77"/><ch n="5F"/><ch n="60"/></r>
+</a>
+<a line="197">
+<l><ch n="A3"/></l>
+<r><ch n="68"/><ch n="77"/><ch n="5F"/><ch n="5E"/></r>
+</a>
+<a line="199">
+<l><ch n="BB"/></l>
+<r><ch n="69"/><ch n="22"/></r>
+</a>
+<a line="200">
+<l><ch n="BC"/></l>
+<r><ch n="69"/><ch n="22"/><ch n="27"/></r>
+</a>
+<a line="201">
+<l><ch n="BD"/></l>
+<r><ch n="69"/><ch n="22"/><ch n="60"/></r>
+</a>
+<a line="203">
+<l><ch n="CB"/></l>
+<r><ch n="75"/><ch n="22"/></r>
+</a>
+<a line="204">
+<l><ch n="CC"/></l>
+<r><ch n="75"/><ch n="22"/><ch n="27"/></r>
+</a>
+<a line="205">
+<l><ch n="CD"/></l>
+<r><ch n="75"/><ch n="22"/><ch n="60"/></r>
+</a>
+<a line="207">
+<l><ch n="41"/><ch n="B8"/></l>
+<r><ch n="48"/><ch n="41"/><ch n="69"/></r>
+</a>
+<a line="208">
+<l><ch n="41"/><ch n="B9"/></l>
+<r><ch n="48"/><ch n="41"/><ch n="69"/><ch n="27"/></r>
+</a>
+<a line="209">
+<l><ch n="41"/><ch n="BA"/></l>
+<r><ch n="48"/><ch n="41"/><ch n="69"/><ch n="5E"/></r>
+</a>
+<a line="210">
+<l><ch n="41"/><ch n="B3"/></l>
+<r><ch n="68"/><ch n="41"/><ch n="69"/></r>
+</a>
+<a line="211">
+<l><ch n="41"/><ch n="B4"/></l>
+<r><ch n="68"/><ch n="41"/><ch n="69"/><ch n="27"/></r>
+</a>
+<a line="212">
+<l><ch n="41"/><ch n="BE"/></l>
+<r><ch n="68"/><ch n="41"/><ch n="69"/><ch n="60"/></r>
+</a>
+<a line="213">
+<l><ch n="41"/><ch n="B5"/></l>
+<r><ch n="68"/><ch n="41"/><ch n="69"/><ch n="5E"/></r>
+</a>
+<a line="215">
+<l><ch n="61"/><ch n="B8"/></l>
+<r><ch n="48"/><ch n="61"/><ch n="69"/></r>
+</a>
+<a line="216">
+<l><ch n="61"/><ch n="B0"/></l>
+<r><ch n="61"/><ch n="69"/><ch n="27"/></r>
+</a>
+<a line="217">
+<l><ch n="61"/><ch n="B9"/></l>
+<r><ch n="48"/><ch n="61"/><ch n="69"/><ch n="27"/></r>
+</a>
+<a line="218">
+<l><ch n="61"/><ch n="B1"/></l>
+<r><ch n="61"/><ch n="69"/><ch n="60"/></r>
+</a>
+<a line="219">
+<l><ch n="61"/><ch n="B2"/></l>
+<r><ch n="61"/><ch n="69"/><ch n="5E"/></r>
+</a>
+<a line="220">
+<l><ch n="61"/><ch n="BA"/></l>
+<r><ch n="48"/><ch n="61"/><ch n="69"/><ch n="5E"/></r>
+</a>
+<a line="221">
+<l><ch n="61"/><ch n="B3"/></l>
+<r><ch n="68"/><ch n="61"/><ch n="69"/></r>
+</a>
+<a line="222">
+<l><ch n="61"/><ch n="B4"/></l>
+<r><ch n="68"/><ch n="61"/><ch n="69"/><ch n="27"/></r>
+</a>
+<a line="223">
+<l><ch n="61"/><ch n="BE"/></l>
+<r><ch n="68"/><ch n="61"/><ch n="69"/><ch n="60"/></r>
+</a>
+<a line="224">
+<l><ch n="61"/><ch n="B5"/></l>
+<r><ch n="68"/><ch n="61"/><ch n="69"/><ch n="5E"/></r>
+</a>
+<a line="226">
+<l><ch n="45"/><ch n="B8"/></l>
+<r><ch n="48"/><ch n="45"/><ch n="69"/></r>
+</a>
+<a line="227">
+<l><ch n="45"/><ch n="B9"/></l>
+<r><ch n="48"/><ch n="45"/><ch n="69"/><ch n="27"/></r>
+</a>
+<a line="228">
+<l><ch n="45"/><ch n="BA"/></l>
+<r><ch n="48"/><ch n="45"/><ch n="69"/><ch n="5E"/></r>
+</a>
+<a line="229">
+<l><ch n="45"/><ch n="B3"/></l>
+<r><ch n="68"/><ch n="45"/><ch n="69"/></r>
+</a>
+<a line="230">
+<l><ch n="45"/><ch n="B4"/></l>
+<r><ch n="68"/><ch n="45"/><ch n="69"/><ch n="27"/></r>
+</a>
+<a line="231">
+<l><ch n="45"/><ch n="BE"/></l>
+<r><ch n="68"/><ch n="45"/><ch n="69"/><ch n="60"/></r>
+</a>
+<a line="232">
+<l><ch n="45"/><ch n="B5"/></l>
+<r><ch n="68"/><ch n="45"/><ch n="69"/><ch n="5E"/></r>
+</a>
+<a line="234">
+<l><ch n="65"/><ch n="B8"/></l>
+<r><ch n="48"/><ch n="65"/><ch n="69"/></r>
+</a>
+<a line="235">
+<l><ch n="65"/><ch n="B0"/></l>
+<r><ch n="65"/><ch n="69"/><ch n="27"/></r>
+</a>
+<a line="236">
+<l><ch n="65"/><ch n="B9"/></l>
+<r><ch n="48"/><ch n="65"/><ch n="69"/><ch n="27"/></r>
+</a>
+<a line="237">
+<l><ch n="65"/><ch n="B1"/></l>
+<r><ch n="65"/><ch n="69"/><ch n="60"/></r>
+</a>
+<a line="238">
+<l><ch n="65"/><ch n="B2"/></l>
+<r><ch n="65"/><ch n="69"/><ch n="5E"/></r>
+</a>
+<a line="239">
+<l><ch n="65"/><ch n="BA"/></l>
+<r><ch n="48"/><ch n="65"/><ch n="69"/><ch n="5E"/></r>
+</a>
+<a line="240">
+<l><ch n="65"/><ch n="B3"/></l>
+<r><ch n="68"/><ch n="65"/><ch n="69"/></r>
+</a>
+<a line="241">
+<l><ch n="65"/><ch n="B4"/></l>
+<r><ch n="68"/><ch n="65"/><ch n="69"/><ch n="27"/></r>
+</a>
+<a line="242">
+<l><ch n="65"/><ch n="BE"/></l>
+<r><ch n="68"/><ch n="65"/><ch n="69"/><ch n="60"/></r>
+</a>
+<a line="243">
+<l><ch n="65"/><ch n="B5"/></l>
+<r><ch n="68"/><ch n="65"/><ch n="69"/><ch n="5E"/></r>
+</a>
+<a line="245">
+<l><ch n="4F"/><ch n="B8"/></l>
+<r><ch n="48"/><ch n="4F"/><ch n="69"/></r>
+</a>
+<a line="246">
+<l><ch n="4F"/><ch n="B9"/></l>
+<r><ch n="48"/><ch n="4F"/><ch n="69"/><ch n="27"/></r>
+</a>
+<a line="247">
+<l><ch n="4F"/><ch n="BA"/></l>
+<r><ch n="48"/><ch n="4F"/><ch n="69"/><ch n="5E"/></r>
+</a>
+<a line="248">
+<l><ch n="4F"/><ch n="B3"/></l>
+<r><ch n="68"/><ch n="4F"/><ch n="69"/></r>
+</a>
+<a line="249">
+<l><ch n="4F"/><ch n="B4"/></l>
+<r><ch n="68"/><ch n="4F"/><ch n="69"/><ch n="27"/></r>
+</a>
+<a line="250">
+<l><ch n="4F"/><ch n="BE"/></l>
+<r><ch n="68"/><ch n="4F"/><ch n="69"/><ch n="60"/></r>
+</a>
+<a line="251">
+<l><ch n="4F"/><ch n="B5"/></l>
+<r><ch n="68"/><ch n="4F"/><ch n="69"/><ch n="5E"/></r>
+</a>
+<a line="253">
+<l><ch n="6F"/><ch n="B8"/></l>
+<r><ch n="48"/><ch n="6F"/><ch n="69"/></r>
+</a>
+<a line="254">
+<l><ch n="6F"/><ch n="B0"/></l>
+<r><ch n="6F"/><ch n="69"/><ch n="27"/></r>
+</a>
+<a line="255">
+<l><ch n="6F"/><ch n="B9"/></l>
+<r><ch n="48"/><ch n="6F"/><ch n="69"/><ch n="27"/></r>
+</a>
+<a line="256">
+<l><ch n="6F"/><ch n="B1"/></l>
+<r><ch n="6F"/><ch n="69"/><ch n="60"/></r>
+</a>
+<a line="257">
+<l><ch n="6F"/><ch n="B2"/></l>
+<r><ch n="6F"/><ch n="69"/><ch n="5E"/></r>
+</a>
+<a line="258">
+<l><ch n="6F"/><ch n="BA"/></l>
+<r><ch n="48"/><ch n="6F"/><ch n="69"/><ch n="5E"/></r>
+</a>
+<a line="259">
+<l><ch n="6F"/><ch n="B3"/></l>
+<r><ch n="68"/><ch n="6F"/><ch n="69"/></r>
+</a>
+<a line="260">
+<l><ch n="6F"/><ch n="B4"/></l>
+<r><ch n="68"/><ch n="6F"/><ch n="69"/><ch n="27"/></r>
+</a>
+<a line="261">
+<l><ch n="6F"/><ch n="BE"/></l>
+<r><ch n="68"/><ch n="6F"/><ch n="69"/><ch n="60"/></r>
+</a>
+<a line="262">
+<l><ch n="6F"/><ch n="B5"/></l>
+<r><ch n="68"/><ch n="6F"/><ch n="69"/><ch n="5E"/></r>
+</a>
+<a line="264">
+<l><ch n="55"/><ch n="B8"/></l>
+<r><ch n="48"/><ch n="55"/><ch n="69"/></r>
+</a>
+<a line="265">
+<l><ch n="55"/><ch n="B9"/></l>
+<r><ch n="48"/><ch n="55"/><ch n="69"/><ch n="27"/></r>
+</a>
+<a line="266">
+<l><ch n="55"/><ch n="BA"/></l>
+<r><ch n="48"/><ch n="55"/><ch n="69"/><ch n="5E"/></r>
+</a>
+<a line="267">
+<l><ch n="55"/><ch n="B3"/></l>
+<r><ch n="68"/><ch n="55"/><ch n="69"/></r>
+</a>
+<a line="268">
+<l><ch n="55"/><ch n="B4"/></l>
+<r><ch n="68"/><ch n="55"/><ch n="69"/><ch n="27"/></r>
+</a>
+<a line="269">
+<l><ch n="55"/><ch n="BE"/></l>
+<r><ch n="68"/><ch n="55"/><ch n="69"/><ch n="60"/></r>
+</a>
+<a line="270">
+<l><ch n="55"/><ch n="B5"/></l>
+<r><ch n="68"/><ch n="55"/><ch n="69"/><ch n="5E"/></r>
+</a>
+<a line="272">
+<l><ch n="75"/><ch n="B8"/></l>
+<r><ch n="48"/><ch n="75"/><ch n="69"/></r>
+</a>
+<a line="273">
+<l><ch n="75"/><ch n="B0"/></l>
+<r><ch n="75"/><ch n="69"/><ch n="27"/></r>
+</a>
+<a line="274">
+<l><ch n="75"/><ch n="B9"/></l>
+<r><ch n="48"/><ch n="75"/><ch n="69"/><ch n="27"/></r>
+</a>
+<a line="275">
+<l><ch n="75"/><ch n="B1"/></l>
+<r><ch n="75"/><ch n="69"/><ch n="60"/></r>
+</a>
+<a line="276">
+<l><ch n="75"/><ch n="B2"/></l>
+<r><ch n="75"/><ch n="69"/><ch n="5E"/></r>
+</a>
+<a line="277">
+<l><ch n="75"/><ch n="BA"/></l>
+<r><ch n="48"/><ch n="75"/><ch n="69"/><ch n="5E"/></r>
+</a>
+<a line="278">
+<l><ch n="75"/><ch n="B3"/></l>
+<r><ch n="68"/><ch n="75"/><ch n="69"/></r>
+</a>
+<a line="279">
+<l><ch n="75"/><ch n="B4"/></l>
+<r><ch n="68"/><ch n="75"/><ch n="69"/><ch n="27"/></r>
+</a>
+<a line="280">
+<l><ch n="75"/><ch n="BE"/></l>
+<r><ch n="68"/><ch n="75"/><ch n="69"/><ch n="60"/></r>
+</a>
+<a line="281">
+<l><ch n="75"/><ch n="B5"/></l>
+<r><ch n="68"/><ch n="75"/><ch n="69"/><ch n="5E"/></r>
+</a>
+<a line="283">
+<l><ch n="41"/><ch n="C7"/></l>
+<r><ch n="48"/><ch n="41"/><ch n="75"/></r>
+</a>
+<a line="284">
+<l><ch n="41"/><ch n="C8"/></l>
+<r><ch n="48"/><ch n="41"/><ch n="75"/><ch n="27"/></r>
+</a>
+<a line="285">
+<l><ch n="41"/><ch n="C9"/></l>
+<r><ch n="48"/><ch n="41"/><ch n="75"/><ch n="60"/></r>
+</a>
+<a line="286">
+<l><ch n="41"/><ch n="CA"/></l>
+<r><ch n="48"/><ch n="41"/><ch n="75"/><ch n="5E"/></r>
+</a>
+<a line="287">
+<l><ch n="41"/><ch n="C3"/></l>
+<r><ch n="68"/><ch n="41"/><ch n="75"/></r>
+</a>
+<a line="288">
+<l><ch n="41"/><ch n="C4"/></l>
+<r><ch n="68"/><ch n="41"/><ch n="75"/><ch n="27"/></r>
+</a>
+<a line="289">
+<l><ch n="41"/><ch n="C5"/></l>
+<r><ch n="68"/><ch n="41"/><ch n="75"/><ch n="60"/></r>
+</a>
+<a line="290">
+<l><ch n="41"/><ch n="C6"/></l>
+<r><ch n="68"/><ch n="41"/><ch n="75"/><ch n="5E"/></r>
+</a>
+<a line="292">
+<l><ch n="61"/><ch n="C7"/></l>
+<r><ch n="48"/><ch n="61"/><ch n="75"/></r>
+</a>
+<a line="293">
+<l><ch n="61"/><ch n="C0"/></l>
+<r><ch n="61"/><ch n="75"/><ch n="27"/></r>
+</a>
+<a line="294">
+<l><ch n="61"/><ch n="C8"/></l>
+<r><ch n="48"/><ch n="61"/><ch n="75"/><ch n="27"/></r>
+</a>
+<a line="295">
+<l><ch n="61"/><ch n="C1"/></l>
+<r><ch n="61"/><ch n="75"/><ch n="60"/></r>
+</a>
+<a line="296">
+<l><ch n="61"/><ch n="C9"/></l>
+<r><ch n="48"/><ch n="61"/><ch n="75"/><ch n="60"/></r>
+</a>
+<a line="297">
+<l><ch n="61"/><ch n="C2"/></l>
+<r><ch n="61"/><ch n="75"/><ch n="5E"/></r>
+</a>
+<a line="298">
+<l><ch n="61"/><ch n="CA"/></l>
+<r><ch n="48"/><ch n="61"/><ch n="75"/><ch n="5E"/></r>
+</a>
+<a line="299">
+<l><ch n="61"/><ch n="C3"/></l>
+<r><ch n="68"/><ch n="61"/><ch n="75"/></r>
+</a>
+<a line="300">
+<l><ch n="61"/><ch n="C4"/></l>
+<r><ch n="68"/><ch n="61"/><ch n="75"/><ch n="27"/></r>
+</a>
+<a line="301">
+<l><ch n="61"/><ch n="C5"/></l>
+<r><ch n="68"/><ch n="61"/><ch n="75"/><ch n="60"/></r>
+</a>
+<a line="302">
+<l><ch n="61"/><ch n="C6"/></l>
+<r><ch n="68"/><ch n="61"/><ch n="75"/><ch n="5E"/></r>
+</a>
+<a line="304">
+<l><ch n="45"/><ch n="C7"/></l>
+<r><ch n="48"/><ch n="45"/><ch n="75"/></r>
+</a>
+<a line="305">
+<l><ch n="45"/><ch n="C8"/></l>
+<r><ch n="48"/><ch n="45"/><ch n="75"/><ch n="27"/></r>
+</a>
+<a line="306">
+<l><ch n="45"/><ch n="C9"/></l>
+<r><ch n="48"/><ch n="45"/><ch n="75"/><ch n="60"/></r>
+</a>
+<a line="307">
+<l><ch n="45"/><ch n="CA"/></l>
+<r><ch n="48"/><ch n="45"/><ch n="75"/><ch n="5E"/></r>
+</a>
+<a line="308">
+<l><ch n="45"/><ch n="C3"/></l>
+<r><ch n="68"/><ch n="45"/><ch n="75"/></r>
+</a>
+<a line="309">
+<l><ch n="45"/><ch n="C4"/></l>
+<r><ch n="68"/><ch n="45"/><ch n="75"/><ch n="27"/></r>
+</a>
+<a line="310">
+<l><ch n="45"/><ch n="C5"/></l>
+<r><ch n="68"/><ch n="45"/><ch n="75"/><ch n="60"/></r>
+</a>
+<a line="311">
+<l><ch n="45"/><ch n="C6"/></l>
+<r><ch n="68"/><ch n="45"/><ch n="75"/><ch n="5E"/></r>
+</a>
+<a line="313">
+<l><ch n="65"/><ch n="C7"/></l>
+<r><ch n="48"/><ch n="65"/><ch n="75"/></r>
+</a>
+<a line="314">
+<l><ch n="65"/><ch n="C0"/></l>
+<r><ch n="65"/><ch n="75"/><ch n="27"/></r>
+</a>
+<a line="315">
+<l><ch n="65"/><ch n="C8"/></l>
+<r><ch n="48"/><ch n="65"/><ch n="75"/><ch n="27"/></r>
+</a>
+<a line="316">
+<l><ch n="65"/><ch n="C1"/></l>
+<r><ch n="65"/><ch n="75"/><ch n="60"/></r>
+</a>
+<a line="317">
+<l><ch n="65"/><ch n="C9"/></l>
+<r><ch n="48"/><ch n="65"/><ch n="75"/><ch n="60"/></r>
+</a>
+<a line="318">
+<l><ch n="65"/><ch n="C2"/></l>
+<r><ch n="65"/><ch n="75"/><ch n="5E"/></r>
+</a>
+<a line="319">
+<l><ch n="65"/><ch n="CA"/></l>
+<r><ch n="48"/><ch n="65"/><ch n="75"/><ch n="5E"/></r>
+</a>
+<a line="320">
+<l><ch n="65"/><ch n="C3"/></l>
+<r><ch n="68"/><ch n="65"/><ch n="75"/></r>
+</a>
+<a line="321">
+<l><ch n="65"/><ch n="C4"/></l>
+<r><ch n="68"/><ch n="65"/><ch n="75"/><ch n="27"/></r>
+</a>
+<a line="322">
+<l><ch n="65"/><ch n="C5"/></l>
+<r><ch n="68"/><ch n="65"/><ch n="75"/><ch n="60"/></r>
+</a>
+<a line="323">
+<l><ch n="65"/><ch n="C6"/></l>
+<r><ch n="68"/><ch n="65"/><ch n="75"/><ch n="5E"/></r>
+</a>
+<a line="325">
+<l><ch n="4A"/><ch n="C7"/></l>
+<r><ch n="48"/><ch n="4A"/><ch n="75"/></r>
+</a>
+<a line="326">
+<l><ch n="4A"/><ch n="C8"/></l>
+<r><ch n="48"/><ch n="4A"/><ch n="75"/><ch n="27"/></r>
+</a>
+<a line="327">
+<l><ch n="4A"/><ch n="C9"/></l>
+<r><ch n="48"/><ch n="4A"/><ch n="75"/><ch n="60"/></r>
+</a>
+<a line="328">
+<l><ch n="4A"/><ch n="CA"/></l>
+<r><ch n="48"/><ch n="4A"/><ch n="75"/><ch n="5E"/></r>
+</a>
+<a line="329">
+<l><ch n="4A"/><ch n="C3"/></l>
+<r><ch n="68"/><ch n="4A"/><ch n="75"/></r>
+</a>
+<a line="330">
+<l><ch n="4A"/><ch n="C4"/></l>
+<r><ch n="68"/><ch n="4A"/><ch n="75"/><ch n="27"/></r>
+</a>
+<a line="331">
+<l><ch n="4A"/><ch n="C5"/></l>
+<r><ch n="68"/><ch n="4A"/><ch n="75"/><ch n="60"/></r>
+</a>
+<a line="332">
+<l><ch n="4A"/><ch n="C6"/></l>
+<r><ch n="68"/><ch n="4A"/><ch n="75"/><ch n="5E"/></r>
+</a>
+<a line="334">
+<l><ch n="6A"/><ch n="C7"/></l>
+<r><ch n="48"/><ch n="6A"/><ch n="75"/></r>
+</a>
+<a line="335">
+<l><ch n="6A"/><ch n="C0"/></l>
+<r><ch n="6A"/><ch n="75"/><ch n="27"/></r>
+</a>
+<a line="336">
+<l><ch n="6A"/><ch n="C8"/></l>
+<r><ch n="48"/><ch n="6A"/><ch n="75"/><ch n="27"/></r>
+</a>
+<a line="337">
+<l><ch n="6A"/><ch n="C1"/></l>
+<r><ch n="6A"/><ch n="75"/><ch n="60"/></r>
+</a>
+<a line="338">
+<l><ch n="6A"/><ch n="C9"/></l>
+<r><ch n="48"/><ch n="6A"/><ch n="75"/><ch n="60"/></r>
+</a>
+<a line="339">
+<l><ch n="6A"/><ch n="C2"/></l>
+<r><ch n="6A"/><ch n="75"/><ch n="5E"/></r>
+</a>
+<a line="340">
+<l><ch n="6A"/><ch n="CA"/></l>
+<r><ch n="48"/><ch n="6A"/><ch n="75"/><ch n="5E"/></r>
+</a>
+<a line="341">
+<l><ch n="6A"/><ch n="C3"/></l>
+<r><ch n="68"/><ch n="6A"/><ch n="75"/></r>
+</a>
+<a line="342">
+<l><ch n="6A"/><ch n="C4"/></l>
+<r><ch n="68"/><ch n="6A"/><ch n="75"/><ch n="27"/></r>
+</a>
+<a line="343">
+<l><ch n="6A"/><ch n="C5"/></l>
+<r><ch n="68"/><ch n="6A"/><ch n="75"/><ch n="60"/></r>
+</a>
+<a line="344">
+<l><ch n="6A"/><ch n="C6"/></l>
+<r><ch n="68"/><ch n="6A"/><ch n="75"/><ch n="5E"/></r>
+</a>
+<a line="346">
+<l><ch n="4F"/><ch n="C7"/></l>
+<r><ch n="48"/><ch n="4F"/><ch n="75"/></r>
+</a>
+<a line="347">
+<l><ch n="4F"/><ch n="C8"/></l>
+<r><ch n="48"/><ch n="4F"/><ch n="75"/><ch n="27"/></r>
+</a>
+<a line="348">
+<l><ch n="4F"/><ch n="C9"/></l>
+<r><ch n="48"/><ch n="4F"/><ch n="75"/><ch n="60"/></r>
+</a>
+<a line="349">
+<l><ch n="4F"/><ch n="CA"/></l>
+<r><ch n="48"/><ch n="4F"/><ch n="75"/><ch n="5E"/></r>
+</a>
+<a line="350">
+<l><ch n="4F"/><ch n="C3"/></l>
+<r><ch n="68"/><ch n="4F"/><ch n="75"/></r>
+</a>
+<a line="351">
+<l><ch n="4F"/><ch n="C4"/></l>
+<r><ch n="68"/><ch n="4F"/><ch n="75"/><ch n="27"/></r>
+</a>
+<a line="352">
+<l><ch n="4F"/><ch n="C5"/></l>
+<r><ch n="68"/><ch n="4F"/><ch n="75"/><ch n="60"/></r>
+</a>
+<a line="353">
+<l><ch n="4F"/><ch n="C6"/></l>
+<r><ch n="68"/><ch n="4F"/><ch n="75"/><ch n="5E"/></r>
+</a>
+<a line="355">
+<l><ch n="6F"/><ch n="C7"/></l>
+<r><ch n="48"/><ch n="6F"/><ch n="75"/></r>
+</a>
+<a line="356">
+<l><ch n="6F"/><ch n="C0"/></l>
+<r><ch n="6F"/><ch n="75"/><ch n="27"/></r>
+</a>
+<a line="357">
+<l><ch n="6F"/><ch n="C8"/></l>
+<r><ch n="48"/><ch n="6F"/><ch n="75"/><ch n="27"/></r>
+</a>
+<a line="358">
+<l><ch n="6F"/><ch n="C1"/></l>
+<r><ch n="6F"/><ch n="75"/><ch n="60"/></r>
+</a>
+<a line="359">
+<l><ch n="6F"/><ch n="C9"/></l>
+<r><ch n="48"/><ch n="6F"/><ch n="75"/><ch n="60"/></r>
+</a>
+<a line="360">
+<l><ch n="6F"/><ch n="C2"/></l>
+<r><ch n="6F"/><ch n="75"/><ch n="5E"/></r>
+</a>
+<a line="361">
+<l><ch n="6F"/><ch n="CA"/></l>
+<r><ch n="48"/><ch n="6F"/><ch n="75"/><ch n="5E"/></r>
+</a>
+<a line="362">
+<l><ch n="6F"/><ch n="C3"/></l>
+<r><ch n="68"/><ch n="6F"/><ch n="75"/></r>
+</a>
+<a line="363">
+<l><ch n="6F"/><ch n="C4"/></l>
+<r><ch n="68"/><ch n="6F"/><ch n="75"/><ch n="27"/></r>
+</a>
+<a line="364">
+<l><ch n="6F"/><ch n="C5"/></l>
+<r><ch n="68"/><ch n="6F"/><ch n="75"/><ch n="60"/></r>
+</a>
+<a line="365">
+<l><ch n="6F"/><ch n="C6"/></l>
+<r><ch n="68"/><ch n="6F"/><ch n="75"/><ch n="5E"/></r>
+</a>
+<a line="367">
+<l><ch n="48"/><ch n="41"/><ch n="BB"/></l>
+<r><ch n="48"/><ch n="41"/><ch n="69"/><ch n="22"/></r>
+</a>
+<a line="368">
+<l><ch n="48"/><ch n="41"/><ch n="BC"/></l>
+<r><ch n="48"/><ch n="41"/><ch n="69"/><ch n="22"/><ch n="27"/></r>
+</a>
+<a line="369">
+<l><ch n="48"/><ch n="41"/><ch n="BD"/></l>
+<r><ch n="48"/><ch n="41"/><ch n="69"/><ch n="22"/><ch n="60"/></r>
+</a>
+<a line="370">
+<l><ch n="68"/><ch n="41"/><ch n="BB"/></l>
+<r><ch n="68"/><ch n="41"/><ch n="69"/><ch n="22"/></r>
+</a>
+<a line="371">
+<l><ch n="68"/><ch n="41"/><ch n="BC"/></l>
+<r><ch n="68"/><ch n="41"/><ch n="69"/><ch n="22"/><ch n="27"/></r>
+</a>
+<a line="372">
+<l><ch n="68"/><ch n="41"/><ch n="BD"/></l>
+<r><ch n="68"/><ch n="41"/><ch n="69"/><ch n="22"/><ch n="60"/></r>
+</a>
+<a line="373">
+<l><ch n="61"/><ch n="BB"/></l>
+<r><ch n="61"/><ch n="69"/><ch n="22"/></r>
+</a>
+<a line="374">
+<l><ch n="87"/><ch n="BB"/></l>
+<r><ch n="48"/><ch n="61"/><ch n="69"/><ch n="22"/></r>
+</a>
+<a line="375">
+<l><ch n="61"/><ch n="BC"/></l>
+<r><ch n="61"/><ch n="69"/><ch n="22"/><ch n="27"/></r>
+</a>
+<a line="376">
+<l><ch n="87"/><ch n="BC"/></l>
+<r><ch n="48"/><ch n="61"/><ch n="69"/><ch n="22"/><ch n="27"/></r>
+</a>
+<a line="377">
+<l><ch n="61"/><ch n="BD"/></l>
+<r><ch n="61"/><ch n="69"/><ch n="22"/><ch n="60"/></r>
+</a>
+<a line="378">
+<l><ch n="87"/><ch n="BD"/></l>
+<r><ch n="48"/><ch n="61"/><ch n="69"/><ch n="22"/><ch n="60"/></r>
+</a>
+<a line="379">
+<l><ch n="83"/><ch n="BB"/></l>
+<r><ch n="68"/><ch n="61"/><ch n="69"/><ch n="22"/></r>
+</a>
+<a line="380">
+<l><ch n="83"/><ch n="BC"/></l>
+<r><ch n="68"/><ch n="61"/><ch n="69"/><ch n="22"/><ch n="27"/></r>
+</a>
+<a line="381">
+<l><ch n="83"/><ch n="BD"/></l>
+<r><ch n="68"/><ch n="61"/><ch n="69"/><ch n="22"/><ch n="60"/></r>
+</a>
+<a line="383">
+<l><ch n="48"/><ch n="45"/><ch n="BB"/></l>
+<r><ch n="48"/><ch n="45"/><ch n="69"/><ch n="22"/></r>
+</a>
+<a line="384">
+<l><ch n="48"/><ch n="45"/><ch n="BC"/></l>
+<r><ch n="48"/><ch n="45"/><ch n="69"/><ch n="22"/><ch n="27"/></r>
+</a>
+<a line="385">
+<l><ch n="48"/><ch n="45"/><ch n="BD"/></l>
+<r><ch n="48"/><ch n="45"/><ch n="69"/><ch n="22"/><ch n="60"/></r>
+</a>
+<a line="386">
+<l><ch n="68"/><ch n="45"/><ch n="BB"/></l>
+<r><ch n="68"/><ch n="45"/><ch n="69"/><ch n="22"/></r>
+</a>
+<a line="387">
+<l><ch n="68"/><ch n="45"/><ch n="BC"/></l>
+<r><ch n="68"/><ch n="45"/><ch n="69"/><ch n="22"/><ch n="27"/></r>
+</a>
+<a line="388">
+<l><ch n="68"/><ch n="45"/><ch n="BD"/></l>
+<r><ch n="68"/><ch n="45"/><ch n="69"/><ch n="22"/><ch n="60"/></r>
+</a>
+<a line="389">
+<l><ch n="65"/><ch n="BB"/></l>
+<r><ch n="65"/><ch n="69"/><ch n="22"/></r>
+</a>
+<a line="390">
+<l><ch n="9D"/><ch n="BB"/></l>
+<r><ch n="48"/><ch n="65"/><ch n="69"/><ch n="22"/></r>
+</a>
+<a line="391">
+<l><ch n="65"/><ch n="BC"/></l>
+<r><ch n="65"/><ch n="69"/><ch n="22"/><ch n="27"/></r>
+</a>
+<a line="392">
+<l><ch n="9D"/><ch n="BC"/></l>
+<r><ch n="48"/><ch n="65"/><ch n="69"/><ch n="22"/><ch n="27"/></r>
+</a>
+<a line="393">
+<l><ch n="65"/><ch n="BD"/></l>
+<r><ch n="65"/><ch n="69"/><ch n="22"/><ch n="60"/></r>
+</a>
+<a line="394">
+<l><ch n="9D"/><ch n="BD"/></l>
+<r><ch n="48"/><ch n="65"/><ch n="69"/><ch n="22"/><ch n="60"/></r>
+</a>
+<a line="395">
+<l><ch n="9B"/><ch n="BB"/></l>
+<r><ch n="68"/><ch n="65"/><ch n="69"/><ch n="22"/></r>
+</a>
+<a line="396">
+<l><ch n="9B"/><ch n="BC"/></l>
+<r><ch n="68"/><ch n="65"/><ch n="69"/><ch n="22"/><ch n="27"/></r>
+</a>
+<a line="397">
+<l><ch n="9B"/><ch n="BD"/></l>
+<r><ch n="68"/><ch n="65"/><ch n="69"/><ch n="22"/><ch n="60"/></r>
+</a>
+<a line="399">
+<l><ch n="48"/><ch n="4F"/><ch n="BB"/></l>
+<r><ch n="48"/><ch n="4F"/><ch n="69"/><ch n="22"/></r>
+</a>
+<a line="400">
+<l><ch n="48"/><ch n="4F"/><ch n="BC"/></l>
+<r><ch n="48"/><ch n="4F"/><ch n="69"/><ch n="22"/><ch n="27"/></r>
+</a>
+<a line="401">
+<l><ch n="48"/><ch n="4F"/><ch n="BD"/></l>
+<r><ch n="48"/><ch n="4F"/><ch n="69"/><ch n="22"/><ch n="60"/></r>
+</a>
+<a line="402">
+<l><ch n="68"/><ch n="4F"/><ch n="BB"/></l>
+<r><ch n="68"/><ch n="4F"/><ch n="69"/><ch n="22"/></r>
+</a>
+<a line="403">
+<l><ch n="68"/><ch n="4F"/><ch n="BC"/></l>
+<r><ch n="68"/><ch n="4F"/><ch n="69"/><ch n="22"/><ch n="27"/></r>
+</a>
+<a line="404">
+<l><ch n="68"/><ch n="4F"/><ch n="BD"/></l>
+<r><ch n="68"/><ch n="4F"/><ch n="69"/><ch n="22"/><ch n="60"/></r>
+</a>
+<a line="405">
+<l><ch n="6F"/><ch n="BB"/></l>
+<r><ch n="6F"/><ch n="69"/><ch n="22"/></r>
+</a>
+<a line="406">
+<l><ch n="EC"/><ch n="BB"/></l>
+<r><ch n="48"/><ch n="6F"/><ch n="69"/><ch n="22"/></r>
+</a>
+<a line="407">
+<l><ch n="6F"/><ch n="BC"/></l>
+<r><ch n="6F"/><ch n="69"/><ch n="22"/><ch n="27"/></r>
+</a>
+<a line="408">
+<l><ch n="EC"/><ch n="BC"/></l>
+<r><ch n="48"/><ch n="6F"/><ch n="69"/><ch n="22"/><ch n="27"/></r>
+</a>
+<a line="409">
+<l><ch n="6F"/><ch n="BD"/></l>
+<r><ch n="6F"/><ch n="69"/><ch n="22"/><ch n="60"/></r>
+</a>
+<a line="410">
+<l><ch n="EC"/><ch n="BD"/></l>
+<r><ch n="48"/><ch n="6F"/><ch n="69"/><ch n="22"/><ch n="60"/></r>
+</a>
+<a line="411">
+<l><ch n="E9"/><ch n="BB"/></l>
+<r><ch n="68"/><ch n="6F"/><ch n="69"/><ch n="22"/></r>
+</a>
+<a line="412">
+<l><ch n="E9"/><ch n="BC"/></l>
+<r><ch n="68"/><ch n="6F"/><ch n="69"/><ch n="22"/><ch n="27"/></r>
+</a>
+<a line="413">
+<l><ch n="E9"/><ch n="BD"/></l>
+<r><ch n="68"/><ch n="6F"/><ch n="69"/><ch n="22"/><ch n="60"/></r>
+</a>
+<a line="415">
+<l><ch n="48"/><ch n="55"/><ch n="BB"/></l>
+<r><ch n="48"/><ch n="55"/><ch n="69"/><ch n="22"/></r>
+</a>
+<a line="416">
+<l><ch n="48"/><ch n="55"/><ch n="BC"/></l>
+<r><ch n="48"/><ch n="55"/><ch n="69"/><ch n="22"/><ch n="27"/></r>
+</a>
+<a line="417">
+<l><ch n="48"/><ch n="55"/><ch n="BD"/></l>
+<r><ch n="48"/><ch n="55"/><ch n="69"/><ch n="22"/><ch n="60"/></r>
+</a>
+<a line="418">
+<l><ch n="68"/><ch n="55"/><ch n="BB"/></l>
+<r><ch n="68"/><ch n="55"/><ch n="69"/><ch n="22"/></r>
+</a>
+<a line="419">
+<l><ch n="68"/><ch n="55"/><ch n="BC"/></l>
+<r><ch n="68"/><ch n="55"/><ch n="69"/><ch n="22"/><ch n="27"/></r>
+</a>
+<a line="420">
+<l><ch n="68"/><ch n="55"/><ch n="BD"/></l>
+<r><ch n="68"/><ch n="55"/><ch n="69"/><ch n="22"/><ch n="60"/></r>
+</a>
+<a line="421">
+<l><ch n="75"/><ch n="BB"/></l>
+<r><ch n="75"/><ch n="69"/><ch n="22"/></r>
+</a>
+<a line="422">
+<l><ch n="C7"/><ch n="BB"/></l>
+<r><ch n="48"/><ch n="75"/><ch n="69"/><ch n="22"/></r>
+</a>
+<a line="423">
+<l><ch n="75"/><ch n="BC"/></l>
+<r><ch n="75"/><ch n="69"/><ch n="22"/><ch n="27"/></r>
+</a>
+<a line="424">
+<l><ch n="C7"/><ch n="BC"/></l>
+<r><ch n="48"/><ch n="75"/><ch n="69"/><ch n="22"/><ch n="27"/></r>
+</a>
+<a line="425">
+<l><ch n="75"/><ch n="BD"/></l>
+<r><ch n="75"/><ch n="69"/><ch n="22"/><ch n="60"/></r>
+</a>
+<a line="426">
+<l><ch n="C7"/><ch n="BD"/></l>
+<r><ch n="48"/><ch n="75"/><ch n="69"/><ch n="22"/><ch n="60"/></r>
+</a>
+<a line="427">
+<l><ch n="C3"/><ch n="BB"/></l>
+<r><ch n="68"/><ch n="75"/><ch n="69"/><ch n="22"/></r>
+</a>
+<a line="428">
+<l><ch n="C3"/><ch n="BC"/></l>
+<r><ch n="68"/><ch n="75"/><ch n="69"/><ch n="22"/><ch n="27"/></r>
+</a>
+<a line="429">
+<l><ch n="C3"/><ch n="BD"/></l>
+<r><ch n="68"/><ch n="75"/><ch n="69"/><ch n="22"/><ch n="60"/></r>
+</a>
+<a line="431">
+<l><ch n="48"/><ch n="41"/><ch n="CB"/></l>
+<r><ch n="48"/><ch n="41"/><ch n="75"/><ch n="22"/></r>
+</a>
+<a line="432">
+<l><ch n="48"/><ch n="41"/><ch n="CC"/></l>
+<r><ch n="48"/><ch n="41"/><ch n="75"/><ch n="22"/><ch n="27"/></r>
+</a>
+<a line="433">
+<l><ch n="48"/><ch n="41"/><ch n="CD"/></l>
+<r><ch n="48"/><ch n="41"/><ch n="75"/><ch n="22"/><ch n="60"/></r>
+</a>
+<a line="434">
+<l><ch n="68"/><ch n="41"/><ch n="CB"/></l>
+<r><ch n="68"/><ch n="41"/><ch n="75"/><ch n="22"/></r>
+</a>
+<a line="435">
+<l><ch n="68"/><ch n="41"/><ch n="CC"/></l>
+<r><ch n="68"/><ch n="41"/><ch n="75"/><ch n="22"/><ch n="27"/></r>
+</a>
+<a line="436">
+<l><ch n="68"/><ch n="41"/><ch n="CD"/></l>
+<r><ch n="68"/><ch n="41"/><ch n="75"/><ch n="22"/><ch n="60"/></r>
+</a>
+<a line="437">
+<l><ch n="61"/><ch n="CB"/></l>
+<r><ch n="61"/><ch n="75"/><ch n="22"/></r>
+</a>
+<a line="438">
+<l><ch n="87"/><ch n="CB"/></l>
+<r><ch n="48"/><ch n="61"/><ch n="75"/><ch n="22"/></r>
+</a>
+<a line="439">
+<l><ch n="61"/><ch n="CC"/></l>
+<r><ch n="61"/><ch n="75"/><ch n="22"/><ch n="27"/></r>
+</a>
+<a line="440">
+<l><ch n="87"/><ch n="CC"/></l>
+<r><ch n="48"/><ch n="61"/><ch n="75"/><ch n="22"/><ch n="27"/></r>
+</a>
+<a line="441">
+<l><ch n="61"/><ch n="CD"/></l>
+<r><ch n="61"/><ch n="75"/><ch n="22"/><ch n="60"/></r>
+</a>
+<a line="442">
+<l><ch n="87"/><ch n="CD"/></l>
+<r><ch n="48"/><ch n="61"/><ch n="75"/><ch n="22"/><ch n="60"/></r>
+</a>
+<a line="443">
+<l><ch n="83"/><ch n="CB"/></l>
+<r><ch n="68"/><ch n="61"/><ch n="75"/><ch n="22"/></r>
+</a>
+<a line="444">
+<l><ch n="83"/><ch n="CC"/></l>
+<r><ch n="68"/><ch n="61"/><ch n="75"/><ch n="22"/><ch n="27"/></r>
+</a>
+<a line="445">
+<l><ch n="83"/><ch n="CD"/></l>
+<r><ch n="68"/><ch n="61"/><ch n="75"/><ch n="22"/><ch n="60"/></r>
+</a>
+<a line="447">
+<l><ch n="48"/><ch n="45"/><ch n="CB"/></l>
+<r><ch n="48"/><ch n="45"/><ch n="75"/><ch n="22"/></r>
+</a>
+<a line="448">
+<l><ch n="48"/><ch n="45"/><ch n="CC"/></l>
+<r><ch n="48"/><ch n="45"/><ch n="75"/><ch n="22"/><ch n="27"/></r>
+</a>
+<a line="449">
+<l><ch n="48"/><ch n="45"/><ch n="CD"/></l>
+<r><ch n="48"/><ch n="45"/><ch n="75"/><ch n="22"/><ch n="60"/></r>
+</a>
+<a line="450">
+<l><ch n="68"/><ch n="45"/><ch n="CB"/></l>
+<r><ch n="68"/><ch n="45"/><ch n="75"/><ch n="22"/></r>
+</a>
+<a line="451">
+<l><ch n="68"/><ch n="45"/><ch n="CC"/></l>
+<r><ch n="68"/><ch n="45"/><ch n="75"/><ch n="22"/><ch n="27"/></r>
+</a>
+<a line="452">
+<l><ch n="68"/><ch n="45"/><ch n="CD"/></l>
+<r><ch n="68"/><ch n="45"/><ch n="75"/><ch n="22"/><ch n="60"/></r>
+</a>
+<a line="453">
+<l><ch n="65"/><ch n="CB"/></l>
+<r><ch n="65"/><ch n="75"/><ch n="22"/></r>
+</a>
+<a line="454">
+<l><ch n="9D"/><ch n="CB"/></l>
+<r><ch n="48"/><ch n="65"/><ch n="75"/><ch n="22"/></r>
+</a>
+<a line="455">
+<l><ch n="65"/><ch n="CC"/></l>
+<r><ch n="65"/><ch n="75"/><ch n="22"/><ch n="27"/></r>
+</a>
+<a line="456">
+<l><ch n="9D"/><ch n="CC"/></l>
+<r><ch n="48"/><ch n="65"/><ch n="75"/><ch n="22"/><ch n="27"/></r>
+</a>
+<a line="457">
+<l><ch n="65"/><ch n="CD"/></l>
+<r><ch n="65"/><ch n="75"/><ch n="22"/><ch n="60"/></r>
+</a>
+<a line="458">
+<l><ch n="9D"/><ch n="CD"/></l>
+<r><ch n="48"/><ch n="65"/><ch n="75"/><ch n="22"/><ch n="60"/></r>
+</a>
+<a line="459">
+<l><ch n="9B"/><ch n="CB"/></l>
+<r><ch n="68"/><ch n="65"/><ch n="75"/><ch n="22"/></r>
+</a>
+<a line="460">
+<l><ch n="9B"/><ch n="CC"/></l>
+<r><ch n="68"/><ch n="65"/><ch n="75"/><ch n="22"/><ch n="27"/></r>
+</a>
+<a line="461">
+<l><ch n="9B"/><ch n="CD"/></l>
+<r><ch n="68"/><ch n="65"/><ch n="75"/><ch n="22"/><ch n="60"/></r>
+</a>
+<a line="463">
+<l><ch n="48"/><ch n="4A"/><ch n="CB"/></l>
+<r><ch n="48"/><ch n="4A"/><ch n="75"/><ch n="22"/></r>
+</a>
+<a line="464">
+<l><ch n="48"/><ch n="4A"/><ch n="CC"/></l>
+<r><ch n="48"/><ch n="4A"/><ch n="75"/><ch n="22"/><ch n="27"/></r>
+</a>
+<a line="465">
+<l><ch n="48"/><ch n="4A"/><ch n="CD"/></l>
+<r><ch n="48"/><ch n="4A"/><ch n="75"/><ch n="22"/><ch n="60"/></r>
+</a>
+<a line="466">
+<l><ch n="68"/><ch n="4A"/><ch n="CB"/></l>
+<r><ch n="68"/><ch n="4A"/><ch n="75"/><ch n="22"/></r>
+</a>
+<a line="467">
+<l><ch n="68"/><ch n="4A"/><ch n="CC"/></l>
+<r><ch n="68"/><ch n="4A"/><ch n="75"/><ch n="22"/><ch n="27"/></r>
+</a>
+<a line="468">
+<l><ch n="68"/><ch n="4A"/><ch n="CD"/></l>
+<r><ch n="68"/><ch n="4A"/><ch n="75"/><ch n="22"/><ch n="60"/></r>
+</a>
+<a line="469">
+<l><ch n="6A"/><ch n="CB"/></l>
+<r><ch n="6A"/><ch n="75"/><ch n="22"/></r>
+</a>
+<a line="470">
+<l><ch n="D7"/><ch n="CB"/></l>
+<r><ch n="48"/><ch n="6A"/><ch n="75"/><ch n="22"/></r>
+</a>
+<a line="471">
+<l><ch n="6A"/><ch n="CC"/></l>
+<r><ch n="6A"/><ch n="75"/><ch n="22"/><ch n="27"/></r>
+</a>
+<a line="472">
+<l><ch n="D7"/><ch n="CC"/></l>
+<r><ch n="48"/><ch n="6A"/><ch n="75"/><ch n="22"/><ch n="27"/></r>
+</a>
+<a line="473">
+<l><ch n="6A"/><ch n="CD"/></l>
+<r><ch n="6A"/><ch n="75"/><ch n="22"/><ch n="60"/></r>
+</a>
+<a line="474">
+<l><ch n="D7"/><ch n="CD"/></l>
+<r><ch n="48"/><ch n="6A"/><ch n="75"/><ch n="22"/><ch n="60"/></r>
+</a>
+<a line="475">
+<l><ch n="D3"/><ch n="CB"/></l>
+<r><ch n="68"/><ch n="6A"/><ch n="75"/><ch n="22"/></r>
+</a>
+<a line="476">
+<l><ch n="D3"/><ch n="CC"/></l>
+<r><ch n="68"/><ch n="6A"/><ch n="75"/><ch n="22"/><ch n="27"/></r>
+</a>
+<a line="477">
+<l><ch n="D3"/><ch n="CD"/></l>
+<r><ch n="68"/><ch n="6A"/><ch n="75"/><ch n="22"/><ch n="60"/></r>
+</a>
+<a line="479">
+<l><ch n="48"/><ch n="4F"/><ch n="CB"/></l>
+<r><ch n="48"/><ch n="4F"/><ch n="75"/><ch n="22"/></r>
+</a>
+<a line="480">
+<l><ch n="48"/><ch n="4F"/><ch n="CC"/></l>
+<r><ch n="48"/><ch n="4F"/><ch n="75"/><ch n="22"/><ch n="27"/></r>
+</a>
+<a line="481">
+<l><ch n="48"/><ch n="4F"/><ch n="CD"/></l>
+<r><ch n="48"/><ch n="4F"/><ch n="75"/><ch n="22"/><ch n="60"/></r>
+</a>
+<a line="482">
+<l><ch n="68"/><ch n="4F"/><ch n="CB"/></l>
+<r><ch n="68"/><ch n="4F"/><ch n="75"/><ch n="22"/></r>
+</a>
+<a line="483">
+<l><ch n="68"/><ch n="4F"/><ch n="CC"/></l>
+<r><ch n="68"/><ch n="4F"/><ch n="75"/><ch n="22"/><ch n="27"/></r>
+</a>
+<a line="484">
+<l><ch n="68"/><ch n="4F"/><ch n="CD"/></l>
+<r><ch n="68"/><ch n="4F"/><ch n="75"/><ch n="22"/><ch n="60"/></r>
+</a>
+<a line="485">
+<l><ch n="6F"/><ch n="CB"/></l>
+<r><ch n="6F"/><ch n="75"/><ch n="22"/></r>
+</a>
+<a line="486">
+<l><ch n="EC"/><ch n="CB"/></l>
+<r><ch n="48"/><ch n="6F"/><ch n="75"/><ch n="22"/></r>
+</a>
+<a line="487">
+<l><ch n="6F"/><ch n="CC"/></l>
+<r><ch n="6F"/><ch n="75"/><ch n="22"/><ch n="27"/></r>
+</a>
+<a line="488">
+<l><ch n="EC"/><ch n="CC"/></l>
+<r><ch n="48"/><ch n="6F"/><ch n="75"/><ch n="22"/><ch n="27"/></r>
+</a>
+<a line="489">
+<l><ch n="6F"/><ch n="CD"/></l>
+<r><ch n="6F"/><ch n="75"/><ch n="22"/><ch n="60"/></r>
+</a>
+<a line="490">
+<l><ch n="EC"/><ch n="CD"/></l>
+<r><ch n="48"/><ch n="6F"/><ch n="75"/><ch n="22"/><ch n="60"/></r>
+</a>
+<a line="491">
+<l><ch n="E9"/><ch n="CB"/></l>
+<r><ch n="68"/><ch n="6F"/><ch n="75"/><ch n="22"/></r>
+</a>
+<a line="492">
+<l><ch n="E9"/><ch n="CC"/></l>
+<r><ch n="68"/><ch n="6F"/><ch n="75"/><ch n="22"/><ch n="27"/></r>
+</a>
+<a line="493">
+<l><ch n="E9"/><ch n="CD"/></l>
+<r><ch n="68"/><ch n="6F"/><ch n="75"/><ch n="22"/><ch n="60"/></r>
+</a>
+<a line="495">
+<l><ch n="AD"/></l>
+<r><ch n="48"/><ch n="27"/></r>
+</a>
+<a line="496">
+<l><ch n="AE"/></l>
+<r><ch n="48"/><ch n="60"/></r>
+</a>
+<a line="497">
+<l><ch n="AF"/></l>
+<r><ch n="48"/><ch n="5E"/></r>
+</a>
+<a line="498">
+<l><ch n="A9"/></l>
+<r><ch n="68"/><ch n="27"/></r>
+</a>
+<a line="499">
+<l><ch n="AA"/></l>
+<r><ch n="68"/><ch n="60"/></r>
+</a>
+<a line="500">
+<l><ch n="AB"/></l>
+<r><ch n="68"/><ch n="5E"/></r>
+</a>
+<a line="502">
+<l><ch n="EE"/></l>
+<r><ch n="22"/><ch n="27"/></r>
+</a>
+<a line="503">
+<l><ch n="EF"/></l>
+<r><ch n="22"/><ch n="60"/></r>
+</a>
+</assignments>
+</pass>
+<pass lhs="bytes" rhs="bytes" line="507">
+<classes>
+<class size="bytes" name="b_dia" line="28">
+60 27 5E 22
+</class>
+</classes>
+<assignments>
+<a line="512">
+<l><ch n="5F"/><group id="dias">
+<class-ref name="b_dia" max="15"/></group>
+</l>
+<r><copy-ref id="dias"/><ch n="5F"/></r>
+</a>
+</assignments>
+</pass>
+<pass lhs="bytes" rhs="unicode" lhsDefault="B7" rhsDefault="FFFD" line="516">
+<classes>
+<class size="bytes" name="b_CTL" line="28">
+00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F 10 11 12 13 14 15 16 17 18 19 1A 1B 1C 1D 1E 1F 7F
+</class>
+<class size="unicode" name="u_CTL" line="530">
+0000 0001 0002 0003 0004 0005 0006 0007 0008 0009 000A 000B 000C 000D 000E 000F 0010 0011 0012 0013 0014 0015 0016 0017 0018 0019 001A 001B 001C 001D 001E 001F 007F
+</class>
+</classes>
+<assignments>
+<a line="532">
+<l><class-ref name="b_CTL"/></l>
+<r><class-ref name="u_CTL"/></r>
+</a>
+<a line="534">
+<l><ch n="20"/></l>
+<r><ch n="0020"/></r>
+</a>
+<a line="535">
+<l><ch n="21"/></l>
+<r><ch n="0021"/></r>
+</a>
+<a line="536">
+<l><ch n="22"/></l>
+<r><ch n="0308"/></r>
+</a>
+<a line="537">
+<l><ch n="23"/></l>
+<r><ch n="00A0"/></r>
+</a>
+<a line="538">
+<l><ch n="24"/></l>
+<r><ch n="00AB"/></r>
+</a>
+<a line="539">
+<l><ch n="25"/></l>
+<r><ch n="00BB"/></r>
+</a>
+<a line="540">
+<l><ch n="26"/></l>
+<r><ch n="0026"/></r>
+</a>
+<a line="541">
+<l><ch n="27"/></l>
+<r><ch n="0301"/></r>
+</a>
+<a line="542">
+<l><ch n="28"/></l>
+<r><ch n="0028"/></r>
+</a>
+<a line="543">
+<l><ch n="29"/></l>
+<r><ch n="0029"/></r>
+</a>
+<a line="544">
+<l><ch n="2A"/></l>
+<r><ch n="002A"/></r>
+</a>
+<a line="545">
+<l><ch n="2B"/></l>
+<r><ch n="002B"/></r>
+</a>
+<a line="546">
+<l><ch n="2C"/></l>
+<r><ch n="002C"/></r>
+</a>
+<a line="547">
+<l><ch n="2D"/></l>
+<r><ch n="002D"/></r>
+</a>
+<a line="548">
+<l><ch n="2E"/></l>
+<r><ch n="002E"/></r>
+</a>
+<a line="549">
+<l><ch n="2F"/></l>
+<r><ch n="002F"/></r>
+</a>
+<a line="551">
+<l><ch n="30"/></l>
+<r><ch n="0030"/></r>
+</a>
+<a line="552">
+<l><ch n="31"/></l>
+<r><ch n="0031"/></r>
+</a>
+<a line="553">
+<l><ch n="32"/></l>
+<r><ch n="0032"/></r>
+</a>
+<a line="554">
+<l><ch n="33"/></l>
+<r><ch n="0033"/></r>
+</a>
+<a line="555">
+<l><ch n="34"/></l>
+<r><ch n="0034"/></r>
+</a>
+<a line="556">
+<l><ch n="35"/></l>
+<r><ch n="0035"/></r>
+</a>
+<a line="557">
+<l><ch n="36"/></l>
+<r><ch n="0036"/></r>
+</a>
+<a line="558">
+<l><ch n="37"/></l>
+<r><ch n="0037"/></r>
+</a>
+<a line="559">
+<l><ch n="38"/></l>
+<r><ch n="0038"/></r>
+</a>
+<a line="560">
+<l><ch n="39"/></l>
+<r><ch n="0039"/></r>
+</a>
+<a line="561">
+<l><ch n="3A"/></l>
+<r><ch n="003A"/></r>
+</a>
+<a line="562" dir="rev">
+<l><ch n="3B"/></l>
+<r><ch n="0387"/></r>
+</a>
+<a line="563">
+<l><ch n="3B"/></l>
+<r><ch n="00B7"/></r>
+</a>
+<a line="564">
+<l><ch n="3C"/></l>
+<r><ch n="003C"/></r>
+</a>
+<a line="565">
+<l><ch n="3D"/></l>
+<r><ch n="003D"/></r>
+</a>
+<a line="566">
+<l><ch n="3E"/></l>
+<r><ch n="003E"/></r>
+</a>
+<a line="567" dir="rev">
+<l><ch n="3F"/></l>
+<r><ch n="037E"/></r>
+</a>
+<a line="568">
+<l><ch n="3F"/></l>
+<r><ch n="003B"/></r>
+</a>
+<a line="570">
+<l><ch n="40"/></l>
+<r><ch n="2019"/></r>
+</a>
+<a line="571" dir="rev">
+<l><ch n="40"/></l>
+<r><ch n="02BC"/></r>
+</a>
+<a line="572">
+<l><ch n="41"/></l>
+<r><ch n="0391"/></r>
+</a>
+<a line="573">
+<l><ch n="42"/></l>
+<r><ch n="0392"/></r>
+</a>
+<a line="574">
+<l><ch n="43"/></l>
+<r><ch n="03A7"/></r>
+</a>
+<a line="575">
+<l><ch n="44"/></l>
+<r><ch n="0394"/></r>
+</a>
+<a line="576">
+<l><ch n="45"/></l>
+<r><ch n="0395"/></r>
+</a>
+<a line="577">
+<l><ch n="46"/></l>
+<r><ch n="03A6"/></r>
+</a>
+<a line="578">
+<l><ch n="47"/></l>
+<r><ch n="0393"/></r>
+</a>
+<a line="579">
+<l><ch n="48"/></l>
+<r><ch n="0313"/></r>
+</a>
+<a line="580">
+<l><ch n="49"/></l>
+<r><ch n="0399"/></r>
+</a>
+<a line="581">
+<l><ch n="4A"/></l>
+<r><ch n="0397"/></r>
+</a>
+<a line="582">
+<l><ch n="4B"/></l>
+<r><ch n="039A"/></r>
+</a>
+<a line="583">
+<l><ch n="4C"/></l>
+<r><ch n="039B"/></r>
+</a>
+<a line="584">
+<l><ch n="4D"/></l>
+<r><ch n="039C"/></r>
+</a>
+<a line="585">
+<l><ch n="4E"/></l>
+<r><ch n="039D"/></r>
+</a>
+<a line="586">
+<l><ch n="4F"/></l>
+<r><ch n="039F"/></r>
+</a>
+<a line="588">
+<l><ch n="50"/></l>
+<r><ch n="03A0"/></r>
+</a>
+<a line="589">
+<l><ch n="51"/></l>
+<r><ch n="0398"/></r>
+</a>
+<a line="590">
+<l><ch n="52"/></l>
+<r><ch n="03A1"/></r>
+</a>
+<a line="591">
+<l><ch n="53"/></l>
+<r><ch n="03A3"/></r>
+</a>
+<a line="592">
+<l><ch n="54"/></l>
+<r><ch n="03A4"/></r>
+</a>
+<a line="593">
+<l><ch n="55"/></l>
+<r><ch n="03A5"/></r>
+</a>
+<a line="595">
+<l><ch n="57"/></l>
+<r><ch n="03A9"/></r>
+</a>
+<a line="596">
+<l><ch n="58"/></l>
+<r><ch n="039E"/></r>
+</a>
+<a line="597">
+<l><ch n="59"/></l>
+<r><ch n="03A8"/></r>
+</a>
+<a line="598">
+<l><ch n="5A"/></l>
+<r><ch n="0396"/></r>
+</a>
+<a line="599">
+<l><ch n="5B"/></l>
+<r><ch n="005B"/></r>
+</a>
+<a line="600">
+<l><ch n="5C"/></l>
+<r><ch n="005C"/></r>
+</a>
+<a line="601">
+<l><ch n="5D"/></l>
+<r><ch n="005D"/></r>
+</a>
+<a line="602">
+<l><ch n="5E"/></l>
+<r><ch n="0342"/></r>
+</a>
+<a line="603">
+<l><ch n="5F"/></l>
+<r><ch n="0345"/></r>
+</a>
+<a line="605">
+<l><ch n="60"/></l>
+<r><ch n="0300"/></r>
+</a>
+<a line="606">
+<l><ch n="61"/></l>
+<r><ch n="03B1"/></r>
+</a>
+<a line="607">
+<l><ch n="62"/></l>
+<r><ch n="03B2"/></r>
+</a>
+<a line="608">
+<l><ch n="63"/></l>
+<r><ch n="03C7"/></r>
+</a>
+<a line="609">
+<l><ch n="64"/></l>
+<r><ch n="03B4"/></r>
+</a>
+<a line="610">
+<l><ch n="65"/></l>
+<r><ch n="03B5"/></r>
+</a>
+<a line="611">
+<l><ch n="66"/></l>
+<r><ch n="03C6"/></r>
+</a>
+<a line="612">
+<l><ch n="67"/></l>
+<r><ch n="03B3"/></r>
+</a>
+<a line="613">
+<l><ch n="68"/></l>
+<r><ch n="0314"/></r>
+</a>
+<a line="614">
+<l><ch n="69"/></l>
+<r><ch n="03B9"/></r>
+</a>
+<a line="615">
+<l><ch n="6A"/></l>
+<r><ch n="03B7"/></r>
+</a>
+<a line="616">
+<l><ch n="6B"/></l>
+<r><ch n="03BA"/></r>
+</a>
+<a line="617">
+<l><ch n="6C"/></l>
+<r><ch n="03BB"/></r>
+</a>
+<a line="618">
+<l><ch n="6D"/></l>
+<r><ch n="03BC"/></r>
+</a>
+<a line="619">
+<l><ch n="6E"/></l>
+<r><ch n="03BD"/></r>
+</a>
+<a line="620">
+<l><ch n="6F"/></l>
+<r><ch n="03BF"/></r>
+</a>
+<a line="622">
+<l><ch n="70"/></l>
+<r><ch n="03C0"/></r>
+</a>
+<a line="623">
+<l><ch n="71"/></l>
+<r><ch n="03B8"/></r>
+</a>
+<a line="624">
+<l><ch n="72"/></l>
+<r><ch n="03C1"/></r>
+</a>
+<a line="625">
+<l><ch n="73"/></l>
+<r><ch n="03C3"/></r>
+</a>
+<a line="626">
+<l><ch n="74"/></l>
+<r><ch n="03C4"/></r>
+</a>
+<a line="627">
+<l><ch n="75"/></l>
+<r><ch n="03C5"/></r>
+</a>
+<a line="628">
+<l><ch n="76"/></l>
+<r><ch n="03C2"/></r>
+</a>
+<a line="629">
+<l><ch n="77"/></l>
+<r><ch n="03C9"/></r>
+</a>
+<a line="630">
+<l><ch n="78"/></l>
+<r><ch n="03BE"/></r>
+</a>
+<a line="631">
+<l><ch n="79"/></l>
+<r><ch n="03C8"/></r>
+</a>
+<a line="632">
+<l><ch n="7A"/></l>
+<r><ch n="03B6"/></r>
+</a>
+<a line="633">
+<l><ch n="7B"/></l>
+<r><ch n="007B"/></r>
+</a>
+<a line="635">
+<l><ch n="7C"/></l>
+<r><ch n="007C"/></r>
+</a>
+<a line="636">
+<l><ch n="7C"/><ch n="62"/></l>
+<r><ch n="03D0"/></r>
+</a>
+<a line="637">
+<l><ch n="7C"/><ch n="66"/></l>
+<r><ch n="03DD"/></r>
+</a>
+<a line="638">
+<l><ch n="7C"/><ch n="47"/></l>
+<r><ch n="03DC"/></r>
+</a>
+<a line="639" dir="fwd">
+<l><ch n="7C"/><ch n="67"/></l>
+<r><ch n="03DD"/></r>
+</a>
+<a line="640">
+<l><ch n="7C"/><ch n="77"/></l>
+<r><ch n="03D6"/></r>
+</a>
+<a line="641">
+<l><ch n="7C"/><ch n="71"/></l>
+<r><ch n="03DF"/></r>
+</a>
+<a line="642">
+<l><ch n="7C"/><ch n="51"/></l>
+<r><ch n="03DE"/></r>
+</a>
+<a line="643" dir="fwd">
+<l><ch n="7C"/><ch n="52"/></l>
+<r><ch n="03DE"/></r>
+</a>
+<a line="644" dir="fwd">
+<l><ch n="7C"/><ch n="6B"/></l>
+<r><ch n="03DF"/></r>
+</a>
+<a line="645" dir="fwd">
+<l><ch n="7C"/><ch n="4B"/></l>
+<r><ch n="03DE"/></r>
+</a>
+<a line="646">
+<l><ch n="7C"/><ch n="70"/></l>
+<r><ch n="03E1"/></r>
+</a>
+<a line="647">
+<l><ch n="7C"/><ch n="50"/></l>
+<r><ch n="03E0"/></r>
+</a>
+<a line="648" dir="fwd">
+<l><ch n="7C"/><ch n="6D"/></l>
+<r><ch n="03E1"/></r>
+</a>
+<a line="649" dir="fwd">
+<l><ch n="7C"/><ch n="4D"/></l>
+<r><ch n="03E0"/></r>
+</a>
+<a line="650">
+<l><ch n="7C"/><ch n="73"/></l>
+<r><ch n="03F2"/></r>
+</a>
+<a line="651" dir="fwd">
+<l><ch n="7C"/><ch n="53"/></l>
+<r><ch n="03F2"/></r>
+</a>
+<a line="652">
+<l><ch n="7C"/><ch n="74"/></l>
+<r><ch n="03DB"/></r>
+</a>
+<a line="653">
+<l><ch n="7C"/><ch n="54"/></l>
+<r><ch n="03DA"/></r>
+</a>
+<a line="654">
+<l><ch n="7C"/><ch n="69"/></l>
+<r><ch n="2129"/><ch n="0330"/></r>
+</a>
+<a line="655">
+<l><ch n="7C"/><ch n="55"/></l>
+<r><ch n="03D2"/></r>
+</a>
+<a line="656">
+<l><ch n="7C"/><ch n="68"/></l>
+<r><ch n="0374"/></r>
+</a>
+<a line="657">
+<l><ch n="7C"/><ch n="48"/></l>
+<r><ch n="0375"/></r>
+</a>
+<a line="658">
+<l><ch n="7C"/><ch n="6E"/></l>
+<r><ch n="200D"/></r>
+</a>
+<a line="659">
+<l><ch n="7C"/><ch n="23"/></l>
+<r><ch n="200C"/></r>
+</a>
+<a line="661">
+<l><ch n="7D"/></l>
+<r><ch n="007D"/></r>
+</a>
+<a line="662">
+<l><ch n="7E"/></l>
+<r><ch n="2014"/></r>
+</a>
+<a line="664">
+<l><ch n="96"/></l>
+<r><ch n="2013"/></r>
+</a>
+<a line="665" dir="fwd">
+<l><ch n="97"/></l>
+<r><ch n="2014"/></r>
+</a>
+<a line="666">
+<l><ch n="A0"/></l>
+<r><ch n="00A0"/></r>
+</a>
+<a line="667">
+<l><ch n="A4"/></l>
+<r><ch n="00A4"/></r>
+</a>
+<a line="668">
+<l><ch n="AC"/></l>
+<r><ch n="00AC"/></r>
+</a>
+<a line="669">
+<l><ch n="B6"/></l>
+<r><ch n="00B6"/></r>
+</a>
+<a line="670">
+<l><ch n="B7"/></l>
+<r><ch n="2022"/></r>
+</a>
+</assignments>
+</pass>
+<pass lhs="unicode" rhs="unicode" line="674">
+<classes>
+<class size="unicode" name="u_BR" line="530">
+0313 0314
+</class>
+<class size="unicode" name="u_aeo" line="678">
+0391 0395 039F 03B1 03B5 03BF
+</class>
+<class size="unicode" name="u_iu" line="679">
+0399 03A5 03B9 03C5
+</class>
+<class size="unicode" name="u_j" line="680">
+0397 03B7
+</class>
+<class size="unicode" name="u_u" line="681">
+03A5 03C5
+</class>
+<class size="unicode" name="u_i" line="682">
+0399 03B9
+</class>
+<class size="unicode" name="u_vowelrho" line="683">
+0391 0395 0399 039F 03A5 0397 03A9 03A1 03B1 03B5 03B9 03BF 03C5 03B7 03C9 03C1
+</class>
+</classes>
+<contexts>
+<context id="uctx_1"><ch n="0308"/></context>
+</contexts>
+<assignments>
+<a line="687">
+<l postCtx="uctx_1"><class-ref name="u_BR" id="b"/><class-ref name="u_aeo" id="v1"/><class-ref name="u_iu" id="v2"/></l>
+<r postCtx="uctx_1"><copy-ref id="v1"/><copy-ref id="b"/><copy-ref id="v2"/></r>
+</a>
+<a line="688">
+<l><class-ref name="u_BR" id="b"/><class-ref name="u_aeo" id="v1"/><class-ref name="u_iu" id="v2"/></l>
+<r><copy-ref id="v1"/><copy-ref id="v2"/><copy-ref id="b"/></r>
+</a>
+<a line="689">
+<l postCtx="uctx_1"><class-ref name="u_BR" id="b"/><class-ref name="u_j" id="v1"/><class-ref name="u_u" id="v2"/></l>
+<r postCtx="uctx_1"><copy-ref id="v1"/><copy-ref id="b"/><copy-ref id="v2"/></r>
+</a>
+<a line="690">
+<l><class-ref name="u_BR" id="b"/><class-ref name="u_j" id="v1"/><class-ref name="u_u" id="v2"/></l>
+<r><copy-ref id="v1"/><copy-ref id="v2"/><copy-ref id="b"/></r>
+</a>
+<a line="691">
+<l postCtx="uctx_1"><class-ref name="u_BR" id="b"/><class-ref name="u_u" id="v1"/><class-ref name="u_i" id="v2"/></l>
+<r postCtx="uctx_1"><copy-ref id="v1"/><copy-ref id="b"/><copy-ref id="v2"/></r>
+</a>
+<a line="692">
+<l><class-ref name="u_BR" id="b"/><class-ref name="u_u" id="v1"/><class-ref name="u_i" id="v2"/></l>
+<r><copy-ref id="v1"/><copy-ref id="v2"/><copy-ref id="b"/></r>
+</a>
+<a line="693">
+<l><class-ref name="u_BR" id="b"/><class-ref name="u_vowelrho" id="v"/></l>
+<r><copy-ref id="v"/><copy-ref id="b"/></r>
+</a>
+</assignments>
+</pass>
+</teckitMapping>

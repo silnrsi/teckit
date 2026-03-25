@@ -1,0 +1,193 @@
+﻿; This file was edited using TECkitMappingEditorU.exe v3.1.0.0 on 1/24/2012.
+;   Conversion Type = Unicode_to_from_Unicode
+;   Left-hand side font = Arial Unicode MS;11.25
+;   Right-hand side font = Arial Unicode MS;11.25
+;   Main Window Position = 0,0,658,712
+;   Left-hand side Character Map Window Position = 658,0,457,446
+;   Right-hand side Character Map Window Position = 658,446,457,446
+;   Left-hand range = 0000-007F
+;   Right-hand range = 0000-007F
+
+;Sen2Ajami.map
+;(c) 2012
+
+; Draft TECkit mapping file for converting Latin to Ajami
+
+LHSName   "Unicode Latin for Wolof"
+RHSName "Unicode Arabic for Wolof"
+Contact  "mailto:wstech@sil.org"
+LHSFlags (ExpectsNFC GeneratesNFC)
+RHSFlags ()
+
+pass (Unicode)
+; uppercase Latin > lowercase Latin
+
+U+0041 <> U+0061
+U+0042 <> U+0062
+U+0043 <> U+0063
+U+0044 <> U+0064
+U+0045 <> U+0065
+U+0046 <> U+0066
+U+0047 <> U+0067
+U+0048 <> U+0068
+U+0049 <> U+0069
+U+004A <> U+006A
+U+004B <> U+006B
+U+004C <> U+006C
+U+004D <> U+006D
+U+004E <> U+006E
+U+004F <> U+006F
+U+0050 <> U+0070
+U+0051 <> U+0071
+U+0052 <> U+0072
+U+0053 <> U+0073
+U+0054 <> U+0074
+U+0055 <> U+0075
+U+0056 <> U+0076
+U+0057 <> U+0077
+U+0058 <> U+0078
+U+0059 <> U+0079
+U+005A <> U+007A
+U+00D1 <> U+00F1
+U+014A <> U+014B
+U+00C0 <> U+00E0
+U+00C3 <> U+00E3
+U+00CB <> U+00EB
+U+00C9 <> U+00E9
+U+1EBC <> U+1EBD
+U+00D3 <> U+00F3
+
+pass (Unicode)
+; lowercase Latin > Arabic
+; hamza rule
+
+U+002C <> U+060C ; Comma 2 Arabic_Comma
+U+003B <> U+061B ; Semicolon 2 Arabic_Semicolon
+U+003F <> U+061F ; Question_Mark 2 Arabic_Question_Mark
+
+U+0062 <> U+0628
+U+0063 <> U+0756
+U+0064 <> U+062F
+U+0066 <> U+0641
+U+0067 <> U+06AF
+U+0068 <> U+062D
+U+006A <> U+062C
+U+006B <> U+06A9
+U+006C <> U+0644
+U+006D <> U+0645
+U+006E <> U+0646
+U+00F1 <> U+0767
+U+014B <> U+075D
+U+0070 <> U+0752
+U+0071 <> U+0642
+U+0072 <> U+0631
+U+0073 <> U+0633
+U+0074 <> U+062A
+U+0077 <> U+0648
+U+0078 <> U+062C
+U+0079 <> U+064A
+
+U+0061 <> U+0627 U+064E
+U+0061 U+0061 <> U+0627 U+0653
+U+0061 U+0061 <> U+0628 U+064E U+0627
+U+00E0 <> U+0627 U+065A
+U+00E3 <> U+0627 U+064E U+075D
+U+00E3 U+0061 <> U+0627 U+064E U+0627 U+075D
+U+00EB <> U+0627 U+065E
+U+00EB U+00EB <> U+0627 U+065E U+0020 U+0627
+U+0065 <> U+0627 U+0655
+U+0065 U+0065 <> U+0627 U+0655 U+064A
+U+00E9 <> U+0627 U+0656
+U+00E9 U+0065 <> U+0627 U+0656 U+064A
+U+1EBD <> U+0627 U+0655 U+075D
+U+0069 <> U+0627 U+0650
+U+0069 U+0069 <> U+0627 U+0650 U+064A
+U+006F <> U+0627 U+065D
+U+006F U+006F <> U+0627 U+065D U+0648
+U+00F3 <> U+0627 U+0657
+U+00F3 U+006F <> U+0627 U+0657 U+0648
+U+0075 <> U+0627 U+064F
+U+0075 U+0075 <> U+0627 U+064F U+0648
+
+; mb	<> U+0645 U+0628 ; mb
+; nd	<> U+0646 U+062F ; nd
+; ng	<> U+0646 U+06AF ; ng
+; nj	<> U+0646 U+062C ; nj
+; lam alif <> U+0644 U+0627 ; lam alif
+
+;; special rules
+
+class[LTR] = (U+0430..U+044F U+0493 U+04D9 U+049B U+04A3 U+04E9 U+04B1 U+04AF \
+					U+04BB U+0448 U+044B U+0456)
+;class[LTR] = (U+0400..U+04FF)
+class[NOTSOFT_SG] = (U+0430 U+0431 U+0432 U+0434 U+0493 U+0436 U+0437 U+0439 U+049B U+043B U+043C U+043D U+04A3 U+043E U+043F U+0440 U+0441 U+0442 U+0443 U+04B1 U+0444 U+0445 U+04BB U+0447 U+0448 U+044B)
+class[NOTSOFT_DI] = (U+0446 U+044E U+044F U+0451)
+class[NOTSOFT_ALL] = ([NOTSOFT_SG][NOTSOFT_DI])
+
+class[NOTSOFT_ARB] = (U+0627 U+0628 U+06CB U+062F U+0639 U+062C U+0632 U+064A U+0642 U+0644 U+0645 U+0646 U+06AD U+0648 U+067E U+0631 U+0633 U+062A U+06CB U+06C7 U+0641 U+062D U+0647 U+0686 U+0634 U+0649)
+;class[NOTSOFT_SG] *MUST* correspond on a one to one basis with class [NOTSOFT_ARB]
+
+; DON'T include the /e/ vowel here because we don't ever want to put a hamza in front of it at start of word
+;class[SOFTVOWEL] = (U+04D9 U+0435 U+04E9 U+04AF U+0456)
+;class[SOFTVOWEL_ARB] = (U+0675 U+06D5 U+0676 U+0677 U+0678) ; isolate forms in corresponding order ae, e oe, ue isoft
+class[SOFTVOWEL] = (U+04D9 U+04E9 U+04AF U+0456)  ; isolate forms in corresponding order ae, oe, ue isoft
+class[SOFTVOWEL_ARB] = (U+0675 U+0676 U+0677 U+0678)	; high-hamza-alef high-hamza-vau u-with-hamza-above high-hamza-yeh
+;the class softvowel arabic are initial forms incorporating hamza
+
+;; Cyr -> Ar rules for hamza/soft vowels
+
+;; Put a high hamza before a word-initial consonant.
+; IF /e/ later in the word is supposed to trigger hamza, use the second form of this rule:
+[NOTSOFT_SG]=CONS \
+	/ ^[LTR] _ [NOTSOFT_ALL]* [SOFTVOWEL] ( [NOTSOFT_ALL] | [SOFTVOWEL] )* ^[LTR] > U+0674 [NOTSOFT_ARB]=CONS
+;[NOTSOFT_SG]=CONS \
+;	/ ^[LTR] _ [NOTSOFT_ALL]* ( [SOFTVOWEL] | U+0435 ) ( [NOTSOFT_ALL] | [SOFTVOWEL] )* ^[LTR] \
+;		> U+0674 [NOTSOFT_ARB]=CONS
+
+;; This rule can be bidirectional.  The class [SOFTVOWEL_ARB] are characters that incorporate the
+; high hamza, so they always correlate with soft vowels on the Cyr side.  They only occur word-initially. -bb
+
+[SOFTVOWEL]=VWL / ^[LTR] _ ([NOTSOFT_ALL]|[SOFTVOWEL])* ^[LTR] <> [SOFTVOWEL_ARB]=VWL
+
+
+;; Ar -> Cyr rules for hamza/soft vowels  -bb
+
+class[NOTSOFTVOWEL] =     (U+0430 U+043E U+04B1 U+044B)	; aA oO barred-yY  bi
+class[NOTSOFTVOWEL_ARB] = (U+0627 U+0648 U+06C7 U+0649)	; alef vau u(vau-with-damma) null/alef-maksura
+class[SOFTCONS] =     (U+043A U+0433 U+0435)	; k g e
+class[SOFTCONS_ARB] = (U+0643 U+06AF U+06D5)	; kaf gaf ae
+;; Same as [NOTSOFT_ARB], except doesn't include the not-soft vowels.
+;class[NOTSOFTCONS_ARB] = (U+0628 U+06CB U+062F U+0639 U+062C U+0632 U+064A U+0642 U+0644 U+0645 U+0646 U+06AD U+067E U+0631 U+0633 U+062A U+06CB U+0641 U+062D U+0647 U+0686 U+0634)
+
+;; Non-initial vowels on Ar side are always non-soft versions.
+; Vowels on ABS side become soft Cyr vowels if word begins with hamza, or
+[SOFTVOWEL]=VWL		<	[NOTSOFTVOWEL_ARB]=VWL  / ^[LTR] U+0674 ( [NOTSOFT_ARB] )* _
+
+;  if word has a soft consonant anywhere in it
+[SOFTVOWEL]=VWL		<	[NOTSOFTVOWEL_ARB]=VWL  / [SOFTCONS_ARB] ( [NOTSOFT_ARB] )* _
+[SOFTVOWEL]=VWL		<	[NOTSOFTVOWEL_ARB]=VWL  / _ ( [NOTSOFT_ARB] )* [SOFTCONS_ARB]
+
+; Vowels on ABS side become non-soft Cyr vowels if the above rules didn't match.
+; These cases are addressed in the one-to-one rules above.
+
+;; Special rules for sequences of digits (e.g., references)
+
+class[digit] = (U+0030 .. U+0039)
+
+U+002D / [digit] _ [digit]  <>  U+002D U+200F ; add RLM after hyphen between digits
+U+003A / [digit] _ [digit]  <>  U+003A U+200F ; add RLM after colon between digits
+
+
+; Map ASCII and Latin1 characters that map directly into Unicode
+UniClass [ascii] = ( U+0000 .. U+007f )
+UniClass [latin1] = ( U+00a0 .. U+00ff )
+
+[ascii]	<>	[ascii]
+[latin1]	<>	[latin1]
+
+
+pass (Unicode)
+
+U+064A U+064A > U+064A; gets rid of duplicated arabic letter yeh
+
+; add in exception word list
