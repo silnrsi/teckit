@@ -67,7 +67,7 @@ $ ../configure             # Run the generated configure script
 $ make                     # Build
 $ make check               # Run the tests (optional)
 $ cat test/dotests.pl.log  # View the test output (optional)
-$ make install             # Install (optional)
+$ sudo make install        # Install (optional)
 ```
 
 Notes:
