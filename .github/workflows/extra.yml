@@ -12,17 +12,17 @@ on:
     - 'INSTALL'
     - 'NEWS'
     - 'README*'
-  pull_request:
-    branches: [ master ]
-    paths-ignore:
-    - '.github/workflow/**'
-    - '.gitignore'
-    - 'AUTHORS'
-    - 'COPYING'
-    - 'ChangeLog'
-    - 'INSTALL'
-    - 'NEWS'
-    - 'README*'
+  # pull_request:
+  #   branches: [ master ]
+  #   paths-ignore:
+  #   - '.github/workflow/**'
+  #   - '.gitignore'
+  #   - 'AUTHORS'
+  #   - 'COPYING'
+  #   - 'ChangeLog'
+  #   - 'INSTALL'
+  #   - 'NEWS'
+  #   - 'README*'
 
 jobs:
   arches:
