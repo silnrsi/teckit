@@ -30,14 +30,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        arch: [aarch64, ppc64le, s390x]
+        arch: [riscv64, ppc64le, s390x]
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
     - uses: uraimo/run-on-arch-action@v3
       id: build
       with:
         arch: ${{ matrix.arch }}
-        distro: alpine_latest
+        distro: ubuntu_latest
         run: |
           uname -a
           ./autogen.sh
