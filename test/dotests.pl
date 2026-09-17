@@ -33,6 +33,7 @@ sub compare {
 	dotest("comparing", "$diff $file1 $file2");
 }
 
+# Map
 dotest("compiling Greek mapping (uncompressed)",
 	"${bindir}teckit_compile ${srcdir}SILGreek2004-04-27.map -z -o SILGreek.uncompressed.tec");
 
@@ -44,7 +45,26 @@ dotest("compiling Greek mapping (compressed)",
 # slightly change the resulting image. The tests below which use the compressed file
 # should be sufficient to verify that it can be decompressed/used properly
 
-dotest("converting plain-text file to unicode",
+# UTF-16LE map
+dotest("converting plain-text file to utf16le",
+	"${bindir}txtconv -t SILGreek.tec -i ${srcdir}mrk.text -o mrk.utf16le-nobom.txt -of utf16le -nobom -nfc");
+
+dotest("converting back to legacy encoding",
+	"${bindir}txtconv -t SILGreek.tec -r -i mrk.utf16le-nobom.txt -if utf16le -o mrk.bytes.txt");
+
+compare("${srcdir}mrk.text", "mrk.bytes.txt");
+
+# UTF-32BE map
+dotest("converting plain-text file to utf32be",
+	"${bindir}txtconv -t SILGreek.tec -i ${srcdir}mrk.text -o mrk.utf32be-nobom.txt -of utf32be -nobom -nfc");
+
+dotest("converting back to legacy encoding",
+	"${bindir}txtconv -t SILGreek.tec -r -i mrk.utf32be-nobom.txt -if utf32be -o mrk.bytes.txt");
+
+compare("${srcdir}mrk.text", "mrk.bytes.txt");
+
+# UTF-8 map
+dotest("converting plain-text file to utf8",
 	"${bindir}txtconv -t SILGreek.tec -i ${srcdir}mrk.text -o mrk.utf8.txt -nfc");
 
 dotest("converting back to legacy encoding",
@@ -52,7 +72,8 @@ dotest("converting back to legacy encoding",
 
 compare("${srcdir}mrk.text", "mrk.bytes.txt");
 
-dotest("converting unicode to utf16 and nfd",
+# UTF-16BE BOM
+dotest("converting unicode to utf16be and nfd",
 	"${bindir}txtconv -i mrk.utf8.txt -o mrk.utf16be.txt -of utf16be -nfd");
 
 dotest("converting back to utf8 and nfc",
@@ -60,10 +81,48 @@ dotest("converting back to utf8 and nfc",
 
 compare("mrk.utf8.txt", "mrk.utf8b.txt");
 
+# UTF-32LE BOM
+dotest("converting unicode to utf32le and nfd",
+	"${bindir}txtconv -i mrk.utf8.txt -o mrk.utf32le.txt -of utf32le -nfd");
+
+dotest("converting back to utf8 and nfc",
+	"${bindir}txtconv -i mrk.utf32le.txt -o mrk.utf8b.txt -of utf8 -nfc");
+
+compare("mrk.utf8.txt", "mrk.utf8b.txt");
+
+# SFconv
 dotest("compiling ISO-8859-1 mapping for sfconv test",
 	"${bindir}teckit_compile ${srcdir}ISO-8859-1.map -o ISO-8859-1.tec");
 
-dotest("converting standard format file to unicode",
+# UTF-8
+dotest("converting standard format file to utf8",
+	"${bindir}sfconv -8u -c ${srcdir}GNT-map.xml -i ${srcdir}Mrk-GNT.sf -o mrk.sf.utf8-nobom.txt -utf8");
+
+dotest("converting back to legacy encodings",
+	"${bindir}sfconv -u8 -c ${srcdir}GNT-map.xml -i mrk.sf.utf8-nobom.txt -o mrk.sf.legacy.txt");
+
+compare("${srcdir}mrk.sf.legacy.txt.orig", "mrk.sf.legacy.txt");
+
+# UTF-16LE
+dotest("converting standard format file to utf16le",
+	"${bindir}sfconv -8u -c ${srcdir}GNT-map.xml -i ${srcdir}Mrk-GNT.sf -o mrk.sf.utf16le-nobom.txt -le");
+
+dotest("converting back to legacy encodings",
+	"${bindir}sfconv -u8 -c ${srcdir}GNT-map.xml -i mrk.sf.utf16le-nobom.txt -o mrk.sf.legacy.txt -le");
+
+compare("${srcdir}mrk.sf.legacy.txt.orig", "mrk.sf.legacy.txt");
+
+# UTF-16BE
+dotest("converting standard format file to utf16be",
+	"${bindir}sfconv -8u -c ${srcdir}GNT-map.xml -i ${srcdir}Mrk-GNT.sf -o mrk.sf.utf16be-nobom.txt -be");
+
+dotest("converting back to legacy encodings",
+	"${bindir}sfconv -u8 -c ${srcdir}GNT-map.xml -i mrk.sf.utf16be-nobom.txt -o mrk.sf.legacy.txt -be");
+
+compare("${srcdir}mrk.sf.legacy.txt.orig", "mrk.sf.legacy.txt");
+
+# UTF-8 BOM
+dotest("converting standard format file to utf8 with bom",
 	"${bindir}sfconv -8u -c ${srcdir}GNT-map.xml -i ${srcdir}Mrk-GNT.sf -o mrk.sf.utf8.txt -utf8 -bom");
 
 dotest("converting back to legacy encodings",
@@ -71,6 +130,25 @@ dotest("converting back to legacy encodings",
 
 compare("${srcdir}mrk.sf.legacy.txt.orig", "mrk.sf.legacy.txt");
 
+# UTF-16LE BOM
+dotest("converting standard format file to utf16le with bom",
+	"${bindir}sfconv -8u -c ${srcdir}GNT-map.xml -i ${srcdir}Mrk-GNT.sf -o mrk.sf.utf16le.txt -le -bom");
+
+dotest("converting back to legacy encodings",
+	"${bindir}sfconv -u8 -c ${srcdir}GNT-map.xml -i mrk.sf.utf16le.txt -o mrk.sf.legacy.txt");
+
+compare("${srcdir}mrk.sf.legacy.txt.orig", "mrk.sf.legacy.txt");
+
+# UTF-16BE BOM
+dotest("converting standard format file to utf16be with bom",
+	"${bindir}sfconv -8u -c ${srcdir}GNT-map.xml -i ${srcdir}Mrk-GNT.sf -o mrk.sf.utf16be.txt -be -bom");
+
+dotest("converting back to legacy encodings",
+	"${bindir}sfconv -u8 -c ${srcdir}GNT-map.xml -i mrk.sf.utf16be.txt -o mrk.sf.legacy.txt");
+
+compare("${srcdir}mrk.sf.legacy.txt.orig", "mrk.sf.legacy.txt");
+
+# Maps
 dotest("exporting Greek mapping",
 	"${bindir}teckit_compile -x ${srcdir}SILGreek2004-04-27.map -o SILGreek2004-04-27.xml");
 
@@ -118,11 +196,19 @@ if (1) {
 	unlink("SILGreek.uncompressed.tec");
 	unlink("SILGreek.tec");
 	unlink("ISO-8859-1.tec");
+	unlink("mrk.mrk.utf16le-nobom.txt");
+	unlink("mrk.mrk.utf32be-nobom.txt");
 	unlink("mrk.utf8.txt");
 	unlink("mrk.utf8b.txt");
 	unlink("mrk.utf16be.txt");
+	unlink("mrk.utf32le.txt");
 	unlink("mrk.bytes.txt");
+	unlink("mrk.sf.utf8-nobom.txt");
+	unlink("mrk.sf.utf16le-nobom.txt");
+	unlink("mrk.sf.utf16be-nobom.txt");
 	unlink("mrk.sf.utf8.txt");
+	unlink("mrk.sf.utf16le.txt");
+	unlink("mrk.sf.utf16be.txt");
 	unlink("mrk.sf.legacy.txt");
 	unlink("SILGreek2004-04-27.xml");
 	unlink("ISO-8859-1.xml");

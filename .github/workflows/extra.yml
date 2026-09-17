@@ -38,6 +38,9 @@ jobs:
       with:
         arch: ${{ matrix.arch }}
         distro: ubuntu_latest
+        install: |
+          apt-get update -q -y
+          apt-get install -q -y build-essential libtool automake
         run: |
           uname -a
           ./autogen.sh

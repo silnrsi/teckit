@@ -29,31 +29,36 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-24.04-arm, ubuntu-slim]
+        os: [ubuntu-24.04-arm, ubuntu-24.04]
     steps:
-    - uses: actions/checkout@v7
-    - name: setup
-      run: ./autogen.sh
-    - name: build
-      run: ./build-linux-binaries.sh
-
-  macos:
-    runs-on: macos-latest
-    steps:
-    - uses: mstksg/get-package@v1
-      with:
-        brew: automake libtool
     - uses: actions/checkout@v7
     - name: setup
       run: ./autogen.sh
     - name: build
       run: |
+        ./build-linux-binaries.sh
+        # The ldd commands below show what shared libraries the binaries are linked against,
+        # they do not affect the build of the binaries.
+        ldd /usr/local/bin/sfconv
+        ldd linux-build/bin/teckit_compile
+        ldd linux-build/bin/txtconv
+
+  macos:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v7
+    - name: setup
+      run: |
+        brew install automake libtool
+        ./autogen.sh
+    - name: build
+      run: |
         ./build-mac-binaries.sh
         # The otool commands below show what shared libraries the binaries are linked against,
         # they do not affect the build of the binaries.
-        # otool -L teckit-mac/bin/sfconv
-        # otool -L teckit-mac/bin/teckit_compile
-        # otool -L teckit-mac/bin/txtconv
+        otool -L teckit-mac/bin/sfconv
+        otool -L teckit-mac/bin/teckit_compile
+        otool -L teckit-mac/bin/txtconv
         cd mac-installer
         ./create-pkg.sh
     - uses: actions/upload-artifact@v4

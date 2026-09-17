@@ -19,7 +19,8 @@ config.h.in
 /build/
 /linux-build/
 /mac-build/
-/windows-build/
+/windows-build32/
+/windows-build64/
 /teckit-linux/
 /teckit-mac/
 /teckit-windows-bin/
